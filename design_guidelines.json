@@ -1,0 +1,160 @@
+{
+  "project": {
+    "name": "Saura Energy",
+    "domain": "Enterprise Marketing & Lead Generation - Clean Energy",
+    "theme": "Light Theme (with cinematic dark mode Hero)",
+    "archetype": "Archetype 1 (Organic & Earthy) blended with Archetype 4 (Swiss & High-Contrast) for trust and authority.",
+    "vibe": "Trustworthy, Premium, Technologically advanced, Environment-friendly, Corporate yet approachable."
+  },
+  "colors": {
+    "primary": {
+      "name": "Deep Blue",
+      "hex": "#1B3A8C",
+      "usage": "Wordmarks, Headings, Primary brand identity, Footers, and Dark surfaces for high contrast."
+    },
+    "secondary": {
+      "name": "Solar Orange",
+      "hex": "#F26A21",
+      "usage": "CTAs, accents, dynamic gradients, interactive elements to signify energy and action."
+    },
+    "accent": {
+      "name": "Sustainability Green",
+      "hex": "#2BA84A",
+      "usage": "Success states, sustainability metrics, badges, and eco-friendly accents."
+    },
+    "backgrounds": {
+      "base": "#FFFFFF",
+      "muted": "#F8FAFC",
+      "hero_dark": "#0A1128",
+      "glass": "rgba(255, 255, 255, 0.7)"
+    },
+    "text": {
+      "primary": "#0F172A",
+      "secondary": "#475569",
+      "on_dark": "#FFFFFF",
+      "on_primary": "#FFFFFF"
+    },
+    "gradients": {
+      "hero_overlay": "linear-gradient(to right, rgba(10, 17, 40, 0.8), rgba(10, 17, 40, 0.4))",
+      "solar_flare": "linear-gradient(135deg, rgba(242, 106, 33, 0.2), rgba(242, 106, 33, 0))"
+    }
+  },
+  "typography": {
+    "headings": {
+      "family": "Cabinet Grotesk, sans-serif",
+      "weights": ["700", "800"],
+      "usage": "H1, H2, H3. Corporate, bold, premium look. Ensure tracking-tight for sizes > 32px."
+    },
+    "body": {
+      "family": "Manrope, sans-serif",
+      "weights": ["400", "500", "600"],
+      "usage": "Body text, labels, subtle UI elements. Highly legible and clean."
+    },
+    "hierarchy": {
+      "h1": "text-5xl sm:text-6xl font-extrabold tracking-tight",
+      "h2": "text-3xl sm:text-4xl font-bold tracking-tight",
+      "h3": "text-xl sm:text-2xl font-bold",
+      "body": "text-base leading-relaxed text-slate-600",
+      "overline": "text-xs font-bold tracking-[0.2em] uppercase"
+    }
+  },
+  "layout_and_spacing": {
+    "philosophy": "Generous spacing. Use large paddings (p-12, p-16, p-24) to establish a premium corporate feel. Do not crowd sections.",
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "grids": "Use 12-column bento grids for features and project showcases to avoid boring symmetric cards."
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-[#F26A21] text-white hover:bg-[#D95B1A] shadow-md hover:shadow-lg transition-all rounded-full px-6 py-3 font-semibold",
+      "secondary": "bg-[#1B3A8C] text-white hover:bg-[#142B6A] shadow-md hover:shadow-lg transition-all rounded-full px-6 py-3 font-semibold",
+      "outline": "border-2 border-[#1B3A8C] text-[#1B3A8C] hover:bg-[#1B3A8C] hover:text-white transition-all rounded-full px-6 py-3 font-semibold"
+    },
+    "cards": {
+      "style": "Modern glassmorphism. bg-white/70 backdrop-blur-xl border border-white/40 shadow-sm rounded-2xl overflow-hidden.",
+      "hover": "Hover state should slightly lift (-translate-y-1) and enhance shadow to shadow-lg."
+    },
+    "inputs": {
+      "style": "Shadcn standard but with rounded-xl, focus:ring-2 focus:ring-[#F26A21] border-slate-200."
+    }
+  },
+  "sections_guidance": {
+    "header": {
+      "type": "Sticky Glassmorphism",
+      "classes": "fixed top-0 w-full z-50 backdrop-blur-xl bg-white/80 border-b border-slate-200/50 shadow-sm"
+    },
+    "hero": {
+      "vibe": "Cinematic and Dark. A high-impact drone shot of solar panels with a heavy dark overlay to make white heading and orange CTAs pop.",
+      "features": "Animated stats counter (e.g., '10MW+ Installed', '500+ Projects').",
+      "layout": "Left-aligned text block, large H1, energetic secondary text."
+    },
+    "trust_strip": {
+      "vibe": "Clean, grayscale or subtle logos.",
+      "content": "Partner brands (Tata, Adani, Waaree, Luminous) and Bank logos (SBI, PNB, BOB, Canara)."
+    },
+    "services": {
+      "layout": "Grid-based (Bento style preferred). Interactive service cards covering 9 services.",
+      "visuals": "Icons or subtle background images per card. Hover reveals more details."
+    },
+    "savings_calculator": {
+      "vibe": "Highly interactive. Tech-forward.",
+      "ui": "Sliders for electricity bill, animated charts for 'Savings over 25 years'. Uses Shadcn slider/chart primitives."
+    },
+    "projects": {
+      "layout": "Filterable grid (Residential, Commercial). Uses before/after sliders for impact."
+    },
+    "process_timeline": {
+      "vibe": "Vertical or horizontal animated steps.",
+      "content": "7 steps. SVG dashed lines connecting icons. Icons fill with #2BA84A as scrolled into view."
+    },
+    "subsidy_finance": {
+      "highlight": "PM Surya Ghar scheme – ₹85,800. Use Poster 1/2 references.",
+      "layout": "Split layout. Left: Information and scheme details, Right: Image/Poster with strong CTA."
+    },
+    "footer": {
+      "background": "Deep Blue (#1B3A8C). White text.",
+      "content": "Address (Agartala, Tripura), phone numbers, social links, newsletter signup."
+    }
+  },
+  "animation_guidelines": {
+    "library": "Framer Motion",
+    "principles": "Smooth, professional, non-distracting. Use ease-out or spring transitions. Stagger list items.",
+    "scroll": "Use Lenis for smooth momentum scrolling.",
+    "effects": "Subtle parallax on background images. Floating energy particles in the Hero section."
+  },
+  "media": {
+    "brand_assets": {
+      "logo": "https://customer-assets.emergentagent.com/job_a7c210ce-7b69-4f02-9869-f283b1d5da9b/artifacts/nuws6j8j_Saura%20Energy%20logo%202%20%28W%29.jpg",
+      "poster_1": "https://customer-assets.emergentagent.com/job_a7c210ce-7b69-4f02-9869-f283b1d5da9b/artifacts/w4btopx6_saura%20energy%20poster%2045.jpg",
+      "poster_2": "https://customer-assets.emergentagent.com/job_a7c210ce-7b69-4f02-9869-f283b1d5da9b/artifacts/hlyw2ny6_saura%20energy%20poster01.png"
+    },
+    "images": {
+      "hero_drone": "https://images.unsplash.com/photo-1753781466451-ec9d6029557c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHwxfHxzb2xhciUyMHBhbmVscyUyMHJvb2Z0b3AlMjBkcm9uZXxlbnwwfHx8fDE3Nzg1MjcwMDB8MA&ixlib=rb-4.1.0&q=85",
+      "rooftop_drone": "https://images.unsplash.com/photo-1772326281137-b617cbf77c5f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHwyfHxzb2xhciUyMHBhbmVscyUyMHJvb2Z0b3AlMjBkcm9uZXxlbnwwfHx8fDE3Nzg1MjcwMDB8MA&ixlib=rb-4.1.0&q=85",
+      "engineers_working_1": "https://images.unsplash.com/photo-1726221062287-fda475b85493?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzZ8MHwxfHNlYXJjaHwyfHxzb2xhciUyMHBhbmVsJTIwZW5naW5lZXJzJTIwd29ya2luZ3xlbnwwfHx8fDE3Nzg1MjcwMDB8MA&ixlib=rb-4.1.0&q=85",
+      "engineers_working_2": "https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzZ8MHwxfHNlYXJjaHwzfHxzb2xhciUyMHBhbmVsJTIwZW5naW5lZXJzJTIwd29ya2luZ3xlbnwwfHx8fDE3Nzg1MjcwMDB8MA&ixlib=rb-4.1.0&q=85",
+      "residential_solar": "https://images.unsplash.com/flagged/photo-1566838803980-56bfa5300e8c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODR8MHwxfHNlYXJjaHwzfHxmYW1pbHklMjBob3VzZSUyMHNvbGFyJTIwcGFuZWxzfGVufDB8fHx8MTc3ODUyNzAwMHww&ixlib=rb-4.1.0&q=85",
+      "residential_solar_2": "https://images.unsplash.com/photo-1640802396402-094375631000?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODR8MHwxfHNlYXJjaHwxfHxmYW1pbHklMjBob3VzZSUyMHNvbGFyJTIwcGFuZWxzfGVufDB8fHx8MTc3ODUyNzAwMHww&ixlib=rb-4.1.0&q=85",
+      "commercial_factory": "https://images.unsplash.com/photo-1745321633881-d2d2218911bd?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwyfHxmYWN0b3J5JTIwY29tbWVyY2lhbCUyMHNvbGFyJTIwcGFuZWxzfGVufDB8fHx8MTc3ODUyNzAwMHww&ixlib=rb-4.1.0&q=85",
+      "commercial_factory_2": "https://images.unsplash.com/photo-1552197892-f2ad2f75e7c8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwzfHxmYWN0b3J5JTIwY29tbWVyY2lhbCUyMHNvbGFyJTIwcGFuZWxzfGVufDB8fHx8MTc3ODUyNzAwMHww&ixlib=rb-4.1.0&q=85",
+      "ev_charging": "https://images.unsplash.com/photo-1692052664566-477579a08e8c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwzfHxldiUyMGNoYXJnaW5nJTIwc3RhdGlvbiUyMHNvbGFyfGVufDB8fHx8MTc3ODUyNzAwMHww&ixlib=rb-4.1.0&q=85",
+      "ev_charging_2": "https://images.unsplash.com/photo-1652252421025-0392a97129a3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwxfHxldiUyMGNoYXJnaW5nJTIwc3RhdGlvbiUyMHNvbGFyfGVufDB8fHx8MTc3ODUyNzAwMHww&ixlib=rb-4.1.0&q=85"
+    }
+  },
+  "dos_and_donts": {
+    "dos": [
+      "Use data-testid attributes on all interactive elements.",
+      "Employ glassmorphism for floating UI elements to maintain a modern, clean look.",
+      "Use Cabinet Grotesk for headings and Manrope for body text.",
+      "Prioritize high-contrast text to ensure accessibility.",
+      "Ensure CTA buttons use the Solar Orange (#F26A21) or Deep Blue (#1B3A8C) for clear hierarchy.",
+      "Use real imagery instead of illustrations to build trust."
+    ],
+    "donts": [
+      "DO NOT use 'Inter', 'Roboto', or 'Open Sans' for headings.",
+      "DO NOT use a fully transparent header; always include a blur or semi-solid background.",
+      "DO NOT make the UI predominantly dark mode except for the cinematic hero section.",
+      "DO NOT use generic shadow classes everywhere; rely on 1px borders combined with soft ambient shadows.",
+      "DO NOT use placeholder URLs (like via.placeholder.com) for images; strictly use the provided media URLs."
+    ]
+  }
+}

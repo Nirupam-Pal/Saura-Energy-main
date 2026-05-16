@@ -1,0 +1,5 @@
+/* App-level minimal */
+.App {
+  min-height: 100vh;
+  background: #ffffff;
+}
