@@ -65,7 +65,8 @@
   },
   "overrides": {
     "react-day-picker": {
-      "date-fns": "$date-fns"
+      "react": "$react",
+      "react-dom": "$react-dom"
     }
   },
   "browserslist": {
