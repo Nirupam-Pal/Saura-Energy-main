@@ -64,7 +64,6 @@ export default function Navbar() {
               <span className="text-[#F26A21]"> ener</span>
               <span className="text-[#2BA84A]">gy</span>
             </div>
-            <div className={`text-[10px] tracking-[0.25em] uppercase ${scrolled ? "text-slate-500" : "text-white/80"}`}>25 Years of Trust</div>
           </div>
         </Link>
 

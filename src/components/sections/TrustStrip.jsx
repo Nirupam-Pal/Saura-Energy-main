@@ -3,6 +3,20 @@ import { PARTNERS, BANKS } from "@/lib/data";
 import { Award, ShieldCheck, BadgeCheck, Landmark } from "lucide-react";
 
 export default function TrustStrip() {
+  const bankLogoMap = {
+    SBI: "sbi.png",
+    PNB: "pnb.png",
+    "Bank of Baroda": "baroda.png",
+    "Canara Bank": "canara.png",
+    HDFC: "hdfc.png",
+    ICICI: "icici.png",
+  };
+
+  const logoPath = (bank) => {
+    const file = bankLogoMap[bank];
+    return file ? `/BankLogos/${file}` : null;
+  };
+
   return (
     <section className="relative py-14 bg-white border-y border-slate-100" data-testid="trust-strip">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,30 +53,50 @@ export default function TrustStrip() {
         <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
             { icon: BadgeCheck, label: "MNRE Empanelled" },
-            { icon: ShieldCheck, label: "ISO 9001:2015 Certified" },
+            { icon: ShieldCheck, label: "TSECL Approved Vendor" },
             { icon: Award, label: "PM Surya Ghar Vendor" },
             { icon: Landmark, label: "Bank-Approved Financier" },
-          ].map(({ icon: I, label }, i) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="flex items-center gap-3 p-4 rounded-xl bg-slate-50 border border-slate-100"
-            >
-              <I className="h-5 w-5 text-[#2BA84A] flex-shrink-0" />
-              <span className="text-sm font-semibold text-slate-700">{label}</span>
-            </motion.div>
-          ))}
+          ].map(({ icon: I, label }, i) => {
+            const highlight = label === "MNRE Empanelled" || label === "TSECL Approved Vendor";
+            return (
+              <motion.div
+                key={label}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className={`flex items-center gap-3 p-4 rounded-xl ${
+                  highlight ? "bg-gradient-to-r from-orange-50 to-white border border-orange-200" : "bg-slate-50 border border-slate-100"
+                }`}
+              >
+                <I className={`h-5 w-5 ${highlight ? "text-orange-600" : "text-[#2BA84A]"} flex-shrink-0`} />
+                <span className={`text-sm font-semibold ${highlight ? "text-slate-800" : "text-slate-700"}`}>{label}</span>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Banks */}
         <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 justify-center">
           <span className="text-xs uppercase tracking-widest text-slate-500 font-semibold">Finance Partners:</span>
-          {BANKS.map((b) => (
-            <span key={b} className="text-sm font-bold text-slate-400 hover:text-[#1B3A8C] transition">{b}</span>
-          ))}
+          {BANKS.map((b) => {
+            const src = logoPath(b);
+            return (
+              <div key={b} className="flex items-center">
+                {src ? (
+                  <img
+                    src={src}
+                    alt={b}
+                    className="h-8 object-contain mx-2"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                    }}
+                  />
+                ) : null}
+                <span className="text-sm font-bold text-slate-400 hover:text-[#1B3A8C] transition">{b}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
