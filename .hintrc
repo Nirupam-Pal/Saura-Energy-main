@@ -7,7 +7,8 @@
       "default",
       {
         "ignore": [
-          "-webkit-mask"
+          "-webkit-mask",
+          "-webkit-text-size-adjust"
         ]
       }
     ],
