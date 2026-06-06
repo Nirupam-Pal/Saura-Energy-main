@@ -2,6 +2,7 @@ import Hero from "@/components/sections/Hero";
 import TrustStrip from "@/components/sections/TrustStrip";
 import AboutSnippet from "@/components/sections/AboutSnippet";
 import Services from "@/components/sections/Services";
+import CommercialProjects from "@/components/sections/CommercialProjects";
 import Calculator from "@/components/sections/Calculator";
 import Projects from "@/components/sections/Projects";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
@@ -19,6 +20,7 @@ export default function Home() {
       <TrustStrip />
       <AboutSnippet />
       <Services />
+      <CommercialProjects />
       <Calculator />
       <Projects />
       <WhyChooseUs />

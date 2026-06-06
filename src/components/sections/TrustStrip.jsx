@@ -10,7 +10,7 @@ export default function TrustStrip() {
     "Canara Bank": "canara.png",
     HDFC: "hdfc.png",
     ICICI: "icici.png",
-  };
+  }
 
   const logoPath = (bank) => {
     const file = bankLogoMap[bank];
@@ -87,13 +87,13 @@ export default function TrustStrip() {
                   <img
                     src={src}
                     alt={b}
-                    className="h-8 object-contain mx-2"
+                    className="h-16 object-contain mx-2"
                     onError={(e) => {
                       e.currentTarget.style.display = "none";
                     }}
                   />
                 ) : null}
-                <span className="text-sm font-bold text-slate-400 hover:text-[#1B3A8C] transition">{b}</span>
+                {/* <span className="text-sm font-bold text-slate-400 hover:text-[#1B3A8C] transition">{b}</span> */}
               </div>
             );
           })}
