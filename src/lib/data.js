@@ -32,11 +32,11 @@ export const IMG = {
   factory2: "https://images.unsplash.com/photo-1552197892-f2ad2f75e7c8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwzfHxmYWN0b3J5JTIwY29tbWVyY2lhbCUyMHNvbGFyJTIwcGFuZWxzfGVufDB8fHx8MTc3ODUyNzAwMHww&ixlib=rb-4.1.0&q=85",
   ev1: "https://images.unsplash.com/photo-1692052664566-477579a08e8c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwzfHxldiUyMGNoYXJnaW5nJTIwc3RhdGlvbiUyMHNvbGFyfGVufDB8fHx8MTc3ODUyNzAwMHww&ixlib=rb-4.1.0&q=85",
   ev2: "https://images.unsplash.com/photo-1652252421025-0392a97129a3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwxfHxldiUyMGNoYXJnaW5nJTIwc3RhdGlvbiUyMHNvbGFyfGVufDB8fHx8MTc3ODUyNzAwMHww&ixlib=rb-4.1.0&q=85",
-  panels: "/services/High%20Efficiency%20Solar%20Panels.jpg",
-  inverters: "/services/Inverter.jpg",
-  storage: "/services/Energy%20Storage.jpg",
-  streetLights: "/services/Street%20lights.jpg",
-  waterHeater: "/services/Water%20heater.jpg",
+  panels: "/ServiceSection/High%20Efficiency%20Solar%20Panels.jpg",
+  inverters: "/ServiceSection/Inverter.jpg",
+  storage: "/ServiceSection/Energy%20Storage.jpg",
+  streetLights: "/ServiceSection/Street%20lights.jpg",
+  waterHeater: "/ServiceSection/Water%20heater.jpg",
 };
 
 export const SERVICES = [
