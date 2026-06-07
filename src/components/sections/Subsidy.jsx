@@ -4,6 +4,20 @@ import { Sparkles, ArrowRight, Landmark, FileCheck2, BadgePercent, IndianRupee }
 import { BANKS } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 
+const bankLogoMap = {
+  SBI: "sbi.png",
+  PNB: "pnb.png",
+  "Bank of Baroda": "baroda.png",
+  "Canara Bank": "canara.png",
+  HDFC: "hdfc.png",
+  ICICI: "icici.png",
+};
+
+const bankLogoSrc = (bank) => {
+  const file = bankLogoMap[bank];
+  return file ? `/BankLogos/${file}` : null;
+};
+
 export default function Subsidy() {
   return (
     <section className="relative py-24 md:py-32 bg-gradient-to-b from-white via-[#FAF7F2] to-white overflow-hidden" data-testid="subsidy-section">
@@ -85,33 +99,48 @@ export default function Subsidy() {
               <table className="w-full text-sm" data-testid="subsidy-slab-table">
                 <thead className="bg-slate-50">
                   <tr className="text-left font-bold text-slate-700">
-                    <th className="px-5 py-3.5">System Size</th>
-                    <th className="px-5 py-3.5">Subsidy</th>
-                    <th className="px-5 py-3.5">Avg Bill Coverage</th>
+                    <th className="px-5 py-3.5">Average Monthly Consumption</th>
+                    <th className="px-5 py-3.5">Suitable Rooftop Capacity</th>
+                    <th className="px-5 py-3.5">Subsidy Support</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {[
-                    ["Up to 1 kW", "₹30,000", "0–150 units/month"],
-                    ["Up to 2 kW", "₹60,000", "150–300 units/month"],
-                    ["Up to 3 kW", "₹78,000", "300+ units/month"],
-                    ["3 kW and above", "₹85,800 (capped)", "Heavy households"],
-                  ].map((r, i) => (
-                    <tr key={i} className={i === 3 ? "bg-orange-50/60 font-semibold" : ""}>
-                      <td className="px-5 py-3.5 text-slate-700">{r[0]}</td>
-                      <td className="px-5 py-3.5 text-[#F26A21] font-bold">{r[1]}</td>
-                      <td className="px-5 py-3.5 text-slate-500 text-xs">{r[2]}</td>
+                    ["0 – 150 units", "1 kW – 2 kW", "₹33,000 – ₹66,000"],
+                    ["150 – 300 units", "2 kW – 3 kW", "₹66,000 – ₹85,800"],
+                    ["> 300 units", "Above 3 kW", "₹85,800"],
+                  ].map((row, index) => (
+                    <tr key={row[0]} className={index === 2 ? "bg-green-50/50 font-semibold" : ""}>
+                      <td className="px-5 py-3.5 text-slate-700">{row[0]}</td>
+                      <td className="px-5 py-3.5 text-slate-700">{row[1]}</td>
+                      <td className="px-5 py-3.5 text-[#2BA84A] font-bold">{row[2]}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
 
-            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <div className="mt-6">
               <span className="text-xs font-bold uppercase tracking-widest text-slate-500">Loan Partners:</span>
-              {BANKS.map((b) => (
-                <span key={b} className="text-sm font-bold text-slate-400 hover:text-[#1B3A8C] transition">{b}</span>
-              ))}
+              <div className="mt-4 flex flex-wrap items-center justify-start gap-8">
+                {BANKS.map((b) => {
+                  const src = bankLogoSrc(b);
+                  return src ? (
+                    <div key={b} className="flex items-center justify-center rounded-2xl bg-white/80 p-2">
+                      <img
+                        src={src}
+                        alt={b}
+                        className="h-12 object-contain"
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <span key={b} className="text-sm font-bold text-slate-400">{b}</span>
+                  );
+                })}
+              </div>
             </div>
           </motion.div>
         </div>
