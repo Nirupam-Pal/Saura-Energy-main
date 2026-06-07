@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Calendar } from "lucide-react";
 import { BLOG_POSTS, IMG } from "@/lib/data";
+import { fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 
 export default function BlogTeaser() {
   return (
@@ -23,10 +24,11 @@ export default function BlogTeaser() {
           {BLOG_POSTS.map((p, i) => (
             <motion.article
               key={p.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
+              initial="hidden"
+              whileInView="show"
+              viewport={VIEWPORT_ONCE}
+              custom={i}
+              variants={fadeUpVariant}
               data-testid={`blog-card-${p.id}`}
               className="group rounded-2xl bg-white overflow-hidden border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all"
             >

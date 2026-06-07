@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { WHY_CHOOSE } from "@/lib/data";
+import { fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 import { ShieldCheck, Users, Award, Rocket, Wrench, Landmark, Sun, ReceiptText } from "lucide-react";
 
 const ICONS = { ShieldCheck, Users, Award, Rocket, Wrench, Landmark, Sun, ReceiptText };

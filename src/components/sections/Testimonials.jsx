@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import { TESTIMONIALS } from "@/lib/data";
+import { SMOOTH_EASING } from "@/lib/animations";
 
 export default function Testimonials() {
   const [i, setI] = useState(0);
@@ -38,7 +39,7 @@ export default function Testimonials() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.45 }}
+                transition={{ duration: 0.5, ease: SMOOTH_EASING }}
                 className="relative text-center"
               >
                 <div className="flex justify-center gap-1 mb-6">

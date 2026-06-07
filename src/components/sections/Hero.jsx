@@ -4,11 +4,9 @@ import { Link } from "react-router-dom";
 import { IMG, STATS } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import AnimatedCounter from "@/components/AnimatedCounter";
+import { fadeUpVariant, SMOOTH_EASING } from "@/lib/animations";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  show: (i = 0) => ({ opacity: 1, y: 0, transition: { delay: 0.15 + i * 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] } }),
-};
+const fadeUp = fadeUpVariant;
 
 export default function Hero() {
   return (

@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider";
 import { calculateSavings } from "@/lib/calculatorUtils";
 import { Link } from "react-router-dom";
+import { slideInLeftVariant, slideInRightVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 
 const inr = (v) =>
   "₹" + Number(v || 0).toLocaleString("en-IN", { maximumFractionDigits: 0 });
@@ -101,9 +102,10 @@ export default function Calculator() {
 
           {/* Right: results */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="show"
+            viewport={VIEWPORT_ONCE}
+            variants={slideInRightVariant}
             className="rounded-3xl bg-[#0A1128] text-white p-6 md:p-8 shadow-2xl shadow-blue-900/30 relative overflow-hidden"
           >
             <div className="absolute -top-24 -right-24 w-72 h-72 bg-[#F26A21]/15 blur-[80px] rounded-full" />

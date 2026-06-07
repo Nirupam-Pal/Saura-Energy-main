@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { PARTNERS, BANKS } from "@/lib/data";
 import { Award, ShieldCheck, BadgeCheck, Landmark } from "lucide-react";
+import { slideInLeftVariant, fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 
 export default function TrustStrip() {
   const bankLogoMap = {
@@ -22,9 +23,10 @@ export default function TrustStrip() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="show"
+            viewport={VIEWPORT_ONCE}
+            variants={slideInLeftVariant}
             className="lg:w-1/3"
           >
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-2">Premium Quality. Trusted Brands.</p>
@@ -61,10 +63,11 @@ export default function TrustStrip() {
             return (
               <motion.div
                 key={label}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
+                initial="hidden"
+                whileInView="show"
+                viewport={VIEWPORT_ONCE}
+                custom={i}
+                variants={fadeUpVariant}
                 className={`flex items-center gap-3 p-4 rounded-xl ${
                   highlight ? "bg-gradient-to-r from-orange-50 to-white border border-orange-200" : "bg-slate-50 border border-slate-100"
                 }`}

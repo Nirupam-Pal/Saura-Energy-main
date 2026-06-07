@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Home, Building2, Factory, Wrench, Gauge, Landmark, HardHat, BatteryCharging, PlugZap, Check } from "lucide-react";
 import { SERVICES, IMG } from "@/lib/data";
+import { fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 
 const ICONS = { Home, Building2, Factory, Wrench, Gauge, Landmark, HardHat, BatteryCharging, PlugZap };
 
@@ -36,8 +37,8 @@ export default function Services({ withHeader = true }) {
                 key={s.slug}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: (i % 3) * 0.08, duration: 0.55 }}
+                viewport={VIEWPORT_ONCE}
+                transition={{ delay: (i % 3) * 0.08, duration: 0.6, ease: SMOOTH_EASING }}
                 data-testid={`service-card-${s.slug}`}
               >
                 <Link to={`/services/${s.slug}`} className="block h-full group">

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Phone, ArrowRight, Calendar } from "lucide-react";
 import { IMG, BRAND } from "@/lib/data";
 import { Button } from "@/components/ui/button";
+import { slideInRightVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 
 export default function CTASection() {
   return (
@@ -14,9 +15,10 @@ export default function CTASection() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="show"
+          viewport={VIEWPORT_ONCE}
+          variants={slideInRightVariant}
           className="max-w-3xl"
         >
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-4">Switch Today</p>

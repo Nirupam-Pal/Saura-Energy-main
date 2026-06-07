@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { PROCESS_STEPS } from "@/lib/data";
 import { MessageSquare, MapPin, Ruler, FileCheck2, Hammer, Zap, ShieldCheck } from "lucide-react";
+import { fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 
 const ICONS = { MessageSquare, MapPin, Ruler, FileCheck2, Hammer, Zap, ShieldCheck };
 
@@ -29,10 +30,11 @@ export default function Process() {
               return (
                 <motion.div
                   key={s.n}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ delay: i * 0.1 }}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={VIEWPORT_ONCE}
+                  custom={i}
+                  variants={fadeUpVariant}
                   className="relative"
                   data-testid={`process-step-${s.n}`}
                 >

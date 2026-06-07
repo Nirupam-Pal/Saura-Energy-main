@@ -4,6 +4,7 @@ import { MapPin, ArrowUpRight, GitCompare } from "lucide-react";
 import { PROJECTS, IMG } from "@/lib/data";
 import { PROJECT_PAIRS } from "@/lib/projectPairs";
 import BeforeAfter from "@/components/BeforeAfter";
+import { fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 
 const FILTERS = ["All", "Residential", "Commercial", "Industrial", "EV"];
 
@@ -55,7 +56,7 @@ export default function Projects() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ delay: (i % 3) * 0.06, duration: 0.45 }}
+                  transition={{ delay: (i % 3) * 0.06, duration: 0.5, ease: SMOOTH_EASING }}
                   className={`group relative rounded-3xl overflow-hidden bg-white border border-slate-100 hover:shadow-2xl hover:shadow-blue-900/10 transition-all hover:-translate-y-1 ${i === 0 ? "lg:col-span-2 lg:row-span-1" : ""}`}
                   data-testid={`project-card-${p.id}`}
                 >

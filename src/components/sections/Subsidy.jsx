@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Sparkles, ArrowRight, Landmark, FileCheck2, BadgePercent, IndianRupee } from "lucide-react";
 import { BANKS } from "@/lib/data";
 import { Button } from "@/components/ui/button";
+import { scaleInVariant, slideInRightVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 
 const bankLogoMap = {
   SBI: "sbi.png",
@@ -25,9 +26,10 @@ export default function Subsidy() {
         <div className="grid lg:grid-cols-12 gap-10 items-center">
           {/* Left badge card */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="show"
+            viewport={VIEWPORT_ONCE}
+            variants={scaleInVariant}
             className="lg:col-span-5"
           >
             <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#1B3A8C] via-[#1B3A8C] to-[#0A1128] text-white p-10 shadow-2xl">
@@ -81,9 +83,10 @@ export default function Subsidy() {
 
           {/* Right content */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="show"
+            viewport={VIEWPORT_ONCE}
+            variants={slideInRightVariant}
             className="lg:col-span-7"
           >
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Subsidy & Finance</p>

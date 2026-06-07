@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Target, Eye, Heart, Sparkles } from "lucide-react";
 import { IMG } from "@/lib/data";
 import { Button } from "@/components/ui/button";
+import { slideInLeftVariant, slideInRightVariant, fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 
 export default function AboutSnippet() {
   return (
@@ -11,7 +12,7 @@ export default function AboutSnippet() {
       <div className="absolute bottom-20 -right-32 w-96 h-96 rounded-full bg-[#1B3A8C]/8 blur-[100px]" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
-        <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+        <motion.div initial="hidden" whileInView="show" viewport={VIEWPORT_ONCE} variants={slideInLeftVariant}>
           <div className="relative">
             <img src={IMG.engineers2} alt="Saura Energy engineers at work" className="rounded-3xl shadow-2xl shadow-blue-900/15 w-full aspect-[4/5] object-cover" />
             {/* Floating stat card */}
@@ -33,7 +34,7 @@ export default function AboutSnippet() {
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+        <motion.div initial="hidden" whileInView="show" viewport={VIEWPORT_ONCE} variants={slideInRightVariant}>
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-4">About Saura Energy</p>
           <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.05]">
             Engineering the sun for <span className="text-[#1B3A8C]">India's clean future.</span>
@@ -50,10 +51,11 @@ export default function AboutSnippet() {
             ].map(({ icon: I, title, desc }, i) => (
               <motion.div
                 key={title}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                initial="hidden"
+                whileInView="show"
+                viewport={VIEWPORT_ONCE}
+                custom={i}
+                variants={fadeUpVariant}
                 className="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow-md transition-all hover:-translate-y-1"
               >
                 <I className="h-6 w-6 text-[#F26A21]" />

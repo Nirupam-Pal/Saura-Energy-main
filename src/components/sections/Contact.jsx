@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { slideInRightVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 
 const initial = {
   name: "", phone: "", email: "", city: "",
@@ -74,9 +75,10 @@ export default function Contact() {
 
           {/* Right form */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="show"
+            viewport={VIEWPORT_ONCE}
+            variants={slideInRightVariant}
             className="lg:col-span-7"
           >
             <form
