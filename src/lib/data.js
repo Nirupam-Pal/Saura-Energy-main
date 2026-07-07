@@ -89,8 +89,8 @@ export const SERVICES = [
 
 export const PROJECTS = [
   { id: 1, title: "120kW Rooftop — Tripura Polytechnic", category: "Commercial", location: "Agartala, Tripura", size: "120 kW", image: "factory1", year: 2024 },
-  { id: 2, title: "5kW Residential — Villa Solar", category: "Residential", location: "Guwahati, Assam", size: "5 kW", image: "residential", year: 2024 },
-  { id: 3, title: "850kW Industrial — Tea Estate", category: "Industrial", location: "Silchar, Assam", size: "850 kW", image: "factory2", year: 2023 },
+  { id: 2, title: "50kW Rooftop - Holycross School", category: "Commercial", location: "Guwahati, Assam", size: "5 kW", image: "residential", year: 2024 },
+  { id: 3, title: "30kW Industrial — Holycross College", category: "Industrial", location: "Silchar, Assam", size: "850 kW", image: "factory2", year: 2023 },
   { id: 4, title: "8kW Hybrid + Storage", category: "Residential", location: "Shillong, Meghalaya", size: "8 kW", image: "residential2", year: 2024 },
   { id: 5, title: "200kW Hospital Rooftop", category: "Commercial", location: "Agartala, Tripura", size: "200 kW", image: "engineers2", year: 2023 },
   { id: 6, title: "Solar EV Charging Hub", category: "EV", location: "Dimapur, Nagaland", size: "60 kW", image: "ev1", year: 2024 },

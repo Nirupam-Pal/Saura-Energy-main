@@ -57,7 +57,7 @@ export default function Navbar() {
       {/* Main bar */}
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3">
         <Link to="/" className="flex items-center gap-3" data-testid="nav-logo">
-          <img src={BRAND.logo} alt="Saura Energy" className="h-11 w-11 rounded-lg object-contain bg-white p-0.5 shadow-sm" />
+          <img src="/company%20logo/saura.png" alt="Saura Energy logo" className="h-11 w-11 rounded-lg object-contain bg-white p-0.5 shadow-sm" />
           <div className="leading-tight">
             <div className="font-display font-extrabold text-xl">
               <span className={scrolled ? "text-[#1B3A8C]" : "text-white"}>SAURA</span>
