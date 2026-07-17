@@ -39,7 +39,7 @@ export default function Hero() {
         />
       ))}
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-28 min-h-[100svh] flex flex-col justify-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-40 md:pb-48 min-h-[100svh] flex flex-col justify-center">
         <motion.div initial="hidden" animate="show" className="max-w-3xl">
           <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-dark text-white/90 text-xs font-semibold uppercase tracking-[0.2em] mb-7">
             <Sun className="h-3.5 w-3.5 text-[#F26A21]" />
@@ -71,7 +71,7 @@ export default function Hero() {
           </motion.div>
 
           {/* Trust pills */}
-          <motion.div variants={fadeUp} custom={4} className="mt-10 flex flex-wrap gap-3">
+          <motion.div variants={fadeUp} custom={4} className="mt-8 mb-8 flex flex-wrap gap-3 relative z-50">
             {[
               { icon: ShieldCheck, label: "25-Year Warranty" },
               { icon: Zap, label: "7-Day Installation" },
@@ -91,15 +91,23 @@ export default function Hero() {
           transition={{ delay: 0.8, duration: 0.8 }}
           className="absolute left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8 bottom-8"
         >
-          <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl glass-dark border border-white/15 overflow-hidden">
-            {STATS.map((s) => (
-              <div key={s.label} className="p-5 md:p-7 bg-white/[0.02]" data-testid={`hero-stat-${s.label.toLowerCase().replace(/[^a-z]/g, "")}`}>
-                <div className="font-display text-3xl md:text-4xl font-extrabold text-white">
-                  <AnimatedCounter to={s.value} decimals={s.decimals || 0} suffix={s.suffix || ""} />
-                </div>
-                <div className="mt-1 text-[11px] tracking-[0.18em] uppercase text-white/60 font-semibold">{s.label}</div>
+          <div className="max-w-7xl mx-auto rounded-2xl glass-dark border border-white/15 overflow-hidden shadow-[0_30px_80px_-50px_rgba(0,0,0,0.45)]">
+            <div className="w-full px-6 py-4 bg-white/3 text-center">
+              <div className="text-sm uppercase tracking-[0.22em] text-white/85 font-semibold">
+                Future Target Planning and execution for next coming years
               </div>
-            ))}
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-px">
+              {STATS.map((s) => (
+                <div key={s.label} className="p-5 md:p-7 bg-white/[0.02]" data-testid={`hero-stat-${s.label.toLowerCase().replace(/[^a-z]/g, "")}`}>
+                  <div className="font-display text-3xl md:text-4xl font-extrabold text-white">
+                    <AnimatedCounter to={s.value} decimals={s.decimals || 0} suffix={s.suffix || ""} />
+                  </div>
+                  <div className="mt-1 text-[11px] tracking-[0.18em] uppercase text-white/60 font-semibold">{s.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
@@ -109,7 +117,8 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
-        className="hidden md:block absolute bottom-44 right-8 lg:right-14 text-white/60 text-[10px] tracking-[0.3em] uppercase rotate-90 origin-right"
+        className="hidden md:block absolute bottom-44 right-8 lg:right-14 z-40 text-white/95 text-[10px] tracking-[0.3em] uppercase rotate-90 origin-right"
+        style={{ textShadow: '0 6px 28px rgba(0,0,0,0.45)' }}
       >
         Scroll to explore →
       </motion.div>
