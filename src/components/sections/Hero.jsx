@@ -39,45 +39,45 @@ export default function Hero() {
         />
       ))}
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-40 md:pb-48 min-h-[100svh] flex flex-col justify-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 pb-28 sm:pb-32 md:pb-40 lg:pb-44 min-h-[100svh] flex flex-col justify-center">
         <motion.div initial="hidden" animate="show" className="max-w-3xl">
-          <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-dark text-white/90 text-xs font-semibold uppercase tracking-[0.2em] mb-7">
+          <motion.div variants={fadeUp} custom={0} className="inline-flex flex-wrap items-center gap-2 px-4 py-1.5 rounded-full glass-dark text-white/90 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.22em] mb-6">
             <Sun className="h-3.5 w-3.5 text-[#F26A21]" />
             PM Surya Ghar · ₹85,800 Subsidy
           </motion.div>
 
-          <motion.h1 variants={fadeUp} custom={1} className="font-display text-white text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.02] tracking-tight">
+          <motion.h1 variants={fadeUp} custom={1} className="font-display text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] sm:leading-[1.04] lg:leading-[1.02] tracking-tight">
             Power your future <br />
             with <span className="gradient-text">smart solar</span> energy.
           </motion.h1>
 
-          <motion.p variants={fadeUp} custom={2} className="mt-7 text-lg sm:text-xl text-white/85 max-w-2xl leading-relaxed">
+          <motion.p variants={fadeUp} custom={2} className="mt-6 text-base sm:text-lg md:text-xl text-white/85 max-w-full sm:max-w-3xl leading-relaxed">
             Premium residential, commercial and industrial solar — engineered by MNRE-certified experts.
             Cut electricity bills by up to <span className="text-[#F26A21] font-semibold">90%</span> and lock in 25 years of savings, today.
           </motion.p>
 
-          <motion.div variants={fadeUp} custom={3} className="mt-9 flex flex-wrap items-center gap-4">
-            <Link to="/contact">
-              <Button data-testid="hero-cta-consultation" className="group rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white px-7 py-6 text-base font-semibold shadow-xl shadow-orange-900/25 hover:shadow-2xl hover:-translate-y-0.5 transition-all">
+          <motion.div variants={fadeUp} custom={3} className="mt-8 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-4">
+            <Link to="/contact" className="w-full sm:w-auto">
+              <Button data-testid="hero-cta-consultation" className="group w-full sm:w-auto rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white px-6 py-5 sm:px-7 sm:py-6 text-base sm:text-base font-semibold shadow-xl shadow-orange-900/25 hover:shadow-2xl hover:-translate-y-0.5 transition-all justify-center flex items-center">
                 Get Free Consultation
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition" />
               </Button>
             </Link>
-            <Link to="/calculator">
-              <Button variant="outline" data-testid="hero-cta-calculator" className="rounded-full border-white/30 bg-white/10 hover:bg-white/20 text-white px-7 py-6 text-base font-semibold backdrop-blur-md">
+            <Link to="/calculator" className="w-full sm:w-auto">
+              <Button variant="outline" data-testid="hero-cta-calculator" className="w-full sm:w-auto rounded-full border-white/30 bg-white/10 hover:bg-white/20 text-white px-6 py-5 sm:px-7 sm:py-6 text-base sm:text-base font-semibold backdrop-blur-md justify-center flex items-center">
                 <PlayCircle className="mr-2 h-5 w-5" /> Calculate Savings
               </Button>
             </Link>
           </motion.div>
 
           {/* Trust pills */}
-          <motion.div variants={fadeUp} custom={4} className="mt-8 mb-8 flex flex-wrap gap-3 relative z-50">
+          <motion.div variants={fadeUp} custom={4} className="mt-8 mb-8 flex flex-col sm:flex-row sm:flex-wrap gap-3 relative z-50 justify-center">
             {[
               { icon: ShieldCheck, label: "25-Year Warranty" },
               { icon: Zap, label: "7-Day Installation" },
               { icon: Leaf, label: "Carbon-Negative" },
             ].map(({ icon: I, label }) => (
-              <span key={label} className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-dark text-white text-sm font-medium border border-white/15">
+              <span key={label} className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-dark text-white text-sm sm:text-base font-medium border border-white/15 min-w-[16rem] sm:min-w-0 justify-center">
                 <I className="h-4 w-4 text-[#F26A21]" /> {label}
               </span>
             ))}
@@ -89,22 +89,22 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.8 }}
-          className="absolute left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8 bottom-8"
+          className="absolute left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8 bottom-6 sm:bottom-8"
         >
           <div className="max-w-7xl mx-auto rounded-2xl glass-dark border border-white/15 overflow-hidden shadow-[0_30px_80px_-50px_rgba(0,0,0,0.45)]">
-            <div className="w-full px-6 py-4 bg-white/3 text-center">
-              <div className="text-sm uppercase tracking-[0.22em] text-white/85 font-semibold">
+            <div className="w-full px-4 py-4 sm:px-6 sm:py-5 bg-white/3 text-center">
+              <div className="text-xs sm:text-sm uppercase tracking-[0.22em] text-white/85 font-semibold">
                 Future Target Planning and execution for next coming years
               </div>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-px">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px">
               {STATS.map((s) => (
-                <div key={s.label} className="p-5 md:p-7 bg-white/[0.02]" data-testid={`hero-stat-${s.label.toLowerCase().replace(/[^a-z]/g, "")}`}>
-                  <div className="font-display text-3xl md:text-4xl font-extrabold text-white">
+                <div key={s.label} className="p-4 sm:p-5 md:p-7 bg-white/[0.02]" data-testid={`hero-stat-${s.label.toLowerCase().replace(/[^a-z]/g, "")}`}>
+                  <div className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-white">
                     <AnimatedCounter to={s.value} decimals={s.decimals || 0} suffix={s.suffix || ""} />
                   </div>
-                  <div className="mt-1 text-[11px] tracking-[0.18em] uppercase text-white/60 font-semibold">{s.label}</div>
+                  <div className="mt-1 text-[10px] sm:text-[11px] tracking-[0.18em] uppercase text-white/60 font-semibold">{s.label}</div>
                 </div>
               ))}
             </div>
