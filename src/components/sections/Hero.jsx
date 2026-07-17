@@ -77,7 +77,7 @@ export default function Hero() {
               { icon: Zap, label: "7-Day Installation" },
               { icon: Leaf, label: "Carbon-Negative" },
             ].map(({ icon: I, label }) => (
-              <span key={label} className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-dark text-white text-sm sm:text-base font-medium border border-white/15 min-w-[16rem] sm:min-w-0 justify-center">
+              <span key={label} className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-dark text-white text-sm sm:text-base font-medium border border-white/15 min-w-[14rem] sm:min-w-0 justify-center">
                 <I className="h-4 w-4 text-[#F26A21]" /> {label}
               </span>
             ))}
@@ -89,7 +89,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.8 }}
-          className="absolute left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8 bottom-6 sm:bottom-8"
+          className="relative lg:absolute w-full mt-10 lg:mt-0 left-0 lg:left-4 right-0 lg:right-4 lg:bottom-8"
         >
           <div className="max-w-7xl mx-auto rounded-2xl glass-dark border border-white/15 overflow-hidden shadow-[0_30px_80px_-50px_rgba(0,0,0,0.45)]">
             <div className="w-full px-4 py-4 sm:px-6 sm:py-5 bg-white/3 text-center">
