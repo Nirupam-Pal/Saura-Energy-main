@@ -15,26 +15,30 @@ export default function AboutSnippet() {
         <motion.div initial="hidden" whileInView="show" viewport={VIEWPORT_ONCE} variants={slideInLeftVariant}>
           <div className="relative">
             <img src={IMG.engineers2} alt="Saura Energy engineers at work" className="rounded-3xl shadow-2xl shadow-blue-900/15 w-full aspect-[4/5] object-cover" />
-            {/* Floating stat card */}
-            <div className="absolute -bottom-8 -right-4 md:-right-8 glass premium-border rounded-2xl p-5 max-w-[220px] shadow-xl">
-              <div className="text-xs uppercase tracking-[0.2em] text-[#F26A21] font-bold">Since 2015</div>
-              <div className="font-display text-3xl font-extrabold text-slate-900 mt-1">500+ Projects</div>
-              <div className="text-xs text-slate-500 mt-1">across 7 NE states</div>
-            </div>
-            {/* Floating top card */}
-            <div className="absolute top-4 w-[350px] -left-4 md:-left-8 glass premium-border rounded-2xl p-4 shadow-xl flex items-center gap-3">
-              <div className="h-10 w-10 rounded-full bg-[#2BA84A]/15 grid place-items-center">
-                <Sparkles className="h-5 w-5 text-[#2BA84A]" />
-              </div>
-              <div>
-                <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Carbon Saved</div>
-                <div className="font-display font-extrabold text-slate-900">22,480 T</div>
-              </div>
-            </div>
           </div>
         </motion.div>
 
         <motion.div initial="hidden" whileInView="show" viewport={VIEWPORT_ONCE} variants={slideInRightVariant}>
+          <div className="relative mb-16 max-w-xl">
+            <div className="rounded-[34px] border border-[#F26A21]/15 bg-white p-6 shadow-[0_30px_70px_-50px_rgba(242,106,33,0.35)] relative z-20">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[#F26A21]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#F26A21]">
+                <Sparkles className="h-4 w-4" />
+                Expertise
+              </div>
+              <p className="mt-4 text-sm leading-7 text-slate-700">
+                Vast experience in solar projects along with transmission and distribution projects.
+              </p>
+            </div>
+            <div className="relative mt-[-0.25rem] ml-8 rounded-[34px] border border-[#1B3A8C]/15 bg-white p-6 shadow-[0_30px_70px_-50px_rgba(27,58,140,0.25)] z-10">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[#1B3A8C]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#1B3A8C]">
+                <Sparkles className="h-4 w-4 text-[#1B3A8C]" />
+                Project Capabilities
+              </div>
+              <p className="mt-4 text-sm leading-7 text-slate-700">
+                Expertise in solar land aquisition and transmission ROW and statutory and regulation works.
+              </p>
+            </div>
+          </div>
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-4">About Saura Energy</p>
           <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.05]">
             Engineering the sun for <span className="text-[#1B3A8C]">India's clean future.</span>

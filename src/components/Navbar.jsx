@@ -62,7 +62,8 @@ export default function Navbar() {
             <div className="font-display font-extrabold text-xl">
               <span className={scrolled ? "text-[#1B3A8C]" : "text-white"}>SAURA</span>
               <span className="text-[#F26A21]"> ener</span>
-              <span className="text-[#2BA84A]">gy</span>
+              <span className="text-[#2BA84A]">g</span>
+              <span className="text-[#F26A21]"> y</span>
             </div>
           </div>
         </Link>
