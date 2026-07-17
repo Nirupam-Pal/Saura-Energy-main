@@ -71,7 +71,7 @@ export default function Hero() {
           </motion.div>
 
           {/* Trust pills */}
-          <motion.div variants={fadeUp} custom={4} className="mt-8 mb-8 flex flex-col sm:flex-row sm:flex-wrap gap-3 relative z-50 justify-center">
+          <motion.div variants={fadeUp} custom={4} className="mt-8 mb-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 relative z-50 justify-center">
             {[
               { icon: ShieldCheck, label: "25-Year Warranty" },
               { icon: Zap, label: "7-Day Installation" },
