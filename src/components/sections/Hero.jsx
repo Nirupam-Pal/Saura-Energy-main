@@ -71,7 +71,7 @@ export default function Hero() {
           </motion.div>
 
           {/* Trust pills */}
-          <motion.div variants={fadeUp} custom={4} className="mt-8 mb-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 relative z-50 justify-center">
+          <motion.div variants={fadeUp} custom={4} className="mt-8 mb-8 md:mb-2 lg:mb-24 flex flex-col sm:flex-row sm:flex-wrap gap-3 relative z-50 justify-center">
             {[
               { icon: ShieldCheck, label: "25-Year Warranty" },
               { icon: Zap, label: "7-Day Installation" },
@@ -100,11 +100,11 @@ export default function Hero() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px">
               {STATS.map((s) => (
-                <div key={s.label} className="p-4 sm:p-5 md:p-7 bg-white/[0.02]" data-testid={`hero-stat-${s.label.toLowerCase().replace(/[^a-z]/g, "")}`}>
+                <div key={s.label} className="p-4 sm:p-5 md:p-7 bg-white/[0.02] flex flex-col items-center justify-center text-center" data-testid={`hero-stat-${s.label.toLowerCase().replace(/[^a-z]/g, "")}`}>
                   <div className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-white">
                     <AnimatedCounter to={s.value} decimals={s.decimals || 0} suffix={s.suffix || ""} />
                   </div>
-                  <div className="mt-1 text-[10px] sm:text-[11px] tracking-[0.18em] uppercase text-white/60 font-semibold">{s.label}</div>
+                  <div className="mt-2 text-[10px] sm:text-[11px] tracking-[0.18em] uppercase text-white/60 font-semibold">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -113,7 +113,7 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
@@ -121,7 +121,7 @@ export default function Hero() {
         style={{ textShadow: '0 6px 28px rgba(0,0,0,0.45)' }}
       >
         Scroll to explore →
-      </motion.div>
+      </motion.div> */}
     </section>
   );
 }
