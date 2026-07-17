@@ -41,10 +41,23 @@ export default function TrustStrip() {
             <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-10" />
             <div className="flex gap-12 marquee-track w-max">
               {[...PARTNERS, ...PARTNERS].map((p, i) => (
-                <div key={i} className="flex-shrink-0 grid place-items-center min-w-[140px]">
-                  <div className="font-display font-extrabold text-2xl text-slate-400 hover:text-[#1B3A8C] transition-colors tracking-tight">
-                    {p.abbr}
-                  </div>
+                <div key={`${p.name}-${i}`} className="flex-shrink-0 grid place-items-center w-[140px]">
+                  {p.logo ? (
+                    <div className="h-24 w-full flex items-center justify-center">
+                      <img
+                        src={p.logo}
+                        alt={p.name}
+                        className="max-h-16 max-w-full object-contain"
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <div className="font-display font-extrabold text-2xl text-slate-400 hover:text-[#1B3A8C] transition-colors tracking-tight">
+                      {p.name}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

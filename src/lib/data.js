@@ -125,12 +125,14 @@ export const WHY_CHOOSE = [
 ];
 
 export const PARTNERS = [
-  { name: "Tata Power Solar", abbr: "TATA" },
-  { name: "Adani Solar", abbr: "Adani" },
-  { name: "Waaree", abbr: "WAAREE" },
-  { name: "Luminous", abbr: "LUMINOUS" },
-  { name: "Vikram Solar", abbr: "VIKRAM" },
-  { name: "Goldi Solar", abbr: "GOLDI" },
+  { name: "Tata Power Solar", logo: "/partners/tata.png" },
+  { name: "Adani Solar", logo: "/partners/adani.png" },
+  { name: "Waaree", logo: "/partners/waaree.png" },
+  { name: "Luminous", logo: "/partners/luminous.png" },
+  { name: "Rayzon", logo: "/partners/rayzon.png" },
+  { name: "UTL", logo: "/partners/utl.png" },
+  { name: "K Solare", logo: "/partners/ksolare.png" },
+  { name: "Loom", logo: "/partners/loom.png" },
 ];
 
 export const BANKS = ["SBI", "PNB", "Bank of Baroda", "Canara Bank", "HDFC", "ICICI"];
