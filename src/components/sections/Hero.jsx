@@ -113,7 +113,7 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      {/* <motion.div
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
@@ -121,7 +121,7 @@ export default function Hero() {
         style={{ textShadow: '0 6px 28px rgba(0,0,0,0.45)' }}
       >
         Scroll to explore →
-      </motion.div> */}
+      </motion.div>
     </section>
   );
 }
