@@ -53,7 +53,7 @@ export default function Hero() {
 
           <motion.p variants={fadeUp} custom={2} className="mt-6 text-base sm:text-lg md:text-xl text-white/85 max-w-full sm:max-w-3xl leading-relaxed">
             Premium residential, commercial and industrial solar — engineered by MNRE-certified experts.
-            Cut electricity bills by up to <span className="text-[#F26A21] font-semibold">90%</span> and lock in 25 years of savings, today.
+            Cut electricity bills by up to <span className="text-[#F26A21] font-semibold">90%</span> and lock in 30 years of savings, today.
           </motion.p>
 
           <motion.div variants={fadeUp} custom={3} className="mt-8 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-4">
@@ -71,7 +71,7 @@ export default function Hero() {
           </motion.div>
 
           {/* Trust pills */}
-          <motion.div variants={fadeUp} custom={4} className="mt-8 mb-8 md:mb-2 lg:mb-24 flex flex-col sm:flex-row sm:flex-wrap gap-3 relative z-50 justify-center">
+          <motion.div variants={fadeUp} custom={4} className="mt-8 mb-8 md:mb-2 lg:mb-24 flex flex-col sm:flex-row sm:flex-wrap gap-3 relative z-10 justify-center">
             {[
               { icon: ShieldCheck, label: "25-Year Warranty" },
               { icon: Zap, label: "7-Day Installation" },
