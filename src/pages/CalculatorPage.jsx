@@ -1,4 +1,5 @@
 import Calculator from "@/components/sections/Calculator";
+import LoadCalculator from "@/components/sections/Calculator/LoadCalculator";
 import Subsidy from "@/components/sections/Subsidy";
 import CTASection from "@/components/sections/CTASection";
 
@@ -18,6 +19,7 @@ export default function CalculatorPage() {
         </div>
       </section>
       <Calculator />
+      <LoadCalculator />
       <Subsidy />
       <CTASection />
     </>

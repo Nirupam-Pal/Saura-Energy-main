@@ -11,6 +11,8 @@
  *   2. If/when you add a backend (e.g. to log leads, or centralize the
  *      catalog so the mobile app and web app never drift), you only change
  *      USE_BACKEND + the fetch call below.
+ *
+ * Payload shape: { quantities: { [applianceId]: qty }, backupHours: number }
  */
 
 import { computeLoadCalculation } from './loadCalculator.utils';

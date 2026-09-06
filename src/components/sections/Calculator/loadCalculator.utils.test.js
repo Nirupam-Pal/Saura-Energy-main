@@ -2,178 +2,192 @@
  * loadCalculator.utils.test.js
  *
  * Run with Jest or Vitest (both share this syntax).
- * Each expected output below is hand-derived from the same formulas
- * documented in loadCalculator.utils.js, so these tests primarily guard
- * against regressions / typos in the implementation — verify the constants
- * (POWER_FACTOR, catalogs) against the real Luminous product list if you
- * need byte-exact parity with their tool.
+ *
+ * The 1135W / 5hr / EVO D 1650 / 300Ah scenario below is not a made-up
+ * number — it is the exact result observed by driving the live reference
+ * tool (luminousindia.com/load-calculator) with the same 2 BHK preset and
+ * a 5 hour backup selection, so this test also guards against drift from
+ * the reference tool's own behavior, not just internal regressions.
  */
 
 import {
-  calculateRunningLoad,
+  clampQuantity,
+  calculateApplianceLoad,
+  calculateTotalLoad,
+  calculateCategoryLoads,
   calculateRequiredVA,
   selectInverter,
   calculateRequiredAh,
   selectBattery,
   computeLoadCalculation,
-  validateField,
-  validateStepOne,
-  validateStepTwo,
+  validateSelection,
+  validateBackupHours,
   isStepValid,
 } from "./loadCalculator.utils";
+import { PROPERTY_TYPE_PRESETS } from "./loadCalculator.constants";
 
-describe("calculateRunningLoad", () => {
-  test("1500W total load at 60% running load -> 900W", () => {
-    expect(calculateRunningLoad(1500, 60)).toBe(900);
+describe("clampQuantity", () => {
+  test("clamps negative values to 0", () => {
+    expect(clampQuantity(-5)).toBe(0);
+  });
+  test("clamps above the max ceiling", () => {
+    expect(clampQuantity(999)).toBe(20);
+  });
+  test("coerces invalid input to 0", () => {
+    expect(clampQuantity("")).toBe(0);
+    expect(clampQuantity(NaN)).toBe(0);
+  });
+  test("rounds fractional input", () => {
+    expect(clampQuantity(2.6)).toBe(3);
+  });
+});
+
+describe("calculateApplianceLoad", () => {
+  test("wattage * quantity", () => {
+    expect(calculateApplianceLoad(80, 2)).toBe(160);
+  });
+  test("zero quantity -> zero load", () => {
+    expect(calculateApplianceLoad(1500, 0)).toBe(0);
+  });
+});
+
+describe("calculateTotalLoad + calculateCategoryLoads (2 BHK preset)", () => {
+  const quantities = PROPERTY_TYPE_PRESETS["2bhk"];
+
+  test("matches the reference tool's own total for the 2 BHK preset (1135W)", () => {
+    expect(calculateTotalLoad(quantities)).toBe(1135);
   });
 
-  test("800W total load at 50% -> 400W", () => {
-    expect(calculateRunningLoad(800, 50)).toBe(400);
+  test("per-category subtotals match the reference tool's category badges", () => {
+    const loads = calculateCategoryLoads(quantities);
+    expect(loads["lights"]).toBe(105); // 3x LED Bulb(5W) + 2x Tubelight
+    expect(loads["home-appliances"]).toBe(495); // Ceiling Fan x2, Computer, Set Top Box, WiFi Router, LED TV
+    expect(loads["kitchen-appliances"]).toBe(290); // Water Purifier + Fridge (200L)
+    expect(loads["heavy-load-appliances"]).toBe(120); // Room Cooler (BLDC)
+    expect(loads["accessories"]).toBe(125); // 2x Phone Charger + Laptop
   });
 
-  test("0% running load -> 0W", () => {
-    expect(calculateRunningLoad(2000, 0)).toBe(0);
+  test("unknown appliance ids are ignored rather than crashing", () => {
+    expect(calculateTotalLoad({ "not-a-real-id": 5 })).toBe(0);
+  });
+
+  test("empty selection -> zero total", () => {
+    expect(calculateTotalLoad({})).toBe(0);
   });
 });
 
 describe("calculateRequiredVA", () => {
-  test("900W running load / 0.8 PF -> 1125 VA", () => {
-    expect(calculateRequiredVA(900)).toBe(1125);
-  });
-
-  test("400W running load / 0.8 PF -> 500 VA", () => {
-    expect(calculateRequiredVA(400)).toBe(500);
+  test("1135W / 0.8 power factor -> 1418.75 VA", () => {
+    expect(calculateRequiredVA(1135)).toBe(1418.75);
   });
 });
 
 describe("selectInverter", () => {
-  test("1125 VA required -> selects 1600 VA tier (next size up)", () => {
-    const inv = selectInverter(1125);
-    expect(inv.maxVA).toBe(1600);
+  test("1418.75 VA required -> selects EVO D 1650 (1500 VA), matching the reference tool", () => {
+    // The reference tool skips the smaller EVO S 1550 (1400 VA / 1176 W —
+    // whose Watt rating alone would already cover 1135W) because selection
+    // runs on VA, not Watts: 1135 / 0.8 = 1418.75 VA clears 1500 VA but not
+    // the 1400 VA tier.
+    const inv = selectInverter(1418.75);
+    expect(inv.label).toBe("EVO D 1650");
     expect(inv.exceedsCatalog).toBe(false);
   });
 
-  test("500 VA required -> selects 700 VA tier", () => {
-    const inv = selectInverter(500);
-    expect(inv.maxVA).toBe(700);
+  test("exact match on catalog boundary selects that tier, not the next one up", () => {
+    const inv = selectInverter(1100);
+    expect(inv.label).toBe("EVO D 1250");
   });
 
-  test("exact match on catalog boundary (850 VA) -> selects 850 VA, not next tier", () => {
-    const inv = selectInverter(850);
-    expect(inv.maxVA).toBe(850);
-  });
-
-  test("VA beyond largest catalog entry -> flags exceedsCatalog", () => {
+  test("load beyond the largest catalog entry flags exceedsCatalog", () => {
     const inv = selectInverter(50000);
     expect(inv.exceedsCatalog).toBe(true);
   });
 });
 
 describe("calculateRequiredAh", () => {
-  test("900W load, 4hr backup, 1600VA inverter (12V, 1 battery) -> ~529.41 Ah", () => {
-    const inverter = { batteryVoltage: 12, batteryCount: 1 };
-    // totalAh = (900 * 4) / (12 * 0.8) = 3600 / 9.6 = 375
-    // perBatteryAh = 375 / 1 = 375
-    // withDodMargin = 375 / 0.85 = 441.176...
-    const ah = calculateRequiredAh(900, 4, inverter);
-    expect(ah).toBeCloseTo(441.18, 1);
+  test("1135W load, 5hr backup, 24V bus -> ~295.6 Ah (rounds up to 300 Ah tier)", () => {
+    // current = 1135 / 24 = 47.29A; rawAh = 47.29 * 5 = 236.46; / 0.8 = 295.57
+    const ah = calculateRequiredAh(1135, 5, 24);
+    expect(ah).toBeCloseTo(295.57, 1);
   });
 
-  test("2000W load, 3hr backup, 2000VA inverter (24V, 2 batteries)", () => {
-    const inverter = { batteryVoltage: 24, batteryCount: 2 };
-    // totalAh = (2000 * 3) / (24 * 0.8) = 6000 / 19.2 = 312.5
-    // perBatteryAh = 312.5 / 2 = 156.25
-    // withDodMargin = 156.25 / 0.85 = 183.82...
-    const ah = calculateRequiredAh(2000, 3, inverter);
-    expect(ah).toBeCloseTo(183.82, 1);
+  test("0 hour backup -> 0 Ah required", () => {
+    expect(calculateRequiredAh(1135, 0, 24)).toBe(0);
   });
 });
 
 describe("selectBattery", () => {
-  test("150 Ah required -> selects 150 Ah tier exactly", () => {
-    expect(selectBattery(150).ah).toBe(150);
+  test("295.57 Ah required -> selects the 300 Ah tier", () => {
+    expect(selectBattery(295.57).ah).toBe(300);
   });
-
-  test("183.82 Ah required -> selects 200 Ah tier", () => {
-    expect(selectBattery(183.82).ah).toBe(200);
+  test("exact match on catalog boundary selects that tier", () => {
+    expect(selectBattery(200).ah).toBe(200);
   });
-
   test("exceeds largest catalog entry -> flags exceedsCatalog", () => {
     expect(selectBattery(9999).exceedsCatalog).toBe(true);
   });
 });
 
-describe("computeLoadCalculation (full pipeline)", () => {
-  test("sample: 1500W total, 60% running, 4hr backup", () => {
+describe("computeLoadCalculation (full pipeline, 2 BHK / 5hr reference scenario)", () => {
+  test("reproduces the reference tool's exact recommendation", () => {
     const result = computeLoadCalculation({
-      totalLoad: 1500,
-      runningLoadPercent: 60,
-      backupHours: 4,
+      quantities: PROPERTY_TYPE_PRESETS["2bhk"],
+      backupHours: 5,
     });
 
-    expect(result.runningLoadWatts).toBe(900);
-    expect(result.requiredVA).toBe(1125);
-    expect(result.recommendedInverter.maxVA).toBe(1600);
-    expect(result.recommendedInverter.batteryVoltage).toBe(12);
-    expect(result.recommendedBattery.ah).toBeGreaterThanOrEqual(result.requiredAh);
+    expect(result.totalLoad).toBe(1135);
+    expect(result.requiredVA).toBe(1418.75);
+    expect(result.recommendedInverter.label).toBe("EVO D 1650");
+    expect(result.recommendedBattery.ah).toBe(300);
+    expect(result.batteryCount).toBe(2);
   });
 
-  test("sample: small household, 500W total, 40% running, 2hr backup", () => {
+  test("small selection: a couple of LED bulbs stays on the smallest inverter tier", () => {
     const result = computeLoadCalculation({
-      totalLoad: 500,
-      runningLoadPercent: 40,
+      quantities: { "led-bulb-5w": 2, "ceiling-fan": 1 },
       backupHours: 2,
     });
-    // runningLoadWatts = 500 * 0.4 = 200
-    expect(result.runningLoadWatts).toBe(200);
-    // requiredVA = 200 / 0.8 = 250
-    expect(result.requiredVA).toBe(250);
-    expect(result.recommendedInverter.maxVA).toBe(700);
+    // total = 2*5 + 80 = 90W
+    expect(result.totalLoad).toBe(90);
+    expect(result.recommendedInverter.label).toBe("EVO D 700");
   });
 
-  test("sample: heavy commercial load, 8000W total, 70% running, 6hr backup", () => {
+  test("heavy commercial-style load steps up the inverter tier", () => {
     const result = computeLoadCalculation({
-      totalLoad: 8000,
-      runningLoadPercent: 70,
-      backupHours: 6,
+      quantities: { "ac-1-5-ton": 2, geyser: 1 },
+      backupHours: 4,
     });
-    // runningLoadWatts = 8000 * 0.7 = 5600
-    expect(result.runningLoadWatts).toBe(5600);
-    // requiredVA = 5600 / 0.8 = 7000
-    expect(result.requiredVA).toBe(7000);
-    expect(result.recommendedInverter.maxVA).toBe(7500);
+    // total = 1500*2 + 2000 = 5000W; requiredVA = 6250
+    expect(result.totalLoad).toBe(5000);
+    expect(result.recommendedInverter.va).toBeGreaterThanOrEqual(result.requiredVA);
+    expect(result.recommendedBattery.ah).toBeGreaterThanOrEqual(result.requiredAh);
   });
 });
 
 describe("validation", () => {
-  test("totalLoad below minimum returns an error message", () => {
-    expect(validateField("totalLoad", 50)).not.toBeNull();
+  test("empty selection returns an error", () => {
+    const errors = validateSelection({});
+    expect(isStepValid(errors)).toBe(false);
   });
 
-  test("totalLoad within range returns null (valid)", () => {
-    expect(validateField("totalLoad", 1500)).toBeNull();
-  });
-
-  test("runningLoadPercent above 100 returns an error message", () => {
-    expect(validateField("runningLoadPercent", 150)).not.toBeNull();
-  });
-
-  test("empty backupHours returns an error message", () => {
-    expect(validateField("backupHours", "")).not.toBeNull();
-  });
-
-  test("validateStepOne + isStepValid: valid payload passes", () => {
-    const errors = validateStepOne({ totalLoad: 1200, runningLoadPercent: 60 });
+  test("at least one appliance selected passes", () => {
+    const errors = validateSelection({ "led-bulb-5w": 1 });
     expect(isStepValid(errors)).toBe(true);
   });
 
-  test("validateStepOne + isStepValid: invalid payload fails", () => {
-    const errors = validateStepOne({ totalLoad: 0, runningLoadPercent: 60 });
-    expect(isStepValid(errors)).toBe(false);
+  test("backupHours below minimum returns an error message", () => {
+    expect(validateBackupHours(0)).not.toBeNull();
   });
 
-  test("validateStepTwo: backupHours over max fails", () => {
-    const errors = validateStepTwo({ backupHours: 30 });
-    expect(isStepValid(errors)).toBe(false);
+  test("backupHours above maximum returns an error message", () => {
+    expect(validateBackupHours(15)).not.toBeNull();
+  });
+
+  test("backupHours within range returns null (valid)", () => {
+    expect(validateBackupHours(5)).toBeNull();
+  });
+
+  test("empty backupHours returns an error message", () => {
+    expect(validateBackupHours("")).not.toBeNull();
   });
 });

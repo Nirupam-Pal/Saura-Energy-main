@@ -4,56 +4,96 @@
  * Pure, side-effect-free calculation logic for the Load Calculator.
  * Every function here takes plain numbers/objects in and returns plain
  * numbers/objects out — no React, no DOM — so it can be unit tested in
- * isolation and reused on a backend (see services/loadCalculator.service.js).
+ * isolation and reused on a backend (see loadCalculator.service.js).
  */
 
 import {
+  APPLIANCE_INDEX,
+  BACKUP_HOURS_LIMITS,
   POWER_FACTOR,
-  BATTERY_EFFICIENCY,
-  DEPTH_OF_DISCHARGE,
-  INPUT_LIMITS,
+  BATTERY_DERATE_FACTOR,
   INVERTER_CATALOG,
   BATTERY_CATALOG,
+  MAX_APPLIANCE_QUANTITY,
 } from './loadCalculator.constants';
+
+// ---------------------------------------------------------------------------
+// Quantity helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Clamps a quantity into [0, MAX_APPLIANCE_QUANTITY], coercing invalid input
+ * (empty string, negative, NaN) down to 0 rather than throwing.
+ */
+export function clampQuantity(value) {
+  const num = Math.round(Number(value));
+  if (!Number.isFinite(num) || num < 0) return 0;
+  return Math.min(num, MAX_APPLIANCE_QUANTITY);
+}
+
+// ---------------------------------------------------------------------------
+// Load calculation
+// ---------------------------------------------------------------------------
+
+/**
+ * Single appliance's contribution to the load: wattage * quantity.
+ */
+export function calculateApplianceLoad(watt, quantity) {
+  return (Number(watt) || 0) * clampQuantity(quantity);
+}
+
+/**
+ * Sums the load of every selected appliance.
+ * `quantities` is a map of applianceId -> quantity (as produced by the UI).
+ * Unknown ids are ignored so stale/removed catalog entries never crash this.
+ */
+export function calculateTotalLoad(quantities = {}) {
+  return Object.entries(quantities).reduce((total, [applianceId, quantity]) => {
+    const appliance = APPLIANCE_INDEX[applianceId];
+    if (!appliance) return total;
+    return total + calculateApplianceLoad(appliance.watt, quantity);
+  }, 0);
+}
+
+/**
+ * Per-category subtotal, in the same order as APPLIANCE_CATEGORIES.
+ * Returns a map of categoryId -> watts, used for the per-category badges.
+ */
+export function calculateCategoryLoads(quantities = {}) {
+  return Object.entries(quantities).reduce((totals, [applianceId, quantity]) => {
+    const appliance = APPLIANCE_INDEX[applianceId];
+    if (!appliance) return totals;
+    const load = calculateApplianceLoad(appliance.watt, quantity);
+    totals[appliance.categoryId] = (totals[appliance.categoryId] || 0) + load;
+    return totals;
+  }, {});
+}
 
 // ---------------------------------------------------------------------------
 // Validation
 // ---------------------------------------------------------------------------
 
 /**
- * Validates a single numeric field against INPUT_LIMITS.
- * Returns null when valid, or a human-readable error message when invalid.
+ * The reference tool has no "minimum" beyond "select at least one
+ * appliance" — an all-zero selection just can't be sized.
  */
-export function validateField(fieldKey, value) {
-  const limits = INPUT_LIMITS[fieldKey];
-  if (!limits) return null;
+export function validateSelection(quantities = {}) {
+  const totalLoad = calculateTotalLoad(quantities);
+  if (totalLoad <= 0) {
+    return { totalLoad: 'Select at least one appliance to calculate your load.' };
+  }
+  return {};
+}
 
-  if (value === '' || value === null || value === undefined || Number.isNaN(Number(value))) {
+export function validateBackupHours(backupHours) {
+  const { min, max } = BACKUP_HOURS_LIMITS;
+  const num = Number(backupHours);
+  if (backupHours === '' || backupHours === null || backupHours === undefined || Number.isNaN(num)) {
     return 'This field is required.';
   }
-  const num = Number(value);
-  if (num < limits.min) return `Minimum allowed value is ${limits.min}${limits.unit}.`;
-  if (num > limits.max) return `Maximum allowed value is ${limits.max}${limits.unit}.`;
+  if (num < min) return `Minimum backup is ${min} hour(s).`;
+  if (num > max) return `Maximum backup is ${max} hours.`;
   return null;
-}
-
-/**
- * Validates the full Step 1 payload (total load + running load %).
- */
-export function validateStepOne({ totalLoad, runningLoadPercent }) {
-  return {
-    totalLoad: validateField('totalLoad', totalLoad),
-    runningLoadPercent: validateField('runningLoadPercent', runningLoadPercent),
-  };
-}
-
-/**
- * Validates the full Step 2 payload (backup hours).
- */
-export function validateStepTwo({ backupHours }) {
-  return {
-    backupHours: validateField('backupHours', backupHours),
-  };
 }
 
 export function isStepValid(errors) {
@@ -61,71 +101,54 @@ export function isStepValid(errors) {
 }
 
 // ---------------------------------------------------------------------------
-// Core calculation
+// Inverter / battery selection
 // ---------------------------------------------------------------------------
 
 /**
- * Step 1: derive the effective running load in Watts.
- *
- *   runningLoadWatts = totalLoad (W) * runningLoadPercent (%)
- *
- * This is the "real" continuous power the inverter has to sustain, as
- * opposed to the peak/total connected load.
+ * Converts real running load (W) into required apparent power (VA):
+ * inverters are marketed and selected by VA, not Watts, because household
+ * loads mix resistive and inductive appliances.
  */
-export function calculateRunningLoad(totalLoad, runningLoadPercent) {
-  const load = Number(totalLoad) || 0;
-  const pct = Number(runningLoadPercent) || 0;
-  return round(load * (pct / 100), 2);
+export function calculateRequiredVA(totalLoadWatts) {
+  return round(totalLoadWatts / POWER_FACTOR, 2);
 }
 
 /**
- * Convert real running load (W) into required apparent power (VA):
- *
- *   requiredVA = runningLoadWatts / POWER_FACTOR
- *
- * Inverters are rated in VA, not W, because household loads are a mix of
- * resistive (PF ~1) and inductive (PF < 1, e.g. motors/fans/pumps) loads.
- */
-export function calculateRequiredVA(runningLoadWatts) {
-  return round(runningLoadWatts / POWER_FACTOR, 2);
-}
-
-/**
- * Picks the smallest inverter in the catalog whose maxVA can cover the
- * required VA. Falls back to the largest catalog entry (flagged as
- * "exceeds catalog") if nothing is big enough — never silently under-sizes.
+ * Picks the smallest inverter in the catalog whose VA rating covers the
+ * required apparent power. Falls back to the largest catalog entry
+ * (flagged as "exceeds catalog") if nothing is big enough — never silently
+ * under-sizes.
  */
 export function selectInverter(requiredVA, catalog = INVERTER_CATALOG) {
-  const sorted = [...catalog].sort((a, b) => a.maxVA - b.maxVA);
-  const match = sorted.find((inv) => inv.maxVA >= requiredVA);
+  const sorted = [...catalog].sort((a, b) => a.va - b.va);
+  const match = sorted.find((inv) => inv.va >= requiredVA);
   if (match) return { ...match, exceedsCatalog: false };
   const largest = sorted[sorted.length - 1];
   return { ...largest, exceedsCatalog: true };
 }
 
 /**
- * Step 2: derive total battery bank capacity (Ah) needed to sustain the
- * running load for the requested backup hours, at the inverter's bus voltage.
+ * Required capacity per battery (Ah), for a battery bank wired in series at
+ * the inverter's DC bus voltage.
  *
- *   totalAh = (runningLoadWatts * backupHours) / (busVoltage * BATTERY_EFFICIENCY)
+ * Batteries in series share the same current, so per-battery Ah depends
+ * only on the bus voltage (not on how many are strung together):
  *
- * Then per-battery Ah = totalAh / number of batteries in series, inflated by
- * the depth-of-discharge margin so the battery is never sized to be fully
- * drained.
+ *   current (A)   = totalLoadWatts / busVoltage
+ *   rawAh         = current * backupHours
+ *   requiredAh    = rawAh / BATTERY_DERATE_FACTOR
  */
-export function calculateRequiredAh(runningLoadWatts, backupHours, inverter) {
+export function calculateRequiredAh(totalLoadWatts, backupHours, busVoltage) {
   const hours = Number(backupHours) || 0;
-  const totalAh =
-    (runningLoadWatts * hours) / (inverter.batteryVoltage * BATTERY_EFFICIENCY);
-  const perBatteryAh = totalAh / inverter.batteryCount;
-  const withDodMargin = perBatteryAh / DEPTH_OF_DISCHARGE;
-  return round(withDodMargin, 2);
+  const current = totalLoadWatts / busVoltage;
+  const rawAh = current * hours;
+  return round(rawAh / BATTERY_DERATE_FACTOR, 2);
 }
 
 /**
- * Picks the smallest battery in the catalog whose ah can cover the
- * required per-battery Ah. Falls back to the largest catalog entry
- * (flagged as "exceeds catalog") if nothing is big enough.
+ * Picks the smallest battery in the catalog whose Ah covers the required
+ * per-battery Ah. Falls back to the largest catalog entry (flagged as
+ * "exceeds catalog") if nothing is big enough.
  */
 export function selectBattery(requiredAh, catalog = BATTERY_CATALOG) {
   const sorted = [...catalog].sort((a, b) => a.ah - b.ah);
@@ -136,24 +159,25 @@ export function selectBattery(requiredAh, catalog = BATTERY_CATALOG) {
 }
 
 /**
- * Orchestrates the full two-step calculation and returns everything the
- * result screen needs. This is the single function the UI (and any backend
+ * Orchestrates the full calculation and returns everything the result
+ * screen needs. This is the single function the UI (and any backend
  * endpoint) should call — keeps calculation logic in one place.
  */
-export function computeLoadCalculation({ totalLoad, runningLoadPercent, backupHours }) {
-  const runningLoadWatts = calculateRunningLoad(totalLoad, runningLoadPercent);
-  const requiredVA = calculateRequiredVA(runningLoadWatts);
+export function computeLoadCalculation({ quantities = {}, backupHours }) {
+  const totalLoad = calculateTotalLoad(quantities);
+  const categoryLoads = calculateCategoryLoads(quantities);
+  const requiredVA = calculateRequiredVA(totalLoad);
   const inverter = selectInverter(requiredVA);
-  const requiredAh = calculateRequiredAh(runningLoadWatts, backupHours, inverter);
+  const requiredAh = calculateRequiredAh(totalLoad, backupHours, inverter.busVoltage);
   const battery = selectBattery(requiredAh);
 
   return {
     inputs: {
-      totalLoad: Number(totalLoad),
-      runningLoadPercent: Number(runningLoadPercent),
+      quantities,
       backupHours: Number(backupHours),
     },
-    runningLoadWatts,
+    totalLoad,
+    categoryLoads,
     requiredVA,
     requiredAh,
     recommendedInverter: inverter,

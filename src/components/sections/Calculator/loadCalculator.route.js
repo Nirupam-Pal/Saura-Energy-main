@@ -18,29 +18,29 @@ const express = require('express');
 const router = express.Router();
 
 // NOTE: if your build targets ESM only, swap this to:
-// import { computeLoadCalculation, validateStepOne, validateStepTwo, isStepValid } from '../utils/loadCalculator.utils.js';
+// import { computeLoadCalculation, validateSelection, validateBackupHours, isStepValid } from '../utils/loadCalculator.utils.js';
 const {
   computeLoadCalculation,
-  validateStepOne,
-  validateStepTwo,
+  validateSelection,
+  validateBackupHours,
   isStepValid,
 } = require('./loadCalculator.utils');
 
 router.post('/calculate', (req, res) => {
-  const { totalLoad, runningLoadPercent, backupHours } = req.body || {};
+  const { quantities, backupHours } = req.body || {};
 
-  const stepOneErrors = validateStepOne({ totalLoad, runningLoadPercent });
-  const stepTwoErrors = validateStepTwo({ backupHours });
+  const selectionErrors = validateSelection(quantities);
+  const backupError = validateBackupHours(backupHours);
 
-  if (!isStepValid(stepOneErrors) || !isStepValid(stepTwoErrors)) {
+  if (!isStepValid(selectionErrors) || backupError) {
     return res.status(400).json({
       error: 'Validation failed',
-      details: { ...stepOneErrors, ...stepTwoErrors },
+      details: { ...selectionErrors, backupHours: backupError },
     });
   }
 
   try {
-    const result = computeLoadCalculation({ totalLoad, runningLoadPercent, backupHours });
+    const result = computeLoadCalculation({ quantities, backupHours });
     return res.status(200).json(result);
   } catch (err) {
     console.error('Load calculator computation error:', err);
