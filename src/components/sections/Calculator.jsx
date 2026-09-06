@@ -10,6 +10,7 @@ import { Slider } from "@/components/ui/slider";
 import { calculateSavings } from "@/lib/calculatorUtils";
 import { Link } from "react-router-dom";
 import { slideInLeftVariant, slideInRightVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
+import LoadCalculator from "./Calculator/LoadCalculator";
 
 const inr = (v) =>
   "₹" + Number(v || 0).toLocaleString("en-IN", { maximumFractionDigits: 0 });
@@ -189,7 +190,7 @@ function Metric({ label, value, color }) {
   );
 }
 
-// import LoadCalculator from "./Calculator/LoadCalculator";
+
 
 // export default function Calculator() {
 //   return <LoadCalculator />;

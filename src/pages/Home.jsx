@@ -12,6 +12,7 @@ import Testimonials from "@/components/sections/Testimonials";
 import BlogTeaser from "@/components/sections/BlogTeaser";
 import CTASection from "@/components/sections/CTASection";
 import Contact from "@/components/sections/Contact";
+import LoadCalculator from "@/components/sections/Calculator/LoadCalculator";
 
 export default function Home() {
   return (
@@ -21,7 +22,8 @@ export default function Home() {
       <AboutSnippet />
       <Services />
       <CommercialProjects />
-      <Calculator />
+      {/* <Calculator /> */}
+      <LoadCalculator/>
       <Projects />
       <WhyChooseUs />
       <Process />

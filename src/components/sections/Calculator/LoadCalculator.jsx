@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, Zap } from "lucide-react";
+import { Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 
@@ -9,7 +9,7 @@ import ApplianceCategoryPicker from "./ApplianceCategoryPicker";
 import ResultScreen from "./ResultScreen";
 
 import { getLoadCalculation } from "./loadCalculator.service";
-import { calculateTotalLoad, calculateCategoryLoads, clampQuantity, validateSelection, isStepValid } from "./loadCalculator.utils";
+import { calculateTotalLoad, clampQuantity, validateSelection, isStepValid } from "./loadCalculator.utils";
 import {
   APPLIANCE_CATEGORIES,
   PROPERTY_TYPE_PRESETS,
@@ -44,7 +44,6 @@ export default function LoadCalculator() {
   const [result, setResult] = useState(null);
 
   const totalLoad = useMemo(() => calculateTotalLoad(quantities), [quantities]);
-  const categoryLoads = useMemo(() => calculateCategoryLoads(quantities), [quantities]);
 
   const handlePropertyTypeSelect = (id) => {
     setPropertyType(id);
@@ -98,101 +97,121 @@ export default function LoadCalculator() {
       className="relative py-24 md:py-32 bg-white overflow-hidden"
       data-testid="load-calculator-section"
     >
-      <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
-          <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">
-            Load Calculator
+          {/* <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">
+            Calculator
           </p>
           <h2 className="font-display text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
             Find the right <span className="text-[#1B3A8C]">inverter &amp; battery</span> for your home.
           </h2>
           <p className="mt-3 text-slate-500 max-w-xl mx-auto">
             Pick your appliances, and we'll size the exact backup power you need.
+          </p> */}
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Savings Calculator</p>
+          <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.05]">
+            Find the right <span className="text-[#2BA84A]">inverter &amp; battery</span> for your home.
+          </h2>
+          <p className="mt-5 text-lg text-slate-600">
+            Pick your appliances, and we'll size the exact backup power you need.
           </p>
         </div>
 
-        <div className="p-5 md:p-8 rounded-3xl bg-white border border-slate-100 shadow-xl shadow-blue-900/5">
-          <AnimatePresence mode="sync">
-            <motion.div
-              key={step}
-              initial={false}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
-            >
-              {step === STEPS.APPLIANCES && (
-                <div className="space-y-6" data-testid="load-calc-appliances-step">
+        <div className="rounded-3xl border border-slate-100 shadow-xl shadow-blue-900/5 overflow-hidden lg:grid lg:grid-cols-[1fr_340px]">
+          <AnimatePresence mode="sync" initial={false}>
+            {step === STEPS.APPLIANCES && (
+              <motion.div
+                key="appliances"
+                initial={false}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="lg:contents"
+              >
+                <div className="bg-white p-5 md:p-8" data-testid="load-calc-appliances-step">
                   <PropertyTypeSelector activePropertyType={propertyType} onSelect={handlePropertyTypeSelect} />
 
-                  <ApplianceCategoryPicker
-                    categories={APPLIANCE_CATEGORIES}
-                    activeCategoryId={activeCategoryId}
-                    onCategoryChange={setActiveCategoryId}
-                    loadTypeFilter={loadTypeFilter}
-                    onLoadTypeFilterChange={setLoadTypeFilter}
-                    categoryLoads={categoryLoads}
-                    quantities={quantities}
-                    onQuantityDelta={handleQuantityDelta}
-                  />
-
-                  <div className="pt-2 border-t border-slate-100">
-                    <div className="flex items-center justify-between py-4">
-                      <span className="text-sm font-bold text-slate-800 flex items-center gap-2">
-                        <Zap className="h-4 w-4 text-[#F26A21]" /> Your Total Running Load
-                      </span>
-                      <span
-                        data-testid="total-running-load"
-                        className="font-display text-2xl font-extrabold text-[#1B3A8C]"
-                      >
-                        {totalLoad} W
-                      </span>
-                    </div>
-                    {errors.totalLoad && (
-                      <p className="mb-3 text-xs font-medium text-red-600">{errors.totalLoad}</p>
-                    )}
-
-                    <p className="text-xs text-slate-400 mb-4">
-                      Get product suggestions as per your required backup power. Choose your estimate below.
-                    </p>
-
-                    <div>
-                      <label className="text-sm font-bold text-slate-800 flex items-center justify-between">
-                        <span className="flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-[#F26A21]" /> Average Daily Backup (Hrs)
-                        </span>
-                        <span className="text-[#1B3A8C] font-display text-lg">{backupHours} hr</span>
-                      </label>
-                      <Slider
-                        value={[backupHours]}
-                        onValueChange={(v) => setBackupHours(v[0])}
-                        min={BACKUP_HOURS_LIMITS.min}
-                        max={BACKUP_HOURS_LIMITS.max}
-                        step={BACKUP_HOURS_LIMITS.step}
-                        className="mt-4"
-                        data-testid="backup-hours-slider"
-                      />
-                      <div className="flex justify-between text-xs text-slate-400 mt-1.5">
-                        <span>{BACKUP_HOURS_LIMITS.min} hr</span>
-                        <span>{BACKUP_HOURS_LIMITS.max} hr</span>
-                      </div>
-                    </div>
-
-                    <Button
-                      onClick={handleCalculate}
-                      disabled={loading}
-                      data-testid="load-calc-submit-btn"
-                      className="w-full mt-6 rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white py-6 text-base font-semibold shadow-lg hover:shadow-xl"
-                    >
-                      {loading ? "Calculating…" : "Find Solution"}
-                    </Button>
+                  <div className="mt-6">
+                    <ApplianceCategoryPicker
+                      categories={APPLIANCE_CATEGORIES}
+                      activeCategoryId={activeCategoryId}
+                      onCategoryChange={setActiveCategoryId}
+                      loadTypeFilter={loadTypeFilter}
+                      onLoadTypeFilterChange={setLoadTypeFilter}
+                      quantities={quantities}
+                      onQuantityDelta={handleQuantityDelta}
+                    />
                   </div>
                 </div>
-              )}
 
-              {step === STEPS.RESULT && (
+                <div className="bg-slate-50 p-5 md:p-8 flex flex-col border-t border-slate-100 lg:border-t-0 lg:border-l">
+                  <p className="text-sm font-bold text-slate-800">Your Total Running Load</p>
+                  <div className="mt-2 flex items-baseline gap-2">
+                    <span
+                      data-testid="total-running-load-value"
+                      className="font-display text-5xl font-extrabold text-[#1B3A8C]"
+                    >
+                      {totalLoad}
+                    </span>
+                    <span className="text-lg font-bold text-[#1B3A8C]">Watts*</span>
+                  </div>
+                  <span data-testid="total-running-load" className="sr-only">
+                    {totalLoad} W
+                  </span>
+                  {errors.totalLoad && (
+                    <p className="mt-2 text-xs font-medium text-red-600">{errors.totalLoad}</p>
+                  )}
+
+                  <p className="mt-3 text-xs text-slate-400">
+                    Get product suggestions as per your required backup power. Choose your estimate below.
+                  </p>
+
+                  <div className="mt-6">
+                    <label className="text-sm font-bold text-slate-800 flex items-center justify-between">
+                      <span className="flex items-center gap-2">
+                        <Clock className="h-4 w-4 text-[#F26A21]" /> Average Daily Backup (Hrs)
+                      </span>
+                      <span className="text-[#1B3A8C] font-display text-lg">{backupHours} hr</span>
+                    </label>
+                    <Slider
+                      value={[backupHours]}
+                      onValueChange={(v) => setBackupHours(v[0])}
+                      min={BACKUP_HOURS_LIMITS.min}
+                      max={BACKUP_HOURS_LIMITS.max}
+                      step={BACKUP_HOURS_LIMITS.step}
+                      className="mt-4"
+                      data-testid="backup-hours-slider"
+                    />
+                    <div className="flex justify-between text-xs text-slate-400 mt-1.5">
+                      <span>{BACKUP_HOURS_LIMITS.min} hr</span>
+                      <span>{BACKUP_HOURS_LIMITS.max} hr</span>
+                    </div>
+                  </div>
+
+                  <Button
+                    onClick={handleCalculate}
+                    disabled={loading}
+                    data-testid="load-calc-submit-btn"
+                    className="w-full mt-6 lg:mt-auto rounded-xl bg-[#F26A21] hover:bg-[#D95B1A] text-white py-6 text-base font-semibold shadow-lg hover:shadow-xl"
+                  >
+                    {loading ? "Calculating…" : "Find Solution"}
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+
+            {step === STEPS.RESULT && (
+              <motion.div
+                key="result"
+                initial={false}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="bg-white p-5 md:p-8 lg:col-span-2"
+              >
                 <ResultScreen result={result} onBack={handleBackToAppliances} onRestart={handleRestart} />
-              )}
-            </motion.div>
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
 

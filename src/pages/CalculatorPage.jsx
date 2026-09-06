@@ -18,7 +18,7 @@ export default function CalculatorPage() {
           </p>
         </div>
       </section>
-      <Calculator />
+      {/* <Calculator /> */}
       <LoadCalculator />
       <Subsidy />
       <CTASection />
