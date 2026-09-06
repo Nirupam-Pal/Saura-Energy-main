@@ -87,14 +87,110 @@ export const SERVICES = [
   },
 ];
 
+// Each project owns its own `gallery` array — a dedicated, ordered list of
+// image URLs shown when that project's card is clicked. These are TEMPORARY
+// stock photos (real solar installs, not staged/lifestyle stock) standing in
+// until real installation photographs are available; see README note below
+// PROJECTS for exactly how to swap them in.
 export const PROJECTS = [
-  { id: 1, title: "120kW Rooftop — Tripura Polytechnic", category: "Commercial", location: "Agartala, Tripura", size: "120 kW", image: "factory1", year: 2024 },
-  { id: 2, title: "50kW Rooftop - Holycross School", category: "Commercial", location: "Guwahati, Assam", size: "5 kW", image: "residential", year: 2024 },
-  { id: 3, title: "30kW Industrial — Holycross College", category: "Industrial", location: "Silchar, Assam", size: "850 kW", image: "factory2", year: 2023 },
-  { id: 4, title: "8kW Hybrid + Storage", category: "Residential", location: "Shillong, Meghalaya", size: "8 kW", image: "residential2", year: 2024 },
-  { id: 5, title: "200kW Hospital Rooftop", category: "Commercial", location: "Agartala, Tripura", size: "200 kW", image: "engineers2", year: 2023 },
-  { id: 6, title: "Solar EV Charging Hub", category: "EV", location: "Dimapur, Nagaland", size: "60 kW", image: "ev1", year: 2024 },
+  {
+    id: 1,
+    title: "120kW Rooftop — Tripura Polytechnic",
+    category: "Commercial",
+    location: "Agartala, Tripura",
+    size: "120 kW",
+    image: "factory1",
+    year: 2024,
+    gallery: [
+      IMG.factory1,
+      "https://images.unsplash.com/photo-1713544123580-12096cc9eb12?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1698755394258-3c2c3dd9448f?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1631771819642-90cee9a2ccac?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  {
+    id: 2,
+    title: "50kW Rooftop - Holycross School",
+    category: "Commercial",
+    location: "Guwahati, Assam",
+    size: "5 kW",
+    image: "residential",
+    year: 2024,
+    gallery: [
+      IMG.residential,
+      "https://images.unsplash.com/photo-1637417494521-78b4d1d33029?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1655300256335-beef51a914fe?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1698755394250-6af71a0fed64?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  {
+    id: 3,
+    title: "30kW Industrial — Holycross College",
+    category: "Industrial",
+    location: "Silchar, Assam",
+    size: "850 kW",
+    image: "factory2",
+    year: 2023,
+    gallery: [
+      IMG.factory2,
+      "https://images.unsplash.com/photo-1694327671725-e2a81cda3436?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1589275776107-e193042128bd?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1564151436289-8fc3f8ea6326?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  {
+    id: 4,
+    title: "8kW Hybrid + Storage",
+    category: "Residential",
+    location: "Shillong, Meghalaya",
+    size: "8 kW",
+    image: "residential2",
+    year: 2024,
+    gallery: [
+      IMG.residential2,
+      "https://images.unsplash.com/photo-1566838616631-f2618f74a6a2?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1624397640148-949b1732bb0a?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1658298775754-5839ffd434cc?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  {
+    id: 5,
+    title: "200kW Hospital Rooftop",
+    category: "Commercial",
+    location: "Agartala, Tripura",
+    size: "200 kW",
+    image: "engineers2",
+    year: 2023,
+    gallery: [
+      IMG.engineers2,
+      "https://images.unsplash.com/photo-1668097613572-40b7c11c8727?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1660330589243-4c640d878052?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1660330589505-9a433a742a7b?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  {
+    id: 6,
+    title: "Solar EV Charging Hub",
+    category: "EV",
+    location: "Dimapur, Nagaland",
+    size: "60 kW",
+    image: "ev1",
+    year: 2024,
+    gallery: [
+      IMG.ev1,
+      IMG.ev2,
+      "https://images.unsplash.com/photo-1775259928422-779c18e32007?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
 ];
+
+// --- Replacing temporary gallery images with real installation photos ---
+// 1. Drop your photos in public/images/projects/project-<id>/ (e.g.
+//    public/images/projects/project-1/installation-1.jpg).
+// 2. Replace the corresponding string(s) in that project's `gallery` array
+//    above with "/images/projects/project-1/installation-1.jpg" etc.
+// No other file needs to change — the gallery UI reads this array directly.
 
 export const TESTIMONIALS = [
   { name: "Anirban Dey", role: "Homeowner, Agartala", quote: "From subsidy paperwork to net metering, Saura Energy handled everything. My ₹4,200 monthly bill is now ₹380. Honest pricing and brilliant engineers.", rating: 5 },

@@ -9,39 +9,6 @@ import { fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 
 const FILTERS = ["All", "Residential", "Commercial", "Industrial", "EV"];
 
-const PROJECT_GALLERY = {
-  1: [
-    "https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1485230892430-238f647d6d72?auto=format&fit=crop&w=1200&q=80",
-  ],
-  2: [
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=1200&q=80",
-  ],
-  3: [
-    "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1508898578281-774ac4893a24?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
-  ],
-  4: [
-    "https://images.unsplash.com/photo-1531626471740-02b619362f01?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1504691342899-9c484b44f7a7?auto=format&fit=crop&w=1200&q=80",
-  ],
-  5: [
-    "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80",
-  ],
-  6: [
-    "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1487014679447-9f8336841d58?auto=format&fit=crop&w=1200&q=80",
-  ],
-};
-
 export default function Projects() {
   const [active, setActive] = useState("All");
   const [compareId, setCompareId] = useState(null);
@@ -54,7 +21,12 @@ export default function Projects() {
     setGalleryIndex(0);
   };
 
-  const galleryImages = galleryProject ? PROJECT_GALLERY[galleryProject] || [] : [];
+  const activeGalleryProject = galleryProject
+    ? PROJECTS.find((project) => project.id === galleryProject)
+    : null;
+  // Each project owns its own `gallery` array (see src/lib/data.js) — never
+  // a shared/global list — so images from one project can't leak into another.
+  const galleryImages = activeGalleryProject?.gallery || [];
 
   return (
     <section className="relative py-24 md:py-32 bg-slate-50/70" data-testid="projects-section">
@@ -180,48 +152,63 @@ export default function Projects() {
 
       <Dialog open={!!galleryProject} onOpenChange={(open) => { if (!open) setGalleryProject(null); }}>
         {galleryProject && (
-          <DialogContent className="max-w-6xl mx-4 sm:mx-auto p-4 md:p-6">
+          <DialogContent className="max-w-6xl mx-4 sm:mx-auto p-4 md:p-6 max-h-[90vh] overflow-y-auto">
             <DialogTitle className="text-xl font-bold text-slate-900">
-              {PROJECTS.find((project) => project.id === galleryProject)?.title || "Project Gallery"}
+              {activeGalleryProject?.title || "Project Gallery"}
             </DialogTitle>
             <p className="text-sm text-slate-600 mb-4">
               Browse the selected project images. Tap thumbnails or use navigation arrows.
             </p>
             <div className="grid gap-4">
-              <div className="relative overflow-hidden rounded-3xl bg-slate-950 shadow-xl">
-                <img
-                  src={galleryImages[galleryIndex]}
-                  alt={`Project gallery ${galleryIndex + 1}`}
-                  className="w-full h-[min(60vh,520px)] object-cover"
-                />
+              <div className="relative overflow-hidden rounded-3xl bg-slate-950 shadow-xl h-[min(60vh,520px)]">
+                <AnimatePresence mode="sync" initial={false}>
+                  <motion.img
+                    key={galleryIndex}
+                    src={galleryImages[galleryIndex]}
+                    alt={`${activeGalleryProject?.title || "Project"} — photo ${galleryIndex + 1}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2, ease: SMOOTH_EASING }}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </AnimatePresence>
                 {galleryImages.length > 1 && (
                   <>
                     <button
                       type="button"
                       onClick={(e) => { e.stopPropagation(); setGalleryIndex((idx) => Math.max(idx - 1, 0)); }}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-3 text-white hover:bg-black"
+                      disabled={galleryIndex === 0}
+                      aria-label="Previous image"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-3 text-white hover:bg-black disabled:opacity-30 disabled:pointer-events-none"
                     >
                       ‹
                     </button>
                     <button
                       type="button"
                       onClick={(e) => { e.stopPropagation(); setGalleryIndex((idx) => Math.min(idx + 1, galleryImages.length - 1)); }}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-3 text-white hover:bg-black"
+                      disabled={galleryIndex === galleryImages.length - 1}
+                      aria-label="Next image"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-3 text-white hover:bg-black disabled:opacity-30 disabled:pointer-events-none"
                     >
                       ›
                     </button>
+                    <span className="absolute bottom-3 right-4 px-2.5 py-1 rounded-full bg-black/60 text-white text-xs font-semibold">
+                      {galleryIndex + 1} / {galleryImages.length}
+                    </span>
                   </>
                 )}
               </div>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                 {galleryImages.map((src, idx) => (
                   <button
                     key={src}
                     type="button"
                     onClick={(e) => { e.stopPropagation(); setGalleryIndex(idx); }}
-                    className={`overflow-hidden rounded-2xl border ${galleryIndex === idx ? "border-[#1B3A8C]" : "border-slate-200"}`}
+                    aria-label={`View photo ${idx + 1}`}
+                    className={`overflow-hidden rounded-2xl border transition-colors ${galleryIndex === idx ? "border-[#1B3A8C]" : "border-slate-200 hover:border-slate-300"}`}
                   >
-                    <img src={src} alt={`Thumbnail ${idx + 1}`} className="h-24 w-full object-cover transition-transform duration-300 hover:scale-105" />
+                    <img src={src} alt={`${activeGalleryProject?.title || "Project"} thumbnail ${idx + 1}`} className="h-20 sm:h-24 w-full object-cover transition-transform duration-300 hover:scale-105" />
                   </button>
                 ))}
               </div>
