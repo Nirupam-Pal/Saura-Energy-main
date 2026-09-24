@@ -52,7 +52,8 @@ export default function Footer() {
                 <div className="font-display font-extrabold text-2xl">
                   <span>SAURA</span>
                   <span className="text-[#F26A21]"> ener</span>
-                  <span className="text-[#2BA84A]">gy</span>
+                  <span className="text-[#2BA84A]">g</span>
+                  <span className="text-[#F26A21]">y</span>
                 </div>
                 <div className="text-[10px] tracking-[0.25em] uppercase text-white/60">25 Years of Trust</div>
               </div>
@@ -66,9 +67,6 @@ export default function Footer() {
               </a>
               <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook" data-testid="footer-facebook" className="h-10 w-10 rounded-full grid place-items-center bg-white/8 hover:bg-[#1B3A8C] transition border border-white/10">
                 <Facebook className="h-4.5 w-4.5" />
-              </a>
-              <a href={`https://wa.me/${BRAND.whatsapp}`} target="_blank" rel="noreferrer" aria-label="WhatsApp" data-testid="footer-whatsapp" className="h-10 w-10 rounded-full grid place-items-center bg-white/8 hover:bg-[#2BA84A] transition border border-white/10">
-                <Sun className="h-4.5 w-4.5" />
               </a>
             </div>
           </div>
