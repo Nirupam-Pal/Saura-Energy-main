@@ -16,6 +16,7 @@ import ProjectsPage from "@/pages/ProjectsPage";
 import ProjectDetail from "@/pages/ProjectDetail";
 import CalculatorPage from "@/pages/CalculatorPage";
 import BlogPage from "@/pages/BlogPage";
+import BlogPost from "@/pages/BlogPost";
 import ContactPage from "@/pages/ContactPage";
 import { DEFAULT_TRANSITION, pageTransition } from "@/lib/animations";
 
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/projects/:id" element={<ProjectDetail />} />
                 <Route path="/calculator" element={<CalculatorPage />} />
                 <Route path="/blog" element={<BlogPage />} />
+                <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/contact" element={<ContactPage />} />
               </Routes>
             </PageTransition>

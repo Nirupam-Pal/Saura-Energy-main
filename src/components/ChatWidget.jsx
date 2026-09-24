@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquareText, X, Send, Sun, Sparkles } from "lucide-react";
-import { api } from "@/lib/api";
-import { BRAND } from "@/lib/data";
+import { Link } from "react-router-dom";
+import { MessageSquareText, X, Send, Sun, Sparkles, ArrowUpRight } from "lucide-react";
+import { answerQuestion } from "@/lib/chatAssistant";
 
 const SUGGESTIONS = [
   "How much subsidy can I claim?",
@@ -14,7 +14,7 @@ const SUGGESTIONS = [
 const INTRO = {
   role: "assistant",
   content:
-    "Hi! I'm Surya, your Saura Energy AI Solar Assistant. ☀️ Ask me about PM Surya Ghar subsidy (up to ₹85,800), payback periods, or any solar question.",
+    "Hi! I'm Surya, Saura Energy's solar assistant. ☀️ Ask me about PM Surya Ghar subsidy (up to ₹85,800), payback periods, or any solar question.",
 };
 
 export default function ChatWidget() {
@@ -22,32 +22,29 @@ export default function ChatWidget() {
   const [messages, setMessages] = useState([INTRO]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [sessionId, setSessionId] = useState(null);
   const scrollRef = useRef(null);
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, loading]);
 
-  const send = async (text) => {
+  // Answers come from the built-in knowledge base (src/lib/chatAssistant.js),
+  // so the widget works on the static site with no server. The short pause
+  // just lets the typing indicator read naturally.
+  const send = (text) => {
     const q = (text ?? input).trim();
     if (!q || loading) return;
     setMessages((m) => [...m, { role: "user", content: q }]);
     setInput("");
     setLoading(true);
-    try {
-      const r = await api.post("/chat", { message: q, session_id: sessionId });
-      if (!sessionId) setSessionId(r.data.session_id);
-      setMessages((m) => [...m, { role: "assistant", content: r.data.reply }]);
-    } catch (e) {
-      setMessages((m) => [
-        ...m,
-        { role: "assistant", content: "I couldn't reach my brain right now 🙈 Please call us on " + BRAND.phoneDisplay + " or try again." },
-      ]);
-    } finally {
+    const reply = answerQuestion(q);
+    setTimeout(() => {
+      setMessages((m) => [...m, { role: "assistant", content: reply.text, links: reply.links, suggestions: reply.suggestions }]);
       setLoading(false);
-    }
+    }, 450 + Math.min(reply.text.length, 400));
   };
+
+  const lastIndex = messages.length - 1;
 
   return (
     <>
@@ -58,7 +55,7 @@ export default function ChatWidget() {
         transition={{ delay: 1, type: "spring", stiffness: 220, damping: 18 }}
         onClick={() => setOpen((o) => !o)}
         data-testid="chat-launcher"
-        aria-label="Open AI Solar Assistant"
+        aria-label={open ? "Close solar assistant" : "Open solar assistant"}
         className={`fixed bottom-6 right-24 z-40 h-14 w-14 rounded-full grid place-items-center shadow-2xl transition-[scale] duration-500 ease-spring hover:[scale:1.1] active:[scale:0.94] ${
           open ? "bg-[#0A1128] text-white" : "bg-gradient-to-br from-[#F26A21] to-[#D95B1A] text-white"
         }`}
@@ -91,7 +88,7 @@ export default function ChatWidget() {
                   <div className="font-display font-extrabold text-lg leading-tight flex items-center gap-1.5">
                     Surya <Sparkles className="h-4 w-4 text-[#F26A21]" />
                   </div>
-                  <div className="text-xs text-white/70">AI Solar Assistant · Saura Energy</div>
+                  <div className="text-xs text-white/70">Solar Assistant · Saura Energy</div>
                 </div>
               </div>
             </div>
@@ -99,7 +96,30 @@ export default function ChatWidget() {
             {/* Messages */}
             <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50/50" data-testid="chat-messages">
               {messages.map((m, i) => (
-                <Bubble key={i} role={m.role} content={m.content} />
+                <div key={i}>
+                  <Bubble role={m.role} content={m.content} />
+                  {m.links?.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-2 pl-1">
+                      {m.links.map((l) => (
+                        <ReplyLink key={l.label} link={l} onNavigate={() => setOpen(false)} />
+                      ))}
+                    </div>
+                  )}
+                  {i === lastIndex && !loading && m.suggestions?.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-2 pl-1">
+                      {m.suggestions.map((s) => (
+                        <button
+                          key={s}
+                          type="button"
+                          onClick={() => send(s)}
+                          className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-600 hover:border-[#F26A21] hover:text-[#F26A21] transition-colors"
+                        >
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
               {loading && <Bubble role="assistant" content={<TypingDots />} />}
 
@@ -149,6 +169,24 @@ export default function ChatWidget() {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+function ReplyLink({ link, onNavigate }) {
+  const className =
+    "inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#1B3A8C]/5 border border-[#1B3A8C]/15 text-xs font-bold text-[#1B3A8C] hover:bg-[#1B3A8C] hover:text-white transition-colors";
+  if (link.to) {
+    return (
+      <Link to={link.to} onClick={onNavigate} className={className}>
+        {link.label} <ArrowUpRight className="h-3 w-3" />
+      </Link>
+    );
+  }
+  const external = link.href.startsWith("http");
+  return (
+    <a href={link.href} className={className} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+      {link.label} <ArrowUpRight className="h-3 w-3" />
+    </a>
   );
 }
 

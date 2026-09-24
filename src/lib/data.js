@@ -234,10 +234,10 @@ export const PARTNERS = [
 export const BANKS = ["SBI", "PNB", "Bank of Baroda", "Canara Bank", "HDFC", "ICICI"];
 
 export const BLOG_POSTS = [
-  { id: 1, title: "PM Surya Ghar 2025: How to Claim ₹85,800 Subsidy in 7 Days", excerpt: "A step-by-step guide for Indian homeowners to register, install, and claim residential rooftop solar subsidy.", date: "Feb 2026", category: "Subsidy", image: "residential" },
-  { id: 2, title: "Mono-PERC vs TOPCon: Which Panel is Right for Your Rooftop?", excerpt: "We break down efficiency, degradation, price-per-watt and warranty for India's most popular panel technologies.", date: "Jan 2026", category: "Education", image: "engineers1" },
-  { id: 3, title: "Solar + Battery Storage: Is It Worth It in 2026?", excerpt: "When hybrid systems pay back, when they don't, and the new lithium chemistries to watch.", date: "Jan 2026", category: "Trends", image: "residential2" },
-  { id: 4, title: "Commercial Solar ROI: Real Numbers from 14 Tripura Businesses", excerpt: "Anonymised case studies showing payback periods, IRR and 25-year savings for SME installations.", date: "Dec 2025", category: "Case Study", image: "factory1" },
+  { id: 1, slug: "pm-surya-ghar-subsidy-guide", title: "PM Surya Ghar 2025: How to Claim ₹85,800 Subsidy in 7 Days", excerpt: "A step-by-step guide for Indian homeowners to register, install, and claim residential rooftop solar subsidy.", date: "Feb 2026", category: "Subsidy", image: "residential" },
+  { id: 2, slug: "mono-perc-vs-topcon", title: "Mono-PERC vs TOPCon: Which Panel is Right for Your Rooftop?", excerpt: "We break down efficiency, degradation, price-per-watt and warranty for India's most popular panel technologies.", date: "Jan 2026", category: "Education", image: "engineers1" },
+  { id: 3, slug: "solar-battery-storage-2026", title: "Solar + Battery Storage: Is It Worth It in 2026?", excerpt: "When hybrid systems pay back, when they don't, and the new lithium chemistries to watch.", date: "Jan 2026", category: "Trends", image: "residential2" },
+  { id: 4, slug: "commercial-solar-roi-tripura", title: "Commercial Solar ROI: Real Numbers from 14 Tripura Businesses", excerpt: "Anonymised case studies showing payback periods, IRR and 25-year savings for SME installations.", date: "Dec 2025", category: "Case Study", image: "factory1" },
 ];
 
 export const FAQS = [

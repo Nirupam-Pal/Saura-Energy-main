@@ -33,21 +33,23 @@ export default function BlogTeaser() {
               data-testid={`blog-card-${p.id}`}
               className="hover-lift group rounded-2xl bg-white overflow-hidden border border-slate-100 hover:shadow-xl transition-lift duration-500"
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <ProgressiveImage src={IMG[p.image]} alt={p.title} sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="absolute inset-0" imgClassName="duration-1000 group-hover:scale-110" />
-                <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur text-[10px] font-bold uppercase tracking-widest text-[#1B3A8C]">
-                  {p.category}
-                </span>
-              </div>
-              <div className="p-5">
-                <div className="flex items-center gap-2 text-xs text-slate-400 font-semibold">
-                  <Calendar className="h-3.5 w-3.5" /> {p.date}
+              <Link to={`/blog/${p.slug}`} className="block h-full rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#F26A21]">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <ProgressiveImage src={IMG[p.image]} alt={p.title} sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="absolute inset-0" imgClassName="duration-1000 group-hover:scale-110" />
+                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur text-[10px] font-bold uppercase tracking-widest text-[#1B3A8C]">
+                    {p.category}
+                  </span>
                 </div>
-                <h3 className="mt-3 font-display text-lg font-bold text-slate-900 leading-snug group-hover:text-[#F26A21] transition-colors line-clamp-2">
-                  {p.title}
-                </h3>
-                <p className="mt-2 text-sm text-slate-600 leading-relaxed line-clamp-2">{p.excerpt}</p>
-              </div>
+                <div className="p-5">
+                  <div className="flex items-center gap-2 text-xs text-slate-400 font-semibold">
+                    <Calendar className="h-3.5 w-3.5" /> {p.date}
+                  </div>
+                  <h3 className="mt-3 font-display text-lg font-bold text-slate-900 leading-snug group-hover:text-[#F26A21] transition-colors line-clamp-2">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-slate-600 leading-relaxed line-clamp-2">{p.excerpt}</p>
+                </div>
+              </Link>
             </motion.article>
           ))}
         </div>

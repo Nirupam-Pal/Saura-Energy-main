@@ -107,7 +107,7 @@ export default function Footer() {
               <li className="flex gap-3"><MapPin className="h-4 w-4 text-[#F26A21] mt-0.5 flex-shrink-0" /><span className="text-white/80">{BRAND.address}</span></li>
             </ul>
 
-            <form onSubmit={onSubscribe} className="mt-6" data-testid="footer-newsletter-form">
+            {/* <form onSubmit={onSubscribe} className="mt-6" data-testid="footer-newsletter-form">
               <label className="text-xs uppercase tracking-widest text-white/60 font-bold mb-2 block">Newsletter</label>
               <div className="flex gap-2">
                 <Input
@@ -123,7 +123,7 @@ export default function Footer() {
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
-            </form>
+            </form> */}
           </div>
         </div>
 
