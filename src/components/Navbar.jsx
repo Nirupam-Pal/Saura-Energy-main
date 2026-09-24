@@ -41,7 +41,7 @@ export default function Navbar() {
       {/* Top utility strip */}
       <div className={`hidden md:flex items-center justify-between px-8 py-2 text-xs font-medium border-b transition-colors ${scrolled ? "border-slate-100 text-slate-600" : "border-white/10 text-white/90"}`}>
         <div className="flex items-center gap-6">
-          <span className="flex items-center gap-2"><Sun className="h-3.5 w-3.5" /> Powering NE India since 2015</span>
+          <span className="flex items-center gap-2"><Sun className="h-3.5 w-3.5" /> Powering NE India since 2025</span>
           <span className="opacity-70">•</span>
           <span>PM Surya Ghar Empanelled</span>
         </div>
