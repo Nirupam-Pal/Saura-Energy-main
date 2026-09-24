@@ -36,7 +36,7 @@ export default function Footer() {
             <h3 className="font-display text-3xl md:text-4xl font-extrabold tracking-tight">Power 25 years of savings. <span className="text-[#F26A21]">Start today.</span></h3>
           </div>
           <Link to="/contact">
-            <Button data-testid="footer-cta-btn" className="rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white px-7 py-6 text-base font-semibold shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all">
+            <Button data-testid="footer-cta-btn" className="rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white px-7 py-6 text-base font-semibold shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-lift">
               Book Free Survey <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
@@ -47,7 +47,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-4">
             <Link to="/" className="flex items-center gap-3 mb-5">
-              <img src="/company%20logo/saura.png" alt="Saura Energy" className="h-12 w-12 bg-white rounded-lg p-1" />
+              <img src="/img/brand/saura-96.webp" alt="Saura Energy" width="48" height="48" loading="lazy" decoding="async" className="h-12 w-12 bg-white rounded-lg p-1" />
               <div>
                 <div className="font-display font-extrabold text-2xl">
                   <span>SAURA</span>

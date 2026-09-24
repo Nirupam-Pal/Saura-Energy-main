@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { IMG, STATS } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import AnimatedCounter from "@/components/AnimatedCounter";
-import { fadeUpVariant, SMOOTH_EASING } from "@/lib/animations";
+import { fadeUpVariant, SMOOTH_EASING, EASE_OUT_EXPO, EASE_OUT_QUINT } from "@/lib/animations";
+import ProgressiveImage from "@/components/ProgressiveImage";
 
 const fadeUp = fadeUpVariant;
 
@@ -15,10 +16,10 @@ export default function Hero() {
       <motion.div
         initial={{ scale: 1.08 }}
         animate={{ scale: 1 }}
-        transition={{ duration: 14, ease: "linear" }}
+        transition={{ duration: 14, ease: EASE_OUT_QUINT }}
         className="absolute inset-0"
       >
-        <img src={IMG.rooftopDrone} alt="Aerial drone view of solar rooftop installation" className="w-full h-full object-cover" />
+        <ProgressiveImage src={IMG.rooftopDrone} alt="Aerial drone view of solar rooftop installation" priority className="absolute inset-0" />
       </motion.div>
       <div className="absolute inset-0 hero-overlay" />
 
@@ -58,7 +59,7 @@ export default function Hero() {
 
           <motion.div variants={fadeUp} custom={3} className="mt-8 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-4">
             <Link to="/contact" className="w-full sm:w-auto">
-              <Button data-testid="hero-cta-consultation" className="group w-full sm:w-auto rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white px-6 py-5 sm:px-7 sm:py-6 text-base sm:text-base font-semibold shadow-xl shadow-orange-900/25 hover:shadow-2xl hover:-translate-y-0.5 transition-all justify-center flex items-center">
+              <Button data-testid="hero-cta-consultation" className="group w-full sm:w-auto rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white px-6 py-5 sm:px-7 sm:py-6 text-base sm:text-base font-semibold shadow-xl shadow-orange-900/25 hover:shadow-2xl hover:-translate-y-0.5 transition-lift justify-center flex items-center">
                 Get Free Consultation
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition" />
               </Button>
@@ -88,7 +89,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
+          transition={{ delay: 0.8, duration: 1, ease: EASE_OUT_EXPO }}
           className="relative lg:absolute w-full mt-10 lg:mt-0 left-0 lg:left-4 right-0 lg:right-4 lg:bottom-8"
         >
           <div className="max-w-7xl mx-auto rounded-2xl glass-dark border border-white/15 overflow-hidden shadow-[0_30px_80px_-50px_rgba(0,0,0,0.45)]">
@@ -116,7 +117,7 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
+        transition={{ delay: 1.5, duration: 0.8, ease: EASE_OUT_QUINT }}
         className="hidden md:block absolute bottom-44 right-8 lg:right-14 z-40 text-white/95 text-[10px] tracking-[0.3em] uppercase rotate-90 origin-right"
         style={{ textShadow: '0 6px 28px rgba(0,0,0,0.45)' }}
       >

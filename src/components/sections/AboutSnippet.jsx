@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Target, Eye, Heart, Sparkles } from "lucide-react";
 import { IMG } from "@/lib/data";
 import { Button } from "@/components/ui/button";
-import { slideInLeftVariant, slideInRightVariant, fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
+import { slideInLeftVariant, slideInRightVariant, fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING, gridReveal } from "@/lib/animations";
+import ProgressiveImage from "@/components/ProgressiveImage";
 
 export default function AboutSnippet() {
   return (
@@ -14,7 +15,7 @@ export default function AboutSnippet() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
         <motion.div initial="hidden" whileInView="show" viewport={VIEWPORT_ONCE} variants={slideInLeftVariant}>
           <div className="relative">
-            <img src={IMG.engineers2} alt="Saura Energy engineers at work" className="rounded-3xl shadow-2xl shadow-blue-900/15 w-full aspect-[4/5] object-cover" />
+            <ProgressiveImage src={IMG.engineers2} alt="Saura Energy engineers at work" sizes="(min-width: 1024px) 600px, 100vw" className="rounded-3xl shadow-2xl shadow-blue-900/15 aspect-[4/5]" />
           </div>
         </motion.div>
 
@@ -60,7 +61,7 @@ export default function AboutSnippet() {
                 viewport={VIEWPORT_ONCE}
                 custom={i}
                 variants={fadeUpVariant}
-                className="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow-md transition-all hover:-translate-y-1"
+                className="hover-lift p-5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow-md transition-lift duration-500"
               >
                 <I className="h-6 w-6 text-[#F26A21]" />
                 <div className="mt-3 font-display font-bold text-slate-900">{title}</div>
@@ -70,7 +71,7 @@ export default function AboutSnippet() {
           </div>
 
           <Link to="/about" className="inline-block mt-9">
-            <Button variant="outline" className="rounded-full border-2 border-[#1B3A8C] text-[#1B3A8C] hover:bg-[#1B3A8C] hover:text-white transition-all px-6 py-5" data-testid="about-readmore">
+            <Button variant="outline" className="rounded-full border-2 border-[#1B3A8C] text-[#1B3A8C] hover:bg-[#1B3A8C] hover:text-white transition-colors px-6 py-5" data-testid="about-readmore">
               Read our full story <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
@@ -96,11 +97,11 @@ export default function AboutSnippet() {
 
           <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
             {/* On-Grid */}
-            <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0 }} className="group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+            <motion.div variants={gridReveal} initial="hidden" whileInView="show" viewport={VIEWPORT_ONCE} custom={0} className="hover-lift-lg group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-lift duration-500">
               {/* Badge */}
               <div className="absolute top-4 right-4 z-20 bg-blue-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide">Most Popular</div>
               
-              <img src={IMG.rooftopDrone} alt="On-Grid Solar System" className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-300" />
+              <ProgressiveImage src={IMG.rooftopDrone} alt="On-Grid Solar System" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="h-72" imgClassName="duration-1000 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
               
               <div className="relative p-8 bg-white border-t-4 border-orange-400">
@@ -125,11 +126,11 @@ export default function AboutSnippet() {
             </motion.div>
 
             {/* Off-Grid */}
-            <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+            <motion.div variants={gridReveal} initial="hidden" whileInView="show" viewport={VIEWPORT_ONCE} custom={1} className="hover-lift-lg group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-lift duration-500">
               {/* Badge */}
               <div className="absolute top-4 right-4 z-20 bg-red-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide">Maximum Backup</div>
               
-              <img src={IMG.residential} alt="Off-Grid Solar System" className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-300" />
+              <ProgressiveImage src={IMG.residential} alt="Off-Grid Solar System" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="h-72" imgClassName="duration-1000 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
               
               <div className="relative p-8 bg-white border-t-4 border-orange-400">
@@ -154,11 +155,11 @@ export default function AboutSnippet() {
             </motion.div>
 
             {/* Hybrid */}
-            <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 md:col-span-1">
+            <motion.div variants={gridReveal} initial="hidden" whileInView="show" viewport={VIEWPORT_ONCE} custom={2} className="hover-lift-lg group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-lift duration-500 md:col-span-1">
               {/* Badge */}
               <div className="absolute top-4 right-4 z-20 bg-green-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide">Best Value</div>
               
-              <img src={IMG.residential2} alt="Hybrid Solar System" className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-300" />
+              <ProgressiveImage src={IMG.residential2} alt="Hybrid Solar System" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="h-72" imgClassName="duration-1000 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
               
               <div className="relative p-8 bg-white border-t-4 border-orange-400">

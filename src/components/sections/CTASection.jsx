@@ -4,12 +4,13 @@ import { Phone, ArrowRight, Calendar } from "lucide-react";
 import { IMG, BRAND } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { slideInRightVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
+import ProgressiveImage from "@/components/ProgressiveImage";
 
 export default function CTASection() {
   return (
     <section className="relative py-20 md:py-28 overflow-hidden" data-testid="big-cta-section">
       <div className="absolute inset-0">
-        <img src={IMG.rooftopDrone} alt="" className="w-full h-full object-cover" />
+        <ProgressiveImage src={IMG.rooftopDrone} className="absolute inset-0" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0A1128]/95 via-[#0A1128]/85 to-[#0A1128]/50" />
       </div>
 
@@ -32,7 +33,7 @@ export default function CTASection() {
 
           <div className="mt-9 flex flex-wrap gap-4">
             <Link to="/contact">
-              <Button data-testid="big-cta-survey" className="rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white px-7 py-6 text-base font-semibold shadow-xl hover:-translate-y-0.5 transition-all">
+              <Button data-testid="big-cta-survey" className="rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white px-7 py-6 text-base font-semibold shadow-xl hover:-translate-y-0.5 transition-lift">
                 <Calendar className="mr-2 h-5 w-5" /> Book Free Survey
               </Button>
             </Link>

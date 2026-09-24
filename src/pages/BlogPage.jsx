@@ -4,6 +4,8 @@ import { useState } from "react";
 import { BLOG_POSTS, IMG, FAQS } from "@/lib/data";
 import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import ProgressiveImage from "@/components/ProgressiveImage";
+import { VIEWPORT_ONCE, gridReveal } from "@/lib/animations";
 
 const CATEGORIES = ["All", "Subsidy", "Education", "Trends", "Case Study"];
 
@@ -64,15 +66,16 @@ export default function BlogPage() {
             {filtered.map((p, i) => (
               <motion.article
                 key={p.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: (i % 3) * 0.08 }}
-                className="group rounded-2xl bg-white overflow-hidden border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all"
+                variants={gridReveal}
+                initial="hidden"
+                whileInView="show"
+                viewport={VIEWPORT_ONCE}
+                custom={i}
+                className="hover-lift group rounded-2xl bg-white overflow-hidden border border-slate-100 hover:shadow-xl transition-lift duration-500"
                 data-testid={`blog-page-card-${p.id}`}
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
-                  <img src={IMG[p.image]} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <ProgressiveImage src={IMG[p.image]} alt={p.title} sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="absolute inset-0" imgClassName="duration-1000 group-hover:scale-110" />
                   <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur text-[10px] font-bold uppercase tracking-widest text-[#1B3A8C]">
                     {p.category}
                   </span>

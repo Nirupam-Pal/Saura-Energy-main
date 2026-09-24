@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Home, Building2, Factory, Wrench, Gauge, Landmark, HardHat, BatteryCharging, PlugZap, Check } from "lucide-react";
 import { SERVICES, IMG } from "@/lib/data";
 import { fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
+import ProgressiveImage from "@/components/ProgressiveImage";
 
 const ICONS = { Home, Building2, Factory, Wrench, Gauge, Landmark, HardHat, BatteryCharging, PlugZap };
 
@@ -42,10 +43,10 @@ export default function Services({ withHeader = true }) {
                 data-testid={`service-card-${s.slug}`}
               >
                 <Link to={`/services/${s.slug}`} className="block h-full group">
-                  <div className="relative h-full rounded-3xl overflow-hidden bg-white border border-slate-100 hover:border-transparent transition-all hover:-translate-y-1 hover:shadow-[0_24px_48px_-20px_rgba(15,23,42,0.18)]">
+                  <div className="relative h-full rounded-3xl overflow-hidden bg-white border border-slate-100 hover:border-transparent transition-lift duration-500 hover:-translate-y-1 hover:shadow-[0_24px_48px_-20px_rgba(15,23,42,0.18)]">
                     {/* Image */}
                     <div className="relative h-44 overflow-hidden">
-                      <img src={IMG[s.image]} alt={s.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                      <ProgressiveImage src={IMG[s.image]} alt={s.title} sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="absolute inset-0" imgClassName="duration-1000 group-hover:scale-110" />
                       <div className={`absolute inset-0 bg-gradient-to-t ${a.glow} to-transparent opacity-70`} />
                       <div className={`absolute top-4 left-4 h-11 w-11 rounded-xl ${a.bg} backdrop-blur grid place-items-center border border-white/30`}>
                         <Icon className={`h-5 w-5 ${a.text}`} />
@@ -67,8 +68,8 @@ export default function Services({ withHeader = true }) {
                         ))}
                       </ul>
 
-                      <div className={`mt-5 inline-flex items-center gap-1.5 text-sm font-bold ${a.text} group-hover:gap-2.5 transition-all`}>
-                        Explore <ArrowRight className="h-4 w-4" />
+                      <div className={`mt-5 inline-flex items-center gap-1.5 text-sm font-bold ${a.text}`}>
+                        Explore <ArrowRight className="h-4 w-4 transition-transform duration-500 ease-spring group-hover:translate-x-1" />
                       </div>
                     </div>
                   </div>

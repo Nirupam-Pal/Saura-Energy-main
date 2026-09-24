@@ -165,14 +165,51 @@ html, body {
   background-size: 60px 60px;
 }
 
-/* Pulse ring */
+/* Pulse ring — a scaled, fading pseudo-element (transform + opacity run on
+   the GPU) instead of an animated box-shadow, which repaints every frame. */
 @keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 rgba(242, 106, 33, 0.5); }
-  70% { box-shadow: 0 0 0 18px rgba(242, 106, 33, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(242, 106, 33, 0); }
+  0% { transform: scale(1); opacity: 0.5; }
+  70%, 100% { transform: scale(1.5); opacity: 0; }
 }
 .pulse-orange {
-  animation: pulse-ring 2.2s cubic-bezier(0.66, 0, 0, 1) infinite;
+  isolation: isolate;
+}
+.pulse-orange::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: rgb(242, 106, 33);
+  animation: pulse-ring 2.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  pointer-events: none;
+}
+
+/* Image skeleton shimmer (used by ProgressiveImage when no blur placeholder exists) */
+@keyframes skeleton-shimmer {
+  to { transform: translateX(100%); }
+}
+.skeleton-shimmer {
+  overflow: hidden;
+  background: rgb(226, 232, 240);
+}
+.skeleton-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: skeleton-shimmer 1.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+/* Respect the OS "reduce motion" setting across CSS animations and transitions. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Spin slow */
@@ -180,3 +217,10 @@ html, body {
   to { transform: rotate(360deg); }
 }
 .spin-slow { animation: spin-slow 30s linear infinite; }
+
+/* Hover lift that also works on Framer Motion elements. Framer writes an
+   inline `transform`, which beats Tailwind's `hover:-translate-y-*`; the
+   standalone `translate` property is separate, still GPU-composited, and is
+   included in `transition-lift`. */
+.hover-lift:hover { translate: 0 -4px; }
+.hover-lift-lg:hover { translate: 0 -8px; }

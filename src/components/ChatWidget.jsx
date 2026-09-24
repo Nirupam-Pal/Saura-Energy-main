@@ -59,7 +59,7 @@ export default function ChatWidget() {
         onClick={() => setOpen((o) => !o)}
         data-testid="chat-launcher"
         aria-label="Open AI Solar Assistant"
-        className={`fixed bottom-6 right-24 z-40 h-14 w-14 rounded-full grid place-items-center shadow-2xl transition-transform hover:scale-110 ${
+        className={`fixed bottom-6 right-24 z-40 h-14 w-14 rounded-full grid place-items-center shadow-2xl transition-[scale] duration-500 ease-spring hover:[scale:1.1] active:[scale:0.94] ${
           open ? "bg-[#0A1128] text-white" : "bg-gradient-to-br from-[#F26A21] to-[#D95B1A] text-white"
         }`}
       >

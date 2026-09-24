@@ -32,7 +32,7 @@ export default function Navbar() {
   return (
     <header
       data-testid="site-navbar"
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 inset-x-0 z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-500 ${
         scrolled
           ? "backdrop-blur-xl bg-white/85 border-b border-slate-200/70 shadow-[0_4px_24px_-12px_rgba(15,23,42,0.12)]"
           : "bg-transparent"
@@ -57,7 +57,7 @@ export default function Navbar() {
       {/* Main bar */}
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3">
         <Link to="/" className="flex items-center gap-3" data-testid="nav-logo">
-          <img src="/company%20logo/saura.png" alt="Saura Energy logo" className="h-11 w-11 rounded-lg object-contain bg-white p-0.5 shadow-sm" />
+          <img src="/img/brand/saura-96.webp" alt="Saura Energy logo" width="44" height="44" fetchPriority="high" className="h-11 w-11 rounded-lg object-contain bg-white p-0.5 shadow-sm" />
           <div className="leading-tight">
             <div className="font-display font-extrabold text-xl">
               <span className={scrolled ? "text-[#1B3A8C]" : "text-white"}>SAURA</span>
@@ -93,7 +93,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3">
           <Link to="/contact" className="hidden md:block">
-            <Button data-testid="nav-cta-quote" className="rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all px-5">
+            <Button data-testid="nav-cta-quote" className="rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-lift px-5">
               Get Free Quote
             </Button>
           </Link>

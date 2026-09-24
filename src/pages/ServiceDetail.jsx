@@ -5,6 +5,7 @@ import { SERVICES, IMG, FAQS } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Contact from "@/components/sections/Contact";
+import ProgressiveImage from "@/components/ProgressiveImage";
 
 export default function ServiceDetail() {
   const { slug } = useParams();
@@ -17,7 +18,7 @@ export default function ServiceDetail() {
     <>
       <section className="relative pt-40 pb-16 bg-[#0A1128] text-white overflow-hidden">
         <div className="absolute inset-0 opacity-30">
-          <img src={IMG[svc.image]} alt="" className="w-full h-full object-cover" />
+          <ProgressiveImage src={IMG[svc.image]} priority className="absolute inset-0 !bg-transparent" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-[#0A1128] via-[#0A1128]/85 to-transparent" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,7 +60,7 @@ export default function ServiceDetail() {
           </div>
 
           <div className="relative">
-            <img src={IMG[svc.image]} alt={svc.title} className="rounded-3xl shadow-2xl shadow-blue-900/15 w-full aspect-[4/5] object-cover" />
+            <ProgressiveImage src={IMG[svc.image]} alt={svc.title} sizes="(min-width: 1024px) 600px, 100vw" className="rounded-3xl shadow-2xl shadow-blue-900/15 aspect-[4/5]" />
             <div className="absolute -bottom-6 -left-6 p-5 rounded-2xl bg-white border border-slate-100 shadow-xl max-w-xs">
               <Sun className="h-6 w-6 text-[#F26A21]" />
               <div className="font-display text-xl font-bold mt-2 text-slate-900">25-Year Warranty</div>
@@ -93,9 +94,9 @@ export default function ServiceDetail() {
           <h3 className="font-display text-2xl md:text-3xl font-extrabold text-slate-900 mb-8">Explore other services</h3>
           <div className="grid sm:grid-cols-3 gap-5">
             {related.map((r) => (
-              <Link key={r.slug} to={`/services/${r.slug}`} className="group rounded-2xl overflow-hidden bg-white border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all" data-testid={`related-service-${r.slug}`}>
+              <Link key={r.slug} to={`/services/${r.slug}`} className="group rounded-2xl overflow-hidden bg-white border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-lift duration-500" data-testid={`related-service-${r.slug}`}>
                 <div className="h-44 overflow-hidden">
-                  <img src={IMG[r.image]} alt={r.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <ProgressiveImage src={IMG[r.image]} alt={r.title} sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="h-full" imgClassName="duration-1000 group-hover:scale-110" />
                 </div>
                 <div className="p-5">
                   <h4 className="font-display font-bold text-slate-900 group-hover:text-[#F26A21] transition">{r.title}</h4>

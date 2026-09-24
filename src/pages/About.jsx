@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Sun, Target, Eye, Heart, Award, Building, Leaf, Users } from "lucide-react";
 import { IMG, BRAND } from "@/lib/data";
 import CTASection from "@/components/sections/CTASection";
+import ProgressiveImage from "@/components/ProgressiveImage";
 
 const MILESTONES = [
   { year: "2015", title: "Founded in Agartala", desc: "Started with a vision: bring affordable solar to North-East India." },
@@ -18,7 +19,7 @@ export default function About() {
       {/* Header */}
       <section className="relative pt-44 pb-20 bg-[#0A1128] text-white overflow-hidden">
         <div className="absolute inset-0 opacity-30">
-          <img src={IMG.engineers1} alt="" className="w-full h-full object-cover" />
+          <ProgressiveImage src={IMG.engineers1} priority className="absolute inset-0 !bg-transparent" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-[#0A1128] via-[#0A1128]/85 to-transparent" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -36,8 +37,8 @@ export default function About() {
       <section className="py-20 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
           <div className="relative">
-            <img src={IMG.engineers2} alt="Engineers" className="rounded-3xl shadow-2xl shadow-blue-900/15 w-full aspect-[4/5] object-cover" />
-            <img src={IMG.heroDrone} alt="Drone" className="hidden md:block absolute -bottom-12 -right-8 w-56 h-56 object-cover rounded-3xl border-8 border-white shadow-xl" />
+            <ProgressiveImage src={IMG.engineers2} alt="Engineers" sizes="(min-width: 1024px) 600px, 100vw" className="rounded-3xl shadow-2xl shadow-blue-900/15 aspect-[4/5]" />
+            <ProgressiveImage src={IMG.heroDrone} alt="Drone" sizes="224px" className="hidden md:block absolute -bottom-12 -right-8 w-56 h-56 rounded-3xl border-8 border-white shadow-xl" />
           </div>
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Our Mission, Vision & Values</p>

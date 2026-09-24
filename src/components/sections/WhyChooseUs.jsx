@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { WHY_CHOOSE } from "@/lib/data";
-import { fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
+import { fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING, gridReveal } from "@/lib/animations";
 import { ShieldCheck, Users, Award, Rocket, Wrench, Landmark, Sun, ReceiptText } from "lucide-react";
 
 const ICONS = { ShieldCheck, Users, Award, Rocket, Wrench, Landmark, Sun, ReceiptText };
@@ -22,14 +22,15 @@ export default function WhyChooseUs() {
             return (
               <motion.div
                 key={w.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: (i % 4) * 0.08 }}
-                className="group relative p-6 rounded-2xl bg-white border border-slate-100 hover:border-[#F26A21]/40 hover:shadow-xl hover:-translate-y-1 transition-all overflow-hidden"
+                variants={gridReveal}
+                initial="hidden"
+                whileInView="show"
+                viewport={VIEWPORT_ONCE}
+                custom={i % 4}
+                className="hover-lift group relative p-6 rounded-2xl bg-white border border-slate-100 hover:border-[#F26A21]/40 hover:shadow-xl transition-lift duration-500 overflow-hidden"
                 data-testid={`why-card-${i}`}
               >
-                <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-[#F26A21]/0 group-hover:bg-[#F26A21]/8 transition-all duration-500" />
+                <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-[#F26A21]/0 group-hover:bg-[#F26A21]/8 group-hover:scale-125 transition-[background-color,transform] duration-700" />
                 <div className="relative">
                   <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#F26A21]/15 to-[#1B3A8C]/15 grid place-items-center group-hover:scale-110 transition-transform">
                     <Icon className="h-6 w-6 text-[#F26A21]" />

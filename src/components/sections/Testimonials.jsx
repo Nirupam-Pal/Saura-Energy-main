@@ -74,7 +74,7 @@ export default function Testimonials() {
                   key={k}
                   onClick={() => setI(k)}
                   aria-label={`Go to testimonial ${k + 1}`}
-                  className={`h-2 rounded-full transition-all ${k === i ? "w-8 bg-[#F26A21]" : "w-2 bg-slate-300"}`}
+                  className={`h-2 rounded-full transition-[width,background-color] duration-500 ${k === i ? "w-8 bg-[#F26A21]" : "w-2 bg-slate-300"}`}
                 />
               ))}
             </div>

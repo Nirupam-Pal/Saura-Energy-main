@@ -73,8 +73,30 @@ module.exports = {
   			}
   		},
   		animation: {
-  			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-down': 'accordion-down 0.35s cubic-bezier(0.22, 1, 0.36, 1)',
+  			'accordion-up': 'accordion-up 0.3s cubic-bezier(0.22, 1, 0.36, 1)'
+  		},
+  		// Motion tokens. DEFAULT replaces Tailwind's stock curve for every
+  		// `transition-*` class on the site, so hovers decelerate naturally
+  		// instead of moving at a mechanical constant-ish rate.
+  		transitionTimingFunction: {
+  			DEFAULT: 'cubic-bezier(0.22, 1, 0.36, 1)',
+  			'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
+  			'out-quint': 'cubic-bezier(0.22, 1, 0.36, 1)',
+  			'in-out-smooth': 'cubic-bezier(0.65, 0, 0.35, 1)',
+  			spring: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+  		},
+  		// `transition-lift`: hover-lift cards and buttons. Lists the exact
+  		// properties that change instead of `transition-all`, which also
+  		// animates layout properties and makes the browser re-layout.
+  		transitionProperty: {
+  			lift: 'transform, translate, scale, box-shadow, border-color, background-color, color'
+  		},
+  		transitionDuration: {
+  			DEFAULT: '300ms',
+  			400: '400ms',
+  			600: '600ms',
+  			800: '800ms'
   		}
   	}
   },

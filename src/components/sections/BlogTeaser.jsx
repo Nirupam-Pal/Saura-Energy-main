@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, Calendar } from "lucide-react";
 import { BLOG_POSTS, IMG } from "@/lib/data";
 import { fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
+import ProgressiveImage from "@/components/ProgressiveImage";
 
 export default function BlogTeaser() {
   return (
@@ -15,8 +16,8 @@ export default function BlogTeaser() {
               Solar knowledge, <span className="text-[#1B3A8C]">demystified.</span>
             </h2>
           </div>
-          <Link to="/blog" className="text-[#F26A21] font-bold inline-flex items-center gap-1.5 hover:gap-2.5 transition-all" data-testid="blog-view-all">
-            View all insights <ArrowUpRight className="h-4 w-4" />
+          <Link to="/blog" className="group text-[#F26A21] font-bold inline-flex items-center gap-1.5" data-testid="blog-view-all">
+            View all insights <ArrowUpRight className="h-4 w-4 transition-transform duration-500 ease-spring group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
 
@@ -30,10 +31,10 @@ export default function BlogTeaser() {
               custom={i}
               variants={fadeUpVariant}
               data-testid={`blog-card-${p.id}`}
-              className="group rounded-2xl bg-white overflow-hidden border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all"
+              className="hover-lift group rounded-2xl bg-white overflow-hidden border border-slate-100 hover:shadow-xl transition-lift duration-500"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
-                <img src={IMG[p.image]} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <ProgressiveImage src={IMG[p.image]} alt={p.title} sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="absolute inset-0" imgClassName="duration-1000 group-hover:scale-110" />
                 <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur text-[10px] font-bold uppercase tracking-widest text-[#1B3A8C]">
                   {p.category}
                 </span>
