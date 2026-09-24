@@ -62,10 +62,10 @@ export default function Footer() {
               India's trusted partner for premium solar installations. We engineer, install and service rooftop solar systems across the North-East — backed by the PM Surya Ghar scheme.
             </p>
             <div className="flex gap-3 mt-6">
-              <a href={`https://instagram.com/${BRAND.instagram}`} target="_blank" rel="noreferrer" aria-label="Instagram" data-testid="footer-instagram" className="h-10 w-10 rounded-full grid place-items-center bg-white/8 hover:bg-[#F26A21] transition border border-white/10">
+              <a href={BRAND.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram" data-testid="footer-instagram" className="h-10 w-10 rounded-full grid place-items-center bg-white/8 hover:bg-[#F26A21] transition border border-white/10">
                 <Instagram className="h-4.5 w-4.5" />
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook" data-testid="footer-facebook" className="h-10 w-10 rounded-full grid place-items-center bg-white/8 hover:bg-[#1B3A8C] transition border border-white/10">
+              <a href={BRAND.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Facebook" data-testid="footer-facebook" className="h-10 w-10 rounded-full grid place-items-center bg-white/8 hover:bg-[#1B3A8C] transition border border-white/10">
                 <Facebook className="h-4.5 w-4.5" />
               </a>
             </div>
