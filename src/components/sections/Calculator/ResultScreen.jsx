@@ -42,8 +42,10 @@ export default function ResultScreen({ result, onBack, onRestart }) {
           <RecommendationCard
             icon={<Cpu className="h-6 w-6 text-[#F26A21]" />}
             title="Recommended Inverter"
-            value={recommendedInverter.label}
-            subtitle={`${recommendedInverter.va} VA`}
+            value={recommendedInverter.va}
+            unit="VA"
+            accent="text-[#F26A21]"
+            subtitle="Inverter capacity"
             testId="load-calc-inverter-result"
             warning={recommendedInverter.exceedsCatalog}
             warningText="Load exceeds our standard range — a custom/industrial solution is recommended."
@@ -51,8 +53,10 @@ export default function ResultScreen({ result, onBack, onRestart }) {
           <RecommendationCard
             icon={<BatteryCharging className="h-6 w-6 text-[#2BA84A]" />}
             title="Recommended Battery"
-            value={`${batteryCount} X ${recommendedBattery.label}`}
-            subtitle={`${recommendedBattery.ah} AH (12 V)`}
+            value={recommendedBattery.ah}
+            unit="Ah"
+            accent="text-[#2BA84A]"
+            subtitle={`12 V battery${batteryCount > 1 ? ` × ${batteryCount} in series` : ""}`}
             testId="load-calc-battery-result"
             warning={recommendedBattery.exceedsCatalog}
             warningText="Backup requirement exceeds our standard battery range."
@@ -87,7 +91,7 @@ function Metric({ label, value }) {
   );
 }
 
-function RecommendationCard({ icon, title, value, subtitle, testId, warning, warningText }) {
+function RecommendationCard({ icon, title, value, unit, accent, subtitle, testId, warning, warningText }) {
   return (
     <div
       data-testid={testId}
@@ -97,8 +101,11 @@ function RecommendationCard({ icon, title, value, subtitle, testId, warning, war
         {icon}
         <span className="text-xs uppercase tracking-widest text-white/60 font-bold">{title}</span>
       </div>
-      <div className="font-display text-2xl font-extrabold mt-2">{value}</div>
-      {subtitle && <div className="text-sm text-white/60 font-semibold mt-0.5">{subtitle}</div>}
+      <div className="mt-3 flex items-baseline gap-2">
+        <span className={`font-display text-5xl md:text-6xl font-extrabold leading-none tracking-tight ${accent}`}>{value}</span>
+        <span className="font-display text-2xl font-bold text-white">{unit}</span>
+      </div>
+      {subtitle && <div className="text-sm text-white/60 font-semibold mt-2">{subtitle}</div>}
       {warning && (
         <div className="mt-2 flex items-start gap-1.5 text-amber-400 text-xs">
           <AlertTriangle className="h-3.5 w-3.5 flex-shrink-0 mt-0.5" />
