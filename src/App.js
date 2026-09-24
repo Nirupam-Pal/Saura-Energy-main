@@ -12,6 +12,7 @@ import About from "@/pages/About";
 import ServicesPage from "@/pages/ServicesPage";
 import ServiceDetail from "@/pages/ServiceDetail";
 import ProjectsPage from "@/pages/ProjectsPage";
+import ProjectDetail from "@/pages/ProjectDetail";
 import CalculatorPage from "@/pages/CalculatorPage";
 import BlogPage from "@/pages/BlogPage";
 import ContactPage from "@/pages/ContactPage";
@@ -35,6 +36,7 @@ function App() {
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/services/:slug" element={<ServiceDetail />} />
             <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/calculator" element={<CalculatorPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/contact" element={<ContactPage />} />

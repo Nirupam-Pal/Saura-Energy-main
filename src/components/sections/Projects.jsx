@@ -1,32 +1,14 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, GitCompare } from "lucide-react";
-import { PROJECTS, IMG } from "@/lib/data";
-import { PROJECT_PAIRS } from "@/lib/projectPairs";
-import BeforeAfter from "@/components/BeforeAfter";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ArrowRight, ArrowUpRight, Images, MapPin } from "lucide-react";
+import { PROJECT_GALLERY } from "@/lib/projectGallery";
+import { VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 
-const FILTERS = ["All", "Residential", "Commercial", "Industrial", "EV"];
+// Featured card spans 2 columns, so 5 projects fill a clean 3-column grid.
+const HOME_PROJECT_COUNT = 5;
 
 export default function Projects() {
-  const [active, setActive] = useState("All");
-  const [compareId, setCompareId] = useState(null);
-  const [galleryProject, setGalleryProject] = useState(null);
-  const [galleryIndex, setGalleryIndex] = useState(0);
-  const filtered = active === "All" ? PROJECTS : PROJECTS.filter((p) => p.category === active);
-
-  const openGallery = (projectId) => {
-    setGalleryProject(projectId);
-    setGalleryIndex(0);
-  };
-
-  const activeGalleryProject = galleryProject
-    ? PROJECTS.find((project) => project.id === galleryProject)
-    : null;
-  // Each project owns its own `gallery` array (see src/lib/data.js) — never
-  // a shared/global list — so images from one project can't leak into another.
-  const galleryImages = activeGalleryProject?.gallery || [];
+  const projects = PROJECT_GALLERY.slice(0, HOME_PROJECT_COUNT);
 
   return (
     <section className="relative py-24 md:py-32 bg-slate-50/70" data-testid="projects-section">
@@ -38,184 +20,69 @@ export default function Projects() {
               Built across <span className="text-[#1B3A8C]">North-East India.</span>
             </h2>
             <p className="mt-4 text-lg text-slate-600">
-              Drone-captured installs from our 500+ commissioned plants. <span className="text-[#F26A21] font-semibold">Tap "Before/After"</span> to see the transformation.
+              Real photos from our installation sites. <span className="text-[#F26A21] font-semibold">Tap any project</span> to see the full gallery.
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {FILTERS.map((f) => (
-              <button
-                key={f}
-                onClick={() => setActive(f)}
-                data-testid={`project-filter-${f.toLowerCase()}`}
-                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
-                  active === f
-                    ? "bg-[#1B3A8C] text-white shadow-md"
-                    : "bg-white text-slate-600 border border-slate-200 hover:border-[#1B3A8C] hover:text-[#1B3A8C]"
-                }`}
-              >
-                {f}
-              </button>
-            ))}
-          </div>
+          <Link
+            to="/projects"
+            data-testid="projects-view-all"
+            className="self-start lg:self-auto inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#1B3A8C] text-white text-sm font-semibold shadow-md hover:bg-[#F26A21] transition-colors"
+          >
+            View all {PROJECT_GALLERY.length} projects <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((p, i) => {
-              const pair = PROJECT_PAIRS[p.image];
-              const showCompare = compareId === p.id && pair;
-              return (
-                <motion.div
-                  key={p.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ delay: (i % 3) * 0.06, duration: 0.5, ease: SMOOTH_EASING }}
-                  className={`group relative rounded-3xl overflow-hidden bg-white border border-slate-100 hover:shadow-2xl hover:shadow-blue-900/10 transition-all hover:-translate-y-1 ${i === 0 ? "lg:col-span-2 lg:row-span-1" : ""}`}
+          {projects.map((p, i) => {
+            const featured = i === 0;
+            return (
+              <motion.div
+                key={p.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={VIEWPORT_ONCE}
+                transition={{ delay: (i % 3) * 0.08, duration: 0.6, ease: SMOOTH_EASING }}
+                className={featured ? "sm:col-span-2" : ""}
+              >
+                <Link
+                  to={`/projects/${p.id}`}
                   data-testid={`project-card-${p.id}`}
-                  onClick={() => openGallery(p.id)}
+                  className="group block rounded-3xl overflow-hidden bg-white border border-slate-100 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F26A21] focus-visible:ring-offset-2"
                 >
-                  <div className={`relative ${i === 0 ? "h-72 lg:h-96" : "h-64"} overflow-hidden`}>
-                    {showCompare ? (
-                      <BeforeAfter
-                        before={pair.before}
-                        after={pair.after}
-                        alt={p.title}
-                        height="h-full absolute inset-0"
-                        testid={`before-after-${p.id}`}
-                      />
-                    ) : (
-                      <>
-                        <img src={IMG[p.image]} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
-                      </>
-                    )}
+                  <div className="relative h-72 lg:h-96 overflow-hidden">
+                    <img
+                      src={p.cover}
+                      alt={p.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/85 via-slate-900/20 to-transparent transition-colors duration-500 group-hover:from-slate-950/90 group-hover:via-slate-900/40" />
 
-                    <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur text-[10px] font-bold uppercase tracking-widest text-[#1B3A8C] z-10">
-                      {p.category}
+                    <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur text-[10px] font-bold uppercase tracking-widest text-[#1B3A8C]">
+                      <Images className="h-3 w-3" /> {p.images.length} photos
                     </span>
-                    <span className="absolute top-4 right-4 px-3 py-1 rounded-full bg-[#F26A21] text-white text-xs font-bold z-10">{p.size}</span>
+                    <span className="absolute top-4 right-4 h-10 w-10 grid place-items-center rounded-full bg-[#F26A21] text-white opacity-0 -translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+                      <ArrowUpRight className="h-5 w-5" />
+                    </span>
 
-                    {!showCompare && (
-                      <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <h3 className="font-display text-xl md:text-2xl font-bold text-white leading-tight">{p.title}</h3>
-                        <div className="mt-2 flex items-center justify-between text-white/80">
-                          <span className="inline-flex items-center gap-1.5 text-sm">
-                            <MapPin className="h-3.5 w-3.5" /> {p.location}
-                          </span>
-                          <span className="text-xs">{p.year}</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Footer with B/A toggle */}
-                  {pair && (
-                    <div className="flex items-center justify-between gap-3 p-4 border-t border-slate-100 bg-white">
-                      <div className="min-w-0">
-                        {showCompare && (
-                          <>
-                            <h3 className="font-display text-sm font-bold text-slate-900 truncate">{p.title}</h3>
-                            <span className="inline-flex items-center gap-1.5 text-xs text-slate-500">
-                              <MapPin className="h-3 w-3" /> {p.location}
-                            </span>
-                          </>
-                        )}
-                        {!showCompare && (
-                          <span className="text-xs text-slate-500 font-medium">{p.year} · {p.size}</span>
-                        )}
-                      </div>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setCompareId((c) => (c === p.id ? null : p.id));
-                        }}
-                        data-testid={`compare-toggle-${p.id}`}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
-                          showCompare
-                            ? "bg-[#1B3A8C] text-white"
-                            : "bg-orange-50 text-[#F26A21] hover:bg-[#F26A21] hover:text-white"
-                        }`}
-                      >
-                        <GitCompare className="h-3.5 w-3.5" />
-                        {showCompare ? "Hide compare" : "Before / After"}
-                      </button>
+                    <div className="absolute bottom-0 left-0 right-0 p-6 transition-transform duration-500 group-hover:-translate-y-1">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#F26A21]">
+                        <MapPin className="h-3.5 w-3.5" /> Solar Installation
+                      </span>
+                      <h3 className={`mt-1.5 font-display font-bold text-white leading-tight ${featured ? "text-2xl md:text-3xl" : "text-xl md:text-2xl"}`}>
+                        {p.title}
+                      </h3>
+                      <span className="mt-2 block max-h-0 overflow-hidden text-sm text-white/80 opacity-0 transition-all duration-500 group-hover:max-h-6 group-hover:opacity-100">
+                        View project gallery →
+                      </span>
                     </div>
-                  )}
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
-
-      <Dialog open={!!galleryProject} onOpenChange={(open) => { if (!open) setGalleryProject(null); }}>
-        {galleryProject && (
-          <DialogContent className="max-w-6xl mx-4 sm:mx-auto p-4 md:p-6 max-h-[90vh] overflow-y-auto">
-            <DialogTitle className="text-xl font-bold text-slate-900">
-              {activeGalleryProject?.title || "Project Gallery"}
-            </DialogTitle>
-            <p className="text-sm text-slate-600 mb-4">
-              Browse the selected project images. Tap thumbnails or use navigation arrows.
-            </p>
-            <div className="grid gap-4">
-              <div className="relative overflow-hidden rounded-3xl bg-slate-950 shadow-xl h-[min(60vh,520px)]">
-                <AnimatePresence mode="sync" initial={false}>
-                  <motion.img
-                    key={galleryIndex}
-                    src={galleryImages[galleryIndex]}
-                    alt={`${activeGalleryProject?.title || "Project"} — photo ${galleryIndex + 1}`}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2, ease: SMOOTH_EASING }}
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                </AnimatePresence>
-                {galleryImages.length > 1 && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={(e) => { e.stopPropagation(); setGalleryIndex((idx) => Math.max(idx - 1, 0)); }}
-                      disabled={galleryIndex === 0}
-                      aria-label="Previous image"
-                      className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-3 text-white hover:bg-black disabled:opacity-30 disabled:pointer-events-none"
-                    >
-                      ‹
-                    </button>
-                    <button
-                      type="button"
-                      onClick={(e) => { e.stopPropagation(); setGalleryIndex((idx) => Math.min(idx + 1, galleryImages.length - 1)); }}
-                      disabled={galleryIndex === galleryImages.length - 1}
-                      aria-label="Next image"
-                      className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-3 text-white hover:bg-black disabled:opacity-30 disabled:pointer-events-none"
-                    >
-                      ›
-                    </button>
-                    <span className="absolute bottom-3 right-4 px-2.5 py-1 rounded-full bg-black/60 text-white text-xs font-semibold">
-                      {galleryIndex + 1} / {galleryImages.length}
-                    </span>
-                  </>
-                )}
-              </div>
-              <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-                {galleryImages.map((src, idx) => (
-                  <button
-                    key={src}
-                    type="button"
-                    onClick={(e) => { e.stopPropagation(); setGalleryIndex(idx); }}
-                    aria-label={`View photo ${idx + 1}`}
-                    className={`overflow-hidden rounded-2xl border transition-colors ${galleryIndex === idx ? "border-[#1B3A8C]" : "border-slate-200 hover:border-slate-300"}`}
-                  >
-                    <img src={src} alt={`${activeGalleryProject?.title || "Project"} thumbnail ${idx + 1}`} className="h-20 sm:h-24 w-full object-cover transition-transform duration-300 hover:scale-105" />
-                  </button>
-                ))}
-              </div>
-            </div>
-          </DialogContent>
-        )}
-      </Dialog>
     </section>
   );
 }
