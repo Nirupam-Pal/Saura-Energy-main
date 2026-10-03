@@ -1,8 +1,14 @@
+import Seo, { LOCAL_BUSINESS_LD } from "@/components/Seo";
 import Contact from "@/components/sections/Contact";
 
 export default function ContactPage() {
   return (
     <>
+      <Seo
+        title="Contact Us — Free Solar Site Survey"
+        description="Book a free rooftop solar site survey in Agartala and across Tripura. Call +91 98620 17266 or WhatsApp Saura Energy."
+        jsonLd={LOCAL_BUSINESS_LD}
+      />
       <section className="relative pt-44 pb-16 bg-[#0A1128] text-white overflow-hidden">
         <div className="absolute -top-32 right-0 w-[500px] h-[500px] rounded-full bg-[#F26A21]/20 blur-[120px]" />
         <div className="absolute -bottom-32 left-0 w-[500px] h-[500px] rounded-full bg-[#1B3A8C]/30 blur-[120px]" />

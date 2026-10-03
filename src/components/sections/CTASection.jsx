@@ -39,7 +39,7 @@ export default function CTASection() {
             </Link>
             <Link to="/calculator">
               <Button variant="outline" data-testid="big-cta-quote" className="rounded-full border-white/30 bg-white/10 hover:bg-white/20 text-white px-7 py-6 text-base font-semibold backdrop-blur">
-                Get Instant Quote <ArrowRight className="ml-2 h-4 w-4" />
+                Size Your Backup <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
             <a href={`tel:${BRAND.phone}`}>

@@ -4,8 +4,23 @@
     {
       "name": "saura-energy-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "start"],
+      "runtimeArgs": [
+        "run",
+        "start"
+      ],
       "port": 3000
+    },
+    {
+      "name": "saura-energy-build",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4173",
+        "--directory",
+        "build"
+      ],
+      "port": 4173
     }
   ]
 }

@@ -90,7 +90,7 @@ export default function Footer() {
               <li><Link to="/about" className="text-white/80 hover:text-[#F26A21] transition">About</Link></li>
               <li><Link to="/projects" className="text-white/80 hover:text-[#F26A21] transition">Projects</Link></li>
               <li><Link to="/blog" className="text-white/80 hover:text-[#F26A21] transition">Insights</Link></li>
-              <li><Link to="/calculator" className="text-white/80 hover:text-[#F26A21] transition">Savings Calculator</Link></li>
+              <li><Link to="/calculator" className="text-white/80 hover:text-[#F26A21] transition">Load Calculator</Link></li>
               <li><Link to="/contact" className="text-white/80 hover:text-[#F26A21] transition">Contact</Link></li>
             </ul>
           </div>

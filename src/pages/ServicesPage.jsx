@@ -1,10 +1,15 @@
 import Services from "@/components/sections/Services";
+import Seo from "@/components/Seo";
 import CTASection from "@/components/sections/CTASection";
 import Process from "@/components/sections/Process";
 
 export default function ServicesPage() {
   return (
     <>
+      <Seo
+        title="Solar Services"
+        description="Solar panels, inverters, battery storage, solar street lights and water heaters — designed, installed and serviced by Saura Energy in Tripura."
+      />
       <section className="relative pt-44 pb-20 bg-[#0A1128] text-white overflow-hidden">
         <div className="absolute -top-32 right-0 w-[500px] h-[500px] rounded-full bg-[#F26A21]/20 blur-[120px]" />
         <div className="absolute -bottom-32 left-0 w-[500px] h-[500px] rounded-full bg-[#1B3A8C]/30 blur-[120px]" />

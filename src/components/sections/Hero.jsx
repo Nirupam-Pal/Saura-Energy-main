@@ -66,7 +66,7 @@ export default function Hero() {
             </Link>
             <Link to="/calculator" className="w-full sm:w-auto">
               <Button variant="outline" data-testid="hero-cta-calculator" className="w-full sm:w-auto rounded-full border-white/30 bg-white/10 hover:bg-white/20 text-white px-6 py-5 sm:px-7 sm:py-6 text-base sm:text-base font-semibold backdrop-blur-md justify-center flex items-center">
-                <PlayCircle className="mr-2 h-5 w-5" /> Calculate Savings
+                <PlayCircle className="mr-2 h-5 w-5" /> Size Your Backup
               </Button>
             </Link>
           </motion.div>

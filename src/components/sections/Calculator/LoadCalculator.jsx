@@ -108,7 +108,7 @@ export default function LoadCalculator() {
           <p className="mt-3 text-slate-500 max-w-xl mx-auto">
             Pick your appliances, and we'll size the exact backup power you need.
           </p> */}
-          <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Savings Calculator</p>
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Load Calculator</p>
           <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.05]">
             Find the right <span className="text-[#2BA84A]">inverter &amp; battery</span> for your home.
           </h2>

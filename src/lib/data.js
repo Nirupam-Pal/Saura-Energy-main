@@ -1,5 +1,8 @@
 // Brand constants & seed data for Saura Energy
 
+// Production origin, used for canonical URLs, Open Graph tags and the sitemap.
+export const SITE_URL = "https://sauraenergy.co.in";
+
 export const BRAND = {
   name: "Saura Energy",
   tagline: "Don't just sell solar. Earn trust.",
@@ -13,11 +16,13 @@ export const BRAND = {
   landline: "0381-291-1229",
   whatsapp: "919862017266",
   address: "Badharghat, near Vivekananda Market, Godown Road, Agartala, Tripura (W) – 799003",
-  email: "hello@sauraenergy.solars",
+  email: "sauraenergy1@gmail.com",
   instagram: "sauraenergy.solars",
   instagramUrl: "https://www.instagram.com/sauraenergy.solars",
   facebook: "Saura Energy Solars",
-  facebookUrl: "https://www.facebook.com/people/Saura-Energy-Solars/61586256341535/",
+  // Stable ID-based Page URL. Once a username is set on the Page (Settings >
+  // Page setup > Username), switch to https://www.facebook.com/<username>.
+  facebookUrl: "https://www.facebook.com/profile.php?id=61586256341535",
   logo: "https://customer-assets.emergentagent.com/job_a7c210ce-7b69-4f02-9869-f283b1d5da9b/artifacts/nuws6j8j_Saura%20Energy%20logo%202%20%28W%29.jpg",
   poster1: "https://customer-assets.emergentagent.com/job_a7c210ce-7b69-4f02-9869-f283b1d5da9b/artifacts/w4btopx6_saura%20energy%20poster%2045.jpg",
   poster2: "https://customer-assets.emergentagent.com/job_a7c210ce-7b69-4f02-9869-f283b1d5da9b/artifacts/hlyw2ny6_saura%20energy%20poster01.png",
@@ -193,6 +198,18 @@ export const PROJECTS = [
 // 2. Replace the corresponding string(s) in that project's `gallery` array
 //    above with "/images/projects/project-1/installation-1.jpg" etc.
 // No other file needs to change — the gallery UI reads this array directly.
+
+// Commercial capacity shown on the homepage. Each entry needs a real site
+// name and its capacity in kW; the section stays hidden until at least one
+// list has entries.
+export const COMMERCIAL_PROJECTS = {
+  completed: [
+    // { name: "Site name, Town", kw: 50 },
+  ],
+  upcoming: [
+    // { name: "Site name", kw: 30 },
+  ],
+};
 
 export const TESTIMONIALS = [
   { name: "Anirban Dey", role: "Homeowner, Agartala", quote: "From subsidy paperwork to net metering, Saura Energy handled everything. My ₹4,200 monthly bill is now ₹380. Honest pricing and brilliant engineers.", rating: 5 },

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { BLOG_POSTS, IMG, FAQS } from "@/lib/data";
 import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import Seo from "@/components/Seo";
 import ProgressiveImage from "@/components/ProgressiveImage";
 import { VIEWPORT_ONCE, gridReveal } from "@/lib/animations";
 
@@ -21,6 +22,10 @@ export default function BlogPage() {
 
   return (
     <>
+      <Seo
+        title="Solar Guides & Insights"
+        description="Guides on the PM Surya Ghar subsidy, choosing solar panels, battery backup and solar costs for homes and businesses in North-East India."
+      />
       <section className="relative pt-44 pb-16 bg-[#0A1128] text-white overflow-hidden">
         <div className="absolute -top-32 right-0 w-[500px] h-[500px] rounded-full bg-[#F26A21]/20 blur-[120px]" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

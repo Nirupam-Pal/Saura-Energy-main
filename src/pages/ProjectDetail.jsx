@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Images, MapPin, X, ZoomIn } from "lucide-react";
+import Seo from "@/components/Seo";
 import CTASection from "@/components/sections/CTASection";
 import ProgressiveImage from "@/components/ProgressiveImage";
 import { PROJECT_GALLERY, getProjectById } from "@/lib/projectGallery";
@@ -163,6 +164,11 @@ export default function ProjectDetail() {
 
   return (
     <>
+      <Seo
+        title={`${project.title} Solar Installation`}
+        description={`Photos of the Saura Energy rooftop solar installation at ${project.title}, Tripura.`}
+        image={project.cover}
+      />
       <section className="relative pt-40 pb-20 bg-[#0A1128] text-white overflow-hidden">
         {/* Above the fold: high priority, not lazy. It sits at 35% opacity under a gradient, so 1200px is plenty. */}
         <ProgressiveImage src={project.cover} priority sizes="(min-width: 1024px) 1200px, 100vw" className="absolute inset-0 opacity-35 !bg-transparent" />

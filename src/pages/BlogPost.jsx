@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Calendar, Clock, Info, MessageCircle, Phone } from "lucide-react";
 import { BLOG_POSTS, BRAND, IMG } from "@/lib/data";
 import { BLOG_ARTICLES } from "@/lib/blogArticles";
+import Seo from "@/components/Seo";
 import ProgressiveImage from "@/components/ProgressiveImage";
 import CTASection from "@/components/sections/CTASection";
 import { VIEWPORT_ONCE, fadeUpVariant, gridReveal } from "@/lib/animations";
@@ -126,6 +127,7 @@ export default function BlogPost() {
 
   return (
     <>
+      <Seo title={post.title} description={post.excerpt} image={IMG[post.image]} type="article" />
       <section className="relative pt-40 pb-16 md:pb-20 bg-[#0A1128] text-white overflow-hidden">
         <ProgressiveImage src={IMG[post.image]} priority sizes="(min-width: 1024px) 1200px, 100vw" className="absolute inset-0 opacity-30 !bg-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0A1128] via-[#0A1128]/90 to-[#0A1128]/40" />

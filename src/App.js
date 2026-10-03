@@ -18,6 +18,7 @@ import CalculatorPage from "@/pages/CalculatorPage";
 import BlogPage from "@/pages/BlogPage";
 import BlogPost from "@/pages/BlogPost";
 import ContactPage from "@/pages/ContactPage";
+import NotFound from "@/pages/NotFound";
 import { DEFAULT_TRANSITION, pageTransition } from "@/lib/animations";
 
 function ScrollToTop() {
@@ -58,6 +59,7 @@ function App() {
                 <Route path="/blog" element={<BlogPage />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/contact" element={<ContactPage />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </PageTransition>
           </main>

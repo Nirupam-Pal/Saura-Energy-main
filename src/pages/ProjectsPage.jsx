@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Seo from "@/components/Seo";
 import CTASection from "@/components/sections/CTASection";
 import ProjectCard from "@/components/ProjectCard";
 import { PROJECT_GALLERY } from "@/lib/projectGallery";
@@ -7,6 +8,10 @@ import { VIEWPORT_ONCE, gridReveal } from "@/lib/animations";
 export default function ProjectsPage() {
   return (
     <>
+      <Seo
+        title="Solar Projects"
+        description="Photos from Saura Energy rooftop solar installations at schools, colleges, homes and businesses across Tripura."
+      />
       <section className="relative pt-44 pb-20 bg-[#0A1128] text-white overflow-hidden">
         <div className="absolute -top-32 right-0 w-[500px] h-[500px] rounded-full bg-[#F26A21]/20 blur-[120px]" />
         <div className="absolute -bottom-32 left-0 w-[500px] h-[500px] rounded-full bg-[#1B3A8C]/30 blur-[120px]" />

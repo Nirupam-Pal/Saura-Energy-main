@@ -1,3 +1,4 @@
+import Seo, { LOCAL_BUSINESS_LD } from "@/components/Seo";
 import Hero from "@/components/sections/Hero";
 import TrustStrip from "@/components/sections/TrustStrip";
 import AboutSnippet from "@/components/sections/AboutSnippet";
@@ -16,6 +17,11 @@ import LoadCalculator from "@/components/sections/Calculator/LoadCalculator";
 export default function Home() {
   return (
     <>
+      <Seo
+        title="Saura Energy | Rooftop Solar Installer in Agartala, Tripura"
+        description="Rooftop solar for homes, schools and businesses across Tripura and North-East India. PM Surya Ghar subsidy help, inverters, battery backup and free site survey."
+        jsonLd={LOCAL_BUSINESS_LD}
+      />
       <Hero />
       <TrustStrip />
       <AboutSnippet />

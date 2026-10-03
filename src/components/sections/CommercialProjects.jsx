@@ -1,81 +1,75 @@
 import AnimatedCounter from "@/components/AnimatedCounter";
+import { COMMERCIAL_PROJECTS } from "@/lib/data";
+
+// Grid width follows the number of entries (capped) so 1–3 cards fill the row.
+const COLS = { 1: "grid-cols-1", 2: "grid-cols-2", 3: "grid-cols-3" };
+
+function ProjectGroup({ title, subtitle, badge, projects, frame, numberGradient, large }) {
+  return (
+    <div className={`rounded-2xl p-[1px] bg-gradient-to-r ${frame} shadow-lg`}>
+      <div className="bg-white rounded-2xl p-6 h-full">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-xl font-bold text-slate-900">{title}</h3>
+            <p className="mt-2 text-sm text-slate-600">{subtitle}</p>
+          </div>
+          <div className="text-sm text-slate-500 uppercase tracking-wide">{badge}</div>
+        </div>
+
+        <div className={`mt-6 grid ${COLS[Math.min(projects.length, large ? 2 : 3)]} gap-4`}>
+          {projects.map((p) => (
+            <div
+              key={p.name}
+              className={`rounded-lg ${large ? "p-5" : "p-4 text-center"} bg-gradient-to-tr from-white/80 to-slate-50 border border-slate-100 shadow-sm`}
+            >
+              <div className={`${large ? "text-4xl md:text-5xl" : "text-2xl md:text-3xl"} font-extrabold bg-clip-text text-transparent bg-gradient-to-r ${numberGradient}`}>
+                <AnimatedCounter to={p.kw} duration={1.6} suffix=" kW" />
+              </div>
+              <div className={`${large ? "mt-2" : "mt-1"} text-sm text-slate-600`}>{p.name}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function CommercialProjects() {
+  const { completed, upcoming } = COMMERCIAL_PROJECTS;
+  if (!completed.length && !upcoming.length) return null;
+
   return (
     <section className="py-20 bg-gradient-to-b from-white via-slate-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mb-10">
           <h2 className="font-display text-3xl md:text-4xl font-extrabold text-slate-900">
-            Commercial Solar Project
+            Commercial Solar Projects
           </h2>
           <p className="mt-3 text-slate-600">Completed and upcoming commercial projects with installed and planned capacities.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Completed */}
-          <div className="rounded-2xl p-[1px] bg-gradient-to-r from-[#F26A21] via-[#1B3A8C] to-[#2BA84A] shadow-lg">
-            <div className="bg-white rounded-2xl p-6 h-full">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900">Completed Project</h3>
-                  <p className="mt-2 text-sm text-slate-600">Capacities commissioned and operational.</p>
-                </div>
-                <div className="text-sm text-slate-500 uppercase tracking-wide">Status</div>
-              </div>
-
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="rounded-lg p-5 bg-gradient-to-tr from-white/80 to-slate-50 border border-slate-100 shadow-sm">
-                  <div className="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#1B3A8C] to-[#F26A21]">
-                    <AnimatedCounter to={50} duration={1.6} suffix=" kW" />
-                  </div>
-                  <div className="mt-2 text-sm text-slate-600">Project A</div>
-                </div>
-
-                <div className="rounded-lg p-5 bg-gradient-to-tr from-white/80 to-slate-50 border border-slate-100 shadow-sm">
-                  <div className="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#1B3A8C] to-[#F26A21]">
-                    <AnimatedCounter to={30} duration={1.6} suffix=" kW" />
-                  </div>
-                  <div className="mt-2 text-sm text-slate-600">Project B</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Upcoming */}
-          <div className="rounded-2xl p-[1px] bg-gradient-to-r from-[#2BA84A] via-[#1B3A8C] to-[#F26A21] shadow-lg">
-            <div className="bg-white rounded-2xl p-6 h-full">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900">Upcoming Project</h3>
-                  <p className="mt-2 text-sm text-slate-600">Planned capacities in the pipeline.</p>
-                </div>
-                <div className="text-sm text-slate-500 uppercase tracking-wide">Planned</div>
-              </div>
-
-              <div className="mt-6 grid grid-cols-3 gap-4">
-                <div className="rounded-lg p-4 bg-gradient-to-tr from-white/80 to-slate-50 border border-slate-100 shadow-sm text-center">
-                  <div className="text-2xl md:text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#2BA84A] to-[#1B3A8C]">
-                    <AnimatedCounter to={30} duration={1.6} suffix=" kW" />
-                  </div>
-                  <div className="mt-1 text-sm text-slate-600">Site 1</div>
-                </div>
-
-                <div className="rounded-lg p-4 bg-gradient-to-tr from-white/80 to-slate-50 border border-slate-100 shadow-sm text-center">
-                  <div className="text-2xl md:text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#2BA84A] to-[#1B3A8C]">
-                    <AnimatedCounter to={50} duration={1.6} suffix=" kW" />
-                  </div>
-                  <div className="mt-1 text-sm text-slate-600">Site 2</div>
-                </div>
-
-                <div className="rounded-lg p-4 bg-gradient-to-tr from-white/80 to-slate-50 border border-slate-100 shadow-sm text-center">
-                  <div className="text-2xl md:text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#2BA84A] to-[#1B3A8C]">
-                    <AnimatedCounter to={60} duration={1.6} suffix=" kW" />
-                  </div>
-                  <div className="mt-1 text-sm text-slate-600">Site 3</div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className={`grid grid-cols-1 ${completed.length && upcoming.length ? "md:grid-cols-2" : ""} gap-8`}>
+          {completed.length > 0 && (
+            <ProjectGroup
+              title="Completed Projects"
+              subtitle="Capacities commissioned and operational."
+              badge="Status"
+              projects={completed}
+              frame="from-[#F26A21] via-[#1B3A8C] to-[#2BA84A]"
+              numberGradient="from-[#1B3A8C] to-[#F26A21]"
+              large
+            />
+          )}
+          {upcoming.length > 0 && (
+            <ProjectGroup
+              title="Upcoming Projects"
+              subtitle="Planned capacities in the pipeline."
+              badge="Planned"
+              projects={upcoming}
+              frame="from-[#2BA84A] via-[#1B3A8C] to-[#F26A21]"
+              numberGradient="from-[#2BA84A] to-[#1B3A8C]"
+            />
+          )}
         </div>
       </div>
     </section>

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Sun, Target, Eye, Heart, Award, Building, Leaf, Users } from "lucide-react";
 import { IMG, BRAND } from "@/lib/data";
+import Seo from "@/components/Seo";
 import CTASection from "@/components/sections/CTASection";
 import ProgressiveImage from "@/components/ProgressiveImage";
 
@@ -16,6 +17,10 @@ const MILESTONES = [
 export default function About() {
   return (
     <>
+      <Seo
+        title="About Us"
+        description="Saura Energy is an Agartala-based solar company installing rooftop and commercial solar plants across Tripura and North-East India since 2015."
+      />
       {/* Header */}
       <section className="relative pt-44 pb-20 bg-[#0A1128] text-white overflow-hidden">
         <div className="absolute inset-0 opacity-30">

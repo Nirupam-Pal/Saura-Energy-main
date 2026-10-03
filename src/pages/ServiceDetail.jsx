@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Check, Sun } from "lucide-react";
 import { SERVICES, IMG, FAQS } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import Seo from "@/components/Seo";
 import Contact from "@/components/sections/Contact";
 import ProgressiveImage from "@/components/ProgressiveImage";
 
@@ -16,6 +17,7 @@ export default function ServiceDetail() {
 
   return (
     <>
+      <Seo title={svc.title} description={svc.short} image={IMG[svc.image]} />
       <section className="relative pt-40 pb-16 bg-[#0A1128] text-white overflow-hidden">
         <div className="absolute inset-0 opacity-30">
           <ProgressiveImage src={IMG[svc.image]} priority className="absolute inset-0 !bg-transparent" />
