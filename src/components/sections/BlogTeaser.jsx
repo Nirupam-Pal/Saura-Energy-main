@@ -4,18 +4,19 @@ import { ArrowUpRight, Calendar } from "lucide-react";
 import { BLOG_POSTS, IMG } from "@/lib/data";
 import { fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 import ProgressiveImage from "@/components/ProgressiveImage";
+import { RevealGroup } from "@/components/Reveal";
 
 export default function BlogTeaser() {
   return (
     <section className="relative py-24 md:py-32 bg-slate-50/70" data-testid="blog-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
-          <div className="max-w-2xl">
+          <RevealGroup className="max-w-2xl">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Insights & Resources</p>
             <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.05]">
               Solar knowledge, <span className="text-[#1B3A8C]">demystified.</span>
             </h2>
-          </div>
+          </RevealGroup>
           <Link to="/blog" className="group text-[#F26A21] font-bold inline-flex items-center gap-1.5" data-testid="blog-view-all">
             View all insights <ArrowUpRight className="h-4 w-4 transition-transform duration-500 ease-spring group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>

@@ -94,7 +94,7 @@ export default function Calculator() {
                   </div>
                 </div>
 
-                <Button onClick={onCalculate} disabled={loading} data-testid="calc-submit-btn" className="w-full rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white py-6 text-base font-semibold shadow-lg hover:shadow-xl">
+                <Button onClick={onCalculate} disabled={loading} data-testid="calc-submit-btn" className="group hover:-translate-y-0.5 hover:shadow-xl w-full rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white py-6 text-base font-semibold shadow-lg hover:shadow-xl">
                   <CalcIcon className="mr-2 h-5 w-5" /> {loading ? "Calculating…" : "Calculate My Savings"}
                 </Button>
               </div>
@@ -168,7 +168,7 @@ export default function Calculator() {
               )}
 
               <Link to="/contact" className="block mt-5">
-                <Button data-testid="calc-claim-cta" className="w-full rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white py-5 font-semibold">
+                <Button data-testid="calc-claim-cta" className="group hover:-translate-y-0.5 hover:shadow-xl w-full rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white py-5 font-semibold">
                   Claim Your Subsidy <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>

@@ -71,7 +71,7 @@ export default function AboutSnippet() {
           </div>
 
           <Link to="/about" className="inline-block mt-9">
-            <Button variant="outline" className="rounded-full border-2 border-[#1B3A8C] text-[#1B3A8C] hover:bg-[#1B3A8C] hover:text-white transition-colors px-6 py-5" data-testid="about-readmore">
+            <Button variant="outline" className="group hover:-translate-y-0.5 hover:shadow-xl rounded-full border-2 border-[#1B3A8C] text-[#1B3A8C] hover:bg-[#1B3A8C] hover:text-white px-6 py-5" data-testid="about-readmore">
               Read our full story <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
@@ -97,21 +97,21 @@ export default function AboutSnippet() {
 
           <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
             {/* On-Grid */}
-            <motion.div variants={gridReveal} initial="hidden" whileInView="show" viewport={VIEWPORT_ONCE} custom={0} className="hover-lift-lg group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-lift duration-500">
+            <motion.div variants={gridReveal} initial="hidden" whileInView="show" viewport={VIEWPORT_ONCE} custom={0} className="hover-lift-lg group relative flex flex-col rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-lift duration-500">
               {/* Badge */}
               <div className="absolute top-4 right-4 z-20 bg-blue-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide">Most Popular</div>
               
               <ProgressiveImage src={IMG.rooftopDrone} alt="On-Grid Solar System" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="h-72" imgClassName="duration-1000 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+              <div className="absolute inset-x-0 top-0 h-72 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
               
-              <div className="relative p-8 bg-white border-t-4 border-orange-400">
+              <div className="relative flex-1 flex flex-col p-8 bg-white border-t-4 border-orange-400">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center">
                     <span className="text-2xl">☀️</span>
                   </div>
                   <div className="font-display text-2xl font-extrabold text-slate-900">On-Grid Solar</div>
                 </div>
-                <div className="space-y-3 text-slate-600 text-sm leading-relaxed">
+                <div className="flex-1 space-y-3 text-slate-600 text-sm leading-relaxed">
                   <p><span className="font-semibold text-slate-900">✓ Connected to Grid:</span> Feeds excess power to the grid</p>
                   <p><span className="font-semibold text-slate-900">✓ Net Metering:</span> Get credits for power you generate</p>
                   <p><span className="font-semibold text-slate-900">✓ Cost:</span> Most affordable option</p>
@@ -126,21 +126,21 @@ export default function AboutSnippet() {
             </motion.div>
 
             {/* Off-Grid */}
-            <motion.div variants={gridReveal} initial="hidden" whileInView="show" viewport={VIEWPORT_ONCE} custom={1} className="hover-lift-lg group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-lift duration-500">
+            <motion.div variants={gridReveal} initial="hidden" whileInView="show" viewport={VIEWPORT_ONCE} custom={1} className="hover-lift-lg group relative flex flex-col rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-lift duration-500">
               {/* Badge */}
               <div className="absolute top-4 right-4 z-20 bg-red-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide">Maximum Backup</div>
               
               <ProgressiveImage src={IMG.residential} alt="Off-Grid Solar System" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="h-72" imgClassName="duration-1000 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+              <div className="absolute inset-x-0 top-0 h-72 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
               
-              <div className="relative p-8 bg-white border-t-4 border-orange-400">
+              <div className="relative flex-1 flex flex-col p-8 bg-white border-t-4 border-orange-400">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center">
                     <span className="text-2xl">🔋</span>
                   </div>
                   <div className="font-display text-2xl font-extrabold text-slate-900">Off-Grid Solar</div>
                 </div>
-                <div className="space-y-3 text-slate-600 text-sm leading-relaxed">
+                <div className="flex-1 space-y-3 text-slate-600 text-sm leading-relaxed">
                   <p><span className="font-semibold text-slate-900">✓ Independent System:</span> Not connected to grid</p>
                   <p><span className="font-semibold text-slate-900">✓ Battery Storage:</span> Full battery backup required</p>
                   <p><span className="font-semibold text-slate-900">⚠️ Cost:</span> Higher due to battery investment</p>
@@ -155,21 +155,21 @@ export default function AboutSnippet() {
             </motion.div>
 
             {/* Hybrid */}
-            <motion.div variants={gridReveal} initial="hidden" whileInView="show" viewport={VIEWPORT_ONCE} custom={2} className="hover-lift-lg group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-lift duration-500 md:col-span-1">
+            <motion.div variants={gridReveal} initial="hidden" whileInView="show" viewport={VIEWPORT_ONCE} custom={2} className="hover-lift-lg group relative flex flex-col rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-lift duration-500 md:col-span-1">
               {/* Badge */}
               <div className="absolute top-4 right-4 z-20 bg-green-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide">Best Value</div>
               
               <ProgressiveImage src={IMG.residential2} alt="Hybrid Solar System" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="h-72" imgClassName="duration-1000 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+              <div className="absolute inset-x-0 top-0 h-72 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
               
-              <div className="relative p-8 bg-white border-t-4 border-orange-400">
+              <div className="relative flex-1 flex flex-col p-8 bg-white border-t-4 border-orange-400">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center">
                     <span className="text-2xl">⚡</span>
                   </div>
                   <div className="font-display text-2xl font-extrabold text-slate-900">Hybrid Solar</div>
                 </div>
-                <div className="space-y-3 text-slate-600 text-sm leading-relaxed">
+                <div className="flex-1 space-y-3 text-slate-600 text-sm leading-relaxed">
                   <p><span className="font-semibold text-slate-900">✓ Best of Both:</span> Grid-connected with battery backup</p>
                   <p><span className="font-semibold text-slate-900">✓ Smart Power:</span> Automatic grid/battery switching</p>
                   <p><span className="font-semibold text-slate-900">✓ Cost:</span> Moderate investment</p>

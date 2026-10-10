@@ -63,8 +63,8 @@ export default function Subsidy() {
                     { i: FileCheck2, t: "We handle DISCOM + portal paperwork" },
                     { i: IndianRupee, t: "Zero hidden costs · transparent quote" },
                   ].map(({ i: I, t }) => (
-                    <li key={t} className="flex items-center gap-3 text-white/95">
-                      <span className="h-9 w-9 rounded-lg bg-white/10 grid place-items-center">
+                    <li key={t} className="group flex items-center gap-3 text-white/95">
+                      <span className="h-9 w-9 rounded-lg bg-white/10 grid place-items-center transition-[transform,background-color] duration-500 ease-spring group-hover:scale-110 group-hover:bg-white/20">
                         <I className="h-4.5 w-4.5 text-[#F26A21]" />
                       </span>
                       <span className="text-sm font-medium">{t}</span>
@@ -73,8 +73,8 @@ export default function Subsidy() {
                 </ul>
 
                 <Link to="/contact" className="block mt-9">
-                  <Button data-testid="subsidy-claim-btn" className="w-full rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white py-6 font-semibold text-base shadow-xl">
-                    Claim My ₹85,800 <ArrowRight className="ml-2 h-4 w-4" />
+                  <Button data-testid="subsidy-claim-btn" className="group hover:-translate-y-0.5 hover:shadow-xl w-full rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white py-6 font-semibold text-base shadow-xl">
+                    Claim My ₹85,800 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
               </div>
@@ -113,7 +113,7 @@ export default function Subsidy() {
                     ["150 – 300 units", "2 kW – 3 kW", "₹66,000 – ₹85,800"],
                     ["> 300 units", "Above 3 kW", "₹85,800"],
                   ].map((row, index) => (
-                    <tr key={row[0]} className={index === 2 ? "bg-green-50/50 font-semibold" : ""}>
+                    <tr key={row[0]} className={`transition-colors duration-300 hover:bg-slate-50 ${index === 2 ? "bg-green-50/50 font-semibold" : ""}`}>
                       <td className="px-5 py-3.5 text-slate-700">{row[0]}</td>
                       <td className="px-5 py-3.5 text-slate-700">{row[1]}</td>
                       <td className="px-5 py-3.5 text-[#2BA84A] font-bold">{row[2]}</td>
@@ -129,7 +129,7 @@ export default function Subsidy() {
                 {BANKS.map((b) => {
                   const src = bankLogoSrc(b);
                   return src ? (
-                    <div key={b} className="flex items-center justify-center rounded-2xl bg-white/80 p-2">
+                    <div key={b} className="flex items-center justify-center rounded-2xl bg-white/80 p-2 hover:bg-white hover:shadow-md hover:-translate-y-0.5 transition-lift duration-500">
                       <img
                         src={src}
                         alt={b}

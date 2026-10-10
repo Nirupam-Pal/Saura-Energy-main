@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { WHY_CHOOSE } from "@/lib/data";
 import { fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING, gridReveal } from "@/lib/animations";
 import { ShieldCheck, Users, Award, Rocket, Wrench, Landmark, Sun, ReceiptText } from "lucide-react";
+import { RevealGroup } from "@/components/Reveal";
 
 const ICONS = { ShieldCheck, Users, Award, Rocket, Wrench, Landmark, Sun, ReceiptText };
 
@@ -9,12 +10,12 @@ export default function WhyChooseUs() {
   return (
     <section className="relative py-24 md:py-32 bg-white" data-testid="why-choose-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mb-14">
+        <RevealGroup className="max-w-3xl mb-14">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Why Choose Saura</p>
           <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.05]">
             8 reasons we're <span className="text-[#2BA84A]">North-East India's #1</span> solar partner.
           </h2>
-        </div>
+        </RevealGroup>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {WHY_CHOOSE.map((w, i) => {

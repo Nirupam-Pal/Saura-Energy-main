@@ -8,6 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import Seo from "@/components/Seo";
 import ProgressiveImage from "@/components/ProgressiveImage";
 import { VIEWPORT_ONCE, gridReveal } from "@/lib/animations";
+import { RevealGroup } from "@/components/Reveal";
 
 const CATEGORIES = ["All", "Subsidy", "Education", "Trends", "Case Study"];
 
@@ -28,7 +29,7 @@ export default function BlogPage() {
       />
       <section className="relative pt-44 pb-16 bg-[#0A1128] text-white overflow-hidden">
         <div className="absolute -top-32 right-0 w-[500px] h-[500px] rounded-full bg-[#F26A21]/20 blur-[120px]" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <RevealGroup className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-4">Insights & Resources</p>
           <h1 className="font-display text-5xl md:text-7xl font-extrabold leading-[0.95] tracking-tight max-w-4xl">
             Solar, <span className="gradient-text">demystified.</span>
@@ -36,7 +37,7 @@ export default function BlogPage() {
           <p className="mt-6 text-lg md:text-xl text-white/85 max-w-3xl leading-relaxed">
             Subsidy guides, technology deep-dives, real ROI case studies — written by India's most-honest solar engineers.
           </p>
-        </div>
+        </RevealGroup>
       </section>
 
       <section className="py-16 md:py-20 bg-white">
@@ -110,13 +111,13 @@ export default function BlogPage() {
       {/* FAQ */}
       <section className="py-20 bg-slate-50/70">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
+          <RevealGroup className="text-center mb-10">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Frequently Asked</p>
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">Common solar questions</h2>
-          </div>
+          </RevealGroup>
           <Accordion type="single" collapsible className="space-y-3" data-testid="blog-faqs">
             {FAQS.map((f, i) => (
-              <AccordionItem key={i} value={`item-${i}`} className="rounded-2xl bg-white border border-slate-100 px-5">
+              <AccordionItem key={i} value={`item-${i}`} className="rounded-2xl bg-white border border-slate-100 px-5 hover:border-[#F26A21]/30 hover:shadow-md transition-lift duration-500">
                 <AccordionTrigger className="font-display font-bold text-left text-slate-900 hover:no-underline py-5">{f.q}</AccordionTrigger>
                 <AccordionContent className="text-slate-600 pb-5">{f.a}</AccordionContent>
               </AccordionItem>

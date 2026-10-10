@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import ProjectCard from "@/components/ProjectCard";
 import { PROJECT_GALLERY } from "@/lib/projectGallery";
 import { VIEWPORT_ONCE, gridReveal } from "@/lib/animations";
+import { RevealGroup } from "@/components/Reveal";
 
 // Featured card spans 2 columns, so 5 projects fill a clean 3-column grid.
 const HOME_PROJECT_COUNT = 5;
@@ -15,7 +16,7 @@ export default function Projects() {
     <section className="relative py-24 md:py-32 bg-slate-50/70" data-testid="projects-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
-          <div className="max-w-2xl">
+          <RevealGroup className="max-w-2xl">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Project Showcase</p>
             <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.05]">
               Built across <span className="text-[#1B3A8C]">North-East India.</span>
@@ -23,7 +24,7 @@ export default function Projects() {
             <p className="mt-4 text-lg text-slate-600">
               Real photos from our installation sites. <span className="text-[#F26A21] font-semibold">Tap any project</span> to see the full gallery.
             </p>
-          </div>
+          </RevealGroup>
           <Link
             to="/projects"
             data-testid="projects-view-all"

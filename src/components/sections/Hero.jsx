@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, PlayCircle, Sun, Zap, Leaf, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { IMG, STATS } from "@/lib/data";
@@ -10,16 +11,24 @@ import ProgressiveImage from "@/components/ProgressiveImage";
 const fadeUp = fadeUpVariant;
 
 export default function Hero() {
+  const sectionRef = useRef(null);
+  // Parallax: the photo drifts down at a quarter of scroll speed as the hero
+  // leaves the viewport. Its top edge always stays above the fold, so no gap shows.
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+
   return (
-    <section className="relative min-h-[100svh] w-full overflow-hidden" data-testid="hero-section">
-      {/* Background image with Ken Burns */}
-      <motion.div
-        initial={{ scale: 1.08 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 14, ease: EASE_OUT_QUINT }}
-        className="absolute inset-0"
-      >
-        <ProgressiveImage src={IMG.rooftopDrone} alt="Aerial drone view of solar rooftop installation" priority className="absolute inset-0" />
+    <section ref={sectionRef} className="relative min-h-[100svh] w-full overflow-hidden" data-testid="hero-section">
+      {/* Background image with Ken Burns + scroll parallax */}
+      <motion.div style={{ y: bgY }} className="absolute inset-0 will-change-transform">
+        <motion.div
+          initial={{ scale: 1.08 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 14, ease: EASE_OUT_QUINT }}
+          className="absolute inset-0"
+        >
+          <ProgressiveImage src={IMG.rooftopDrone} alt="Aerial drone view of solar rooftop installation" priority className="absolute inset-0" />
+        </motion.div>
       </motion.div>
       <div className="absolute inset-0 hero-overlay" />
 
@@ -65,20 +74,20 @@ export default function Hero() {
               </Button>
             </Link>
             <Link to="/calculator" className="w-full sm:w-auto">
-              <Button variant="outline" data-testid="hero-cta-calculator" className="w-full sm:w-auto rounded-full border-white/30 bg-white/10 hover:bg-white/20 text-white px-6 py-5 sm:px-7 sm:py-6 text-base sm:text-base font-semibold backdrop-blur-md justify-center flex items-center">
+              <Button variant="outline" data-testid="hero-cta-calculator" className="group hover:-translate-y-0.5 hover:shadow-xl w-full sm:w-auto rounded-full border-white/30 bg-white/10 hover:bg-white/20 text-white px-6 py-5 sm:px-7 sm:py-6 text-base sm:text-base font-semibold backdrop-blur-md justify-center flex items-center">
                 <PlayCircle className="mr-2 h-5 w-5" /> Size Your Backup
               </Button>
             </Link>
           </motion.div>
 
           {/* Trust pills */}
-          <motion.div variants={fadeUp} custom={4} className="mt-8 mb-8 md:mb-2 lg:mb-24 flex flex-col sm:flex-row sm:flex-wrap gap-3 relative z-10 justify-center">
+          <motion.div variants={fadeUp} custom={4} className="mt-8 mb-8 md:mb-2 lg:mb-24 flex flex-col sm:flex-row sm:flex-wrap gap-3 relative z-10 justify-start">
             {[
               { icon: ShieldCheck, label: "25-Year Warranty" },
               { icon: Zap, label: "7-Day Installation" },
               { icon: Leaf, label: "Carbon-Negative" },
             ].map(({ icon: I, label }) => (
-              <span key={label} className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-dark text-white text-sm sm:text-base font-medium border border-white/15 min-w-[14rem] sm:min-w-0 justify-center">
+              <span key={label} className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-dark text-white text-sm sm:text-base font-medium border border-white/15 min-w-[14rem] sm:min-w-0 justify-center hover:border-[#F26A21]/50 hover:-translate-y-0.5 transition-lift duration-500">
                 <I className="h-4 w-4 text-[#F26A21]" /> {label}
               </span>
             ))}

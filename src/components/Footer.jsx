@@ -6,6 +6,7 @@ import { BRAND, SERVICES } from "@/lib/data";
 import { sendNewsletterViaWhatsApp } from "@/lib/whatsappUtils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/Reveal";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -30,22 +31,22 @@ export default function Footer() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-10">
         {/* CTA strip */}
-        <div className="rounded-3xl glass-dark p-8 md:p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-16 border border-white/10" data-testid="footer-cta">
+        <Reveal className="rounded-3xl glass-dark p-8 md:p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-16 border border-white/10" data-testid="footer-cta">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-[#F26A21] font-bold mb-2">Ready to switch?</p>
             <h3 className="font-display text-3xl md:text-4xl font-extrabold tracking-tight">Power 25 years of savings. <span className="text-[#F26A21]">Start today.</span></h3>
           </div>
           <Link to="/contact">
-            <Button data-testid="footer-cta-btn" className="rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white px-7 py-6 text-base font-semibold shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-lift">
-              Book Free Survey <ArrowRight className="ml-2 h-4 w-4" />
+            <Button data-testid="footer-cta-btn" className="group rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white px-7 py-6 text-base font-semibold shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-lift">
+              Book Free Survey <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </Link>
-        </div>
+        </Reveal>
 
         {/* Main grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
           {/* Brand */}
-          <div className="lg:col-span-4">
+          <Reveal className="lg:col-span-4">
             <Link to="/" className="flex items-center gap-3 mb-5">
               <img src="/img/brand/saura-96.webp" alt="Saura Energy" width="48" height="48" loading="lazy" decoding="async" className="h-12 w-12 bg-white rounded-lg p-1" />
               <div>
@@ -62,46 +63,46 @@ export default function Footer() {
               India's trusted partner for premium solar installations. We engineer, install and service rooftop solar systems across the North-East — backed by the PM Surya Ghar scheme.
             </p>
             <div className="flex gap-3 mt-6">
-              <a href={BRAND.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram" data-testid="footer-instagram" className="h-10 w-10 rounded-full grid place-items-center bg-white/8 hover:bg-[#F26A21] transition border border-white/10">
+              <a href={BRAND.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram" data-testid="footer-instagram" className="h-10 w-10 rounded-full grid place-items-center bg-white/8 hover:bg-[#F26A21] hover:-translate-y-1 hover:border-transparent transition-lift border border-white/10">
                 <Instagram className="h-4.5 w-4.5" />
               </a>
-              <a href={BRAND.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Facebook" data-testid="footer-facebook" className="h-10 w-10 rounded-full grid place-items-center bg-white/8 hover:bg-[#1B3A8C] transition border border-white/10">
+              <a href={BRAND.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Facebook" data-testid="footer-facebook" className="h-10 w-10 rounded-full grid place-items-center bg-white/8 hover:bg-[#1B3A8C] hover:-translate-y-1 hover:border-transparent transition-lift border border-white/10">
                 <Facebook className="h-4.5 w-4.5" />
               </a>
             </div>
-          </div>
+          </Reveal>
 
           {/* Services */}
-          <div className="lg:col-span-3">
+          <Reveal delay={0.08} className="lg:col-span-3">
             <h4 className="font-display font-bold uppercase tracking-widest text-xs text-white/60 mb-5">Services</h4>
             <ul className="space-y-3 text-sm">
               {SERVICES.slice(0, 6).map((s) => (
                 <li key={s.slug}>
-                  <Link to={`/services/${s.slug}`} className="text-white/80 hover:text-[#F26A21] transition">{s.title}</Link>
+                  <Link to={`/services/${s.slug}`} className="inline-block text-white/80 hover:text-[#F26A21] hover:translate-x-1 transition-lift">{s.title}</Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
 
           {/* Company */}
-          <div className="lg:col-span-2">
+          <Reveal delay={0.16} className="lg:col-span-2">
             <h4 className="font-display font-bold uppercase tracking-widest text-xs text-white/60 mb-5">Company</h4>
             <ul className="space-y-3 text-sm">
-              <li><Link to="/about" className="text-white/80 hover:text-[#F26A21] transition">About</Link></li>
-              <li><Link to="/projects" className="text-white/80 hover:text-[#F26A21] transition">Projects</Link></li>
-              <li><Link to="/blog" className="text-white/80 hover:text-[#F26A21] transition">Insights</Link></li>
-              <li><Link to="/calculator" className="text-white/80 hover:text-[#F26A21] transition">Load Calculator</Link></li>
-              <li><Link to="/contact" className="text-white/80 hover:text-[#F26A21] transition">Contact</Link></li>
+              <li><Link to="/about" className="inline-block text-white/80 hover:text-[#F26A21] hover:translate-x-1 transition-lift">About</Link></li>
+              <li><Link to="/projects" className="inline-block text-white/80 hover:text-[#F26A21] hover:translate-x-1 transition-lift">Projects</Link></li>
+              <li><Link to="/blog" className="inline-block text-white/80 hover:text-[#F26A21] hover:translate-x-1 transition-lift">Insights</Link></li>
+              <li><Link to="/calculator" className="inline-block text-white/80 hover:text-[#F26A21] hover:translate-x-1 transition-lift">Load Calculator</Link></li>
+              <li><Link to="/contact" className="inline-block text-white/80 hover:text-[#F26A21] hover:translate-x-1 transition-lift">Contact</Link></li>
             </ul>
-          </div>
+          </Reveal>
 
           {/* Contact + Newsletter */}
-          <div className="lg:col-span-3">
+          <Reveal delay={0.24} className="lg:col-span-3">
             <h4 className="font-display font-bold uppercase tracking-widest text-xs text-white/60 mb-5">Get in touch</h4>
             <ul className="space-y-3 text-sm">
-              <li className="flex gap-3"><Phone className="h-4 w-4 text-[#F26A21] mt-0.5" /><a href={`tel:${BRAND.phone}`} className="text-white/80 hover:text-white">{BRAND.phoneDisplay}</a></li>
-              <li className="flex gap-3"><Phone className="h-4 w-4 text-[#F26A21] mt-0.5" /><a href={`tel:${BRAND.landline}`} className="text-white/80 hover:text-white">{BRAND.landline}</a></li>
-              <li className="flex gap-3"><Mail className="h-4 w-4 text-[#F26A21] mt-0.5" /><a href={`mailto:${BRAND.email}`} className="text-white/80 hover:text-white break-all">{BRAND.email}</a></li>
+              <li className="flex gap-3"><Phone className="h-4 w-4 text-[#F26A21] mt-0.5" /><a href={`tel:${BRAND.phone}`} className="text-white/80 hover:text-white transition-colors">{BRAND.phoneDisplay}</a></li>
+              <li className="flex gap-3"><Phone className="h-4 w-4 text-[#F26A21] mt-0.5" /><a href={`tel:${BRAND.landline}`} className="text-white/80 hover:text-white transition-colors">{BRAND.landline}</a></li>
+              <li className="flex gap-3"><Mail className="h-4 w-4 text-[#F26A21] mt-0.5" /><a href={`mailto:${BRAND.email}`} className="text-white/80 hover:text-white transition-colors break-all">{BRAND.email}</a></li>
               <li className="flex gap-3"><MapPin className="h-4 w-4 text-[#F26A21] mt-0.5 flex-shrink-0" /><span className="text-white/80">{BRAND.address}</span></li>
             </ul>
 
@@ -122,15 +123,15 @@ export default function Footer() {
                 </Button>
               </div>
             </form> */}
-          </div>
+          </Reveal>
         </div>
 
         <div className="mt-14 pt-6 border-t border-white/10 flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-xs text-white/50">
           <p>© {new Date().getFullYear()} Saura Energy Solars. All rights reserved. Empanelled by Ministry of New & Renewable Energy.</p>
           <div className="flex gap-5">
-            <a href="#" className="hover:text-white">Privacy</a>
-            <a href="#" className="hover:text-white">Terms</a>
-            <a href="#" className="hover:text-white">Subsidy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Privacy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms</a>
+            <a href="#" className="hover:text-white transition-colors">Subsidy Policy</a>
           </div>
         </div>
       </div>

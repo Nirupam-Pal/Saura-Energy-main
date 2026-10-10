@@ -7,6 +7,7 @@ import Seo from "@/components/Seo";
 import ProgressiveImage from "@/components/ProgressiveImage";
 import CTASection from "@/components/sections/CTASection";
 import { VIEWPORT_ONCE, fadeUpVariant, gridReveal } from "@/lib/animations";
+import { RevealGroup } from "@/components/Reveal";
 
 function Block({ block }) {
   if (block.h) {
@@ -131,7 +132,7 @@ export default function BlogPost() {
       <section className="relative pt-40 pb-16 md:pb-20 bg-[#0A1128] text-white overflow-hidden">
         <ProgressiveImage src={IMG[post.image]} priority sizes="(min-width: 1024px) 1200px, 100vw" className="absolute inset-0 opacity-30 !bg-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0A1128] via-[#0A1128]/90 to-[#0A1128]/40" />
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <RevealGroup className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             to="/blog"
             className="group inline-flex items-center gap-2 text-white/70 hover:text-[#F26A21] text-sm font-semibold transition-colors"
@@ -145,7 +146,7 @@ export default function BlogPost() {
             <span className="inline-flex items-center gap-1.5"><Calendar className="h-4 w-4" /> {post.date}</span>
             {article.readTime && <span className="inline-flex items-center gap-1.5"><Clock className="h-4 w-4" /> {article.readTime}</span>}
           </div>
-        </div>
+        </RevealGroup>
       </section>
 
       <motion.article

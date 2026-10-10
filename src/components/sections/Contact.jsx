@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { slideInRightVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
+import { Reveal } from "@/components/Reveal";
 
 const initial = {
   name: "", phone: "", email: "", city: "",
@@ -45,7 +46,7 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-12 gap-10">
           {/* Left info */}
-          <div className="lg:col-span-5">
+          <Reveal className="lg:col-span-5">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Get in Touch</p>
             <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.05]">
               Let's design your <span className="text-[#1B3A8C]">solar future</span> together.
@@ -67,11 +68,11 @@ export default function Contact() {
               target="_blank"
               rel="noreferrer"
               data-testid="contact-whatsapp-cta"
-              className="mt-8 inline-flex items-center gap-3 px-6 py-4 rounded-full bg-[#25D366] hover:bg-[#1ebe57] text-white font-semibold transition shadow-lg"
+              className="mt-8 inline-flex items-center gap-3 px-6 py-4 rounded-full bg-[#25D366] hover:bg-[#1ebe57] text-white font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.97] transition-lift"
             >
               <MessageCircle className="h-5 w-5" /> Chat on WhatsApp
             </a>
-          </div>
+          </Reveal>
 
           {/* Right form */}
           <motion.div
@@ -149,7 +150,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              <Button type="submit" data-testid="form-submit" className="mt-7 w-full rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white py-6 text-base font-semibold shadow-lg hover:shadow-xl">
+              <Button type="submit" data-testid="form-submit" className="group hover:-translate-y-0.5 hover:shadow-xl mt-7 w-full rounded-full bg-[#F26A21] hover:bg-[#D95B1A] text-white py-6 text-base font-semibold shadow-lg hover:shadow-xl">
                 <Send className="mr-2 h-5 w-5" /> Request Free Consultation
               </Button>
               <p className="text-xs text-slate-400 text-center mt-3">By submitting, you agree to our privacy policy. We never share your data.</p>
@@ -164,7 +165,7 @@ export default function Contact() {
 function Info({ icon: I, label, value, href, testid }) {
   const inner = (
     <>
-      <span className="h-12 w-12 rounded-2xl bg-gradient-to-br from-[#F26A21]/15 to-[#1B3A8C]/10 grid place-items-center flex-shrink-0">
+      <span className="h-12 w-12 rounded-2xl bg-gradient-to-br from-[#F26A21]/15 to-[#1B3A8C]/10 grid place-items-center flex-shrink-0 transition-transform duration-500 ease-spring group-hover:scale-110 group-hover:-rotate-6">
         <I className="h-5 w-5 text-[#F26A21]" />
       </span>
       <div>
@@ -174,7 +175,7 @@ function Info({ icon: I, label, value, href, testid }) {
     </>
   );
   return href ? (
-    <a href={href} data-testid={testid} className="flex items-start gap-4 group hover:text-[#F26A21] transition">{inner}</a>
+    <a href={href} data-testid={testid} className="flex items-start gap-4 group hover:text-[#F26A21] transition-colors">{inner}</a>
   ) : (
     <div data-testid={testid} className="flex items-start gap-4">{inner}</div>
   );

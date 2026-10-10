@@ -3,6 +3,7 @@ import LoadCalculator from "@/components/sections/Calculator/LoadCalculator";
 import Subsidy from "@/components/sections/Subsidy";
 import Seo from "@/components/Seo";
 import CTASection from "@/components/sections/CTASection";
+import { RevealGroup } from "@/components/Reveal";
 
 export default function CalculatorPage() {
   return (
@@ -13,7 +14,7 @@ export default function CalculatorPage() {
       />
       <section className="relative pt-44 pb-20 bg-[#0A1128] text-white overflow-hidden">
         <div className="absolute -top-32 right-0 w-[500px] h-[500px] rounded-full bg-[#F26A21]/20 blur-[120px]" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <RevealGroup className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-4">Load Calculator</p>
           <h1 className="font-display text-5xl md:text-7xl font-extrabold leading-[0.95] tracking-tight max-w-4xl">
             Size your backup <span className="gradient-text">before you buy.</span>
@@ -21,7 +22,7 @@ export default function CalculatorPage() {
           <p className="mt-6 text-lg md:text-xl text-white/85 max-w-3xl leading-relaxed">
             Pick the appliances you want running during a power cut and for how long. We'll add up the load and recommend the right inverter (VA) and battery (Ah).
           </p>
-        </div>
+        </RevealGroup>
       </section>
       {/* <Calculator /> */}
       <LoadCalculator />

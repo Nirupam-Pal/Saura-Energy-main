@@ -29,6 +29,9 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  /* Elements that slide in from the side (x offset before they reveal) must
+     never widen the page. `clip`, unlike `hidden`, keeps sticky/fixed working. */
+  overflow-x: clip;
 }
 
 .font-display {
@@ -43,14 +46,6 @@ html, body {
 ::selection {
   background: var(--saura-orange);
   color: #fff;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--saura-blue), var(--saura-orange));
-  border-radius: 10px;
 }
 
 @layer base {
@@ -97,6 +92,35 @@ html, body {
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
+
+/* Frosted-glass navbar (applied once the page is scrolled). A translucent
+   tint + heavy blur/saturate lets the page show through; the hairline white
+   border and inset top highlight read as the lit edge of a glass pane. The
+   diagonal sheen lives on ::before so it can fade in (gradients can't
+   transition as a background). */
+.nav-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.04) 45%, rgba(255, 255, 255, 0.15) 100%);
+  opacity: 0;
+  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: -1;
+}
+.nav-shell { isolation: isolate; }
+.nav-glass {
+  background-color: rgba(255, 255, 255, 0.35);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  border-color: rgba(255, 255, 255, 0.65);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.04),
+    0 12px 40px -16px rgba(15, 23, 42, 0.28);
+}
+.nav-glass::before { opacity: 1; }
 
 /* Animated gradient text */
 .gradient-text {
@@ -201,6 +225,41 @@ html, body {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
   animation: skeleton-shimmer 1.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
+
+/* ---- HeroSolar illustration loops (transform / opacity / dashoffset only) ---- */
+.hero-sun-rays { transform-box: fill-box; transform-origin: center; animation: spin-slow 40s linear infinite; }
+.hero-sun-glow { transform-box: fill-box; transform-origin: center; animation: hero-breathe 6s cubic-bezier(0.65, 0, 0.35, 1) infinite alternate; }
+@keyframes hero-breathe { from { transform: scale(0.94); opacity: 0.8; } to { transform: scale(1.06); opacity: 1; } }
+
+/* Sunbeams fade in and out in turn. */
+.hero-beam { opacity: 0; animation: hero-beam 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+@keyframes hero-beam { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+
+/* Light sweep across the panel cells. */
+.hero-shimmer { animation: hero-shimmer 4.8s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+@keyframes hero-shimmer { 0% { transform: translateX(-80px); } 60%, 100% { transform: translateX(460px); } }
+
+/* Cables (pathLength = 100): steady dashed flow + one bright travelling pulse. */
+.hero-flow { stroke-dasharray: 1.6 3.2; animation: hero-flow 1.4s linear infinite; }
+@keyframes hero-flow { to { stroke-dashoffset: -4.8; } }
+.hero-pulse { stroke-dasharray: 14 120; stroke-dashoffset: 14; animation: hero-pulse 2.8s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+@keyframes hero-pulse { 0% { stroke-dashoffset: 14; opacity: 0; } 10% { opacity: 1; } 80% { opacity: 1; } 100% { stroke-dashoffset: -100; opacity: 0; } }
+
+/* Home windows light up as each pulse arrives (same 2.8s cycle). */
+.hero-window { opacity: 0.25; animation: hero-window 2.8s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+@keyframes hero-window { 0%, 60% { opacity: 0.25; } 80% { opacity: 1; } 100% { opacity: 0.4; } }
+
+/* Battery charge level breathes. */
+.hero-battery { transform-box: fill-box; transform-origin: left center; animation: hero-battery 5.6s cubic-bezier(0.65, 0, 0.35, 1) infinite alternate; }
+@keyframes hero-battery { from { transform: scaleX(0.3); } to { transform: scaleX(1); } }
+
+/* Live-generation sparkline bars. */
+.hero-bar { transform-origin: bottom; animation: hero-bar 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite alternate; }
+@keyframes hero-bar { from { transform: scaleY(0.45); } to { transform: scaleY(1); } }
+
+/* Floating readout cards bob gently. */
+.hero-float { animation: hero-float 6s cubic-bezier(0.65, 0, 0.35, 1) infinite alternate; }
+@keyframes hero-float { from { transform: translateY(0); } to { transform: translateY(-10px); } }
 
 /* Respect the OS "reduce motion" setting across CSS animations and transitions. */
 @media (prefers-reduced-motion: reduce) {

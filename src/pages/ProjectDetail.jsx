@@ -9,6 +9,7 @@ import ProgressiveImage from "@/components/ProgressiveImage";
 import { PROJECT_GALLERY, getProjectById } from "@/lib/projectGallery";
 import { preloadImage, resolveImage } from "@/lib/images";
 import { VIEWPORT_ONCE, EASE_OUT_EXPO, SPRING_SNAPPY, gridReveal } from "@/lib/animations";
+import { RevealGroup } from "@/components/Reveal";
 
 const MASONRY_SIZES = "(min-width: 1280px) 400px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
 const SWIPE_THRESHOLD = 60;
@@ -174,7 +175,7 @@ export default function ProjectDetail() {
         <ProgressiveImage src={project.cover} priority sizes="(min-width: 1024px) 1200px, 100vw" className="absolute inset-0 opacity-35 !bg-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0A1128] via-[#0A1128]/85 to-[#0A1128]/30" />
         <div className="absolute -bottom-32 left-0 w-[500px] h-[500px] rounded-full bg-[#F26A21]/15 blur-[120px]" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <RevealGroup className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             to="/projects"
             className="group inline-flex items-center gap-2 text-white/70 hover:text-[#F26A21] text-sm font-semibold transition-colors"
@@ -193,18 +194,18 @@ export default function ProjectDetail() {
               <Images className="h-4 w-4 text-[#F26A21]" /> {project.images.length} photos
             </span>
           </div>
-        </div>
+        </RevealGroup>
       </section>
 
       <section className="py-20 md:py-28 bg-slate-50/70" data-testid="project-detail-gallery">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mb-10">
+          <RevealGroup className="max-w-2xl mb-10">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Installation Gallery</p>
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
               On site at <span className="text-[#1B3A8C]">{project.title}</span>
             </h2>
             <p className="mt-3 text-slate-600">Tap any photo to view it full screen.</p>
-          </div>
+          </RevealGroup>
 
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-5">
             {project.images.map((src, i) => (

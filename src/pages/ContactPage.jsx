@@ -1,5 +1,6 @@
 import Seo, { LOCAL_BUSINESS_LD } from "@/components/Seo";
 import Contact from "@/components/sections/Contact";
+import { RevealGroup } from "@/components/Reveal";
 
 export default function ContactPage() {
   return (
@@ -12,7 +13,7 @@ export default function ContactPage() {
       <section className="relative pt-44 pb-16 bg-[#0A1128] text-white overflow-hidden">
         <div className="absolute -top-32 right-0 w-[500px] h-[500px] rounded-full bg-[#F26A21]/20 blur-[120px]" />
         <div className="absolute -bottom-32 left-0 w-[500px] h-[500px] rounded-full bg-[#1B3A8C]/30 blur-[120px]" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <RevealGroup className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-4">Get In Touch</p>
           <h1 className="font-display text-5xl md:text-7xl font-extrabold leading-[0.95] tracking-tight max-w-4xl">
             Free survey. <span className="gradient-text">Honest quote.</span>
@@ -20,7 +21,7 @@ export default function ContactPage() {
           <p className="mt-6 text-lg md:text-xl text-white/85 max-w-3xl leading-relaxed">
             Tell us about your roof, your bill and your goals. A Saura expert will call you within 4 working hours.
           </p>
-        </div>
+        </RevealGroup>
       </section>
       <Contact />
 

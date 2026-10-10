@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import { TESTIMONIALS } from "@/lib/data";
 import { SMOOTH_EASING } from "@/lib/animations";
+import { Reveal, RevealGroup } from "@/components/Reveal";
 
 export default function Testimonials() {
   const [i, setI] = useState(0);
@@ -21,14 +22,14 @@ export default function Testimonials() {
       <div className="absolute bottom-10 right-10 w-72 h-72 rounded-full bg-[#1B3A8C]/8 blur-[100px]" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-14">
+        <RevealGroup className="text-center max-w-2xl mx-auto mb-14">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Customer Stories</p>
           <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.05]">
             980+ happy customers. <span className="text-[#2BA84A]">Hear them out.</span>
           </h2>
-        </div>
+        </RevealGroup>
 
-        <div className="relative max-w-4xl mx-auto">
+        <Reveal className="relative max-w-4xl mx-auto">
           <div className="relative rounded-3xl bg-gradient-to-br from-slate-50 via-white to-orange-50/30 border border-slate-100 p-8 md:p-14 shadow-xl shadow-blue-900/5">
             <Quote className="absolute top-6 left-6 h-12 w-12 text-[#F26A21]/15" />
             <Quote className="absolute bottom-6 right-6 h-12 w-12 text-[#1B3A8C]/15 rotate-180" />
@@ -64,7 +65,7 @@ export default function Testimonials() {
               onClick={() => setI((p) => (p - 1 + len) % len)}
               aria-label="Previous"
               data-testid="testimonial-prev"
-              className="h-11 w-11 rounded-full grid place-items-center border-2 border-slate-200 text-slate-500 hover:border-[#1B3A8C] hover:text-[#1B3A8C] transition"
+              className="h-11 w-11 rounded-full grid place-items-center border-2 border-slate-200 text-slate-500 hover:border-[#1B3A8C] hover:text-[#1B3A8C] hover:bg-[#1B3A8C]/5 hover:scale-105 active:scale-95 transition-lift duration-300"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
@@ -82,12 +83,12 @@ export default function Testimonials() {
               onClick={() => setI((p) => (p + 1) % len)}
               aria-label="Next"
               data-testid="testimonial-next"
-              className="h-11 w-11 rounded-full grid place-items-center border-2 border-slate-200 text-slate-500 hover:border-[#1B3A8C] hover:text-[#1B3A8C] transition"
+              className="h-11 w-11 rounded-full grid place-items-center border-2 border-slate-200 text-slate-500 hover:border-[#1B3A8C] hover:text-[#1B3A8C] hover:bg-[#1B3A8C]/5 hover:scale-105 active:scale-95 transition-lift duration-300"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -4,6 +4,8 @@ import { IMG, BRAND } from "@/lib/data";
 import Seo from "@/components/Seo";
 import CTASection from "@/components/sections/CTASection";
 import ProgressiveImage from "@/components/ProgressiveImage";
+import { EASE_OUT_EXPO, VIEWPORT_ONCE } from "@/lib/animations";
+import { Reveal, RevealGroup } from "@/components/Reveal";
 
 const MILESTONES = [
   { year: "2015", title: "Founded in Agartala", desc: "Started with a vision: bring affordable solar to North-East India." },
@@ -27,7 +29,7 @@ export default function About() {
           <ProgressiveImage src={IMG.engineers1} priority className="absolute inset-0 !bg-transparent" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-[#0A1128] via-[#0A1128]/85 to-transparent" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <RevealGroup className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-4">About Saura Energy</p>
           <h1 className="font-display text-5xl md:text-7xl font-extrabold leading-[0.95] tracking-tight max-w-4xl">
             Engineering the sun for <span className="gradient-text">India's clean future.</span>
@@ -35,17 +37,17 @@ export default function About() {
           <p className="mt-6 text-lg md:text-xl text-white/85 max-w-3xl leading-relaxed">
             Founded in 2015 in Agartala, Tripura — Saura Energy is a clean-energy company on a mission to make premium solar accessible to every Indian home, business and industry.
           </p>
-        </div>
+        </RevealGroup>
       </section>
 
       {/* MVV cards */}
       <section className="py-20 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
-          <div className="relative">
+          <Reveal className="relative">
             <ProgressiveImage src={IMG.engineers2} alt="Engineers" sizes="(min-width: 1024px) 600px, 100vw" className="rounded-3xl shadow-2xl shadow-blue-900/15 aspect-[4/5]" />
             <ProgressiveImage src={IMG.heroDrone} alt="Drone" sizes="224px" className="hidden md:block absolute -bottom-12 -right-8 w-56 h-56 rounded-3xl border-8 border-white shadow-xl" />
-          </div>
-          <div>
+          </Reveal>
+          <Reveal delay={0.12}>
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Our Mission, Vision & Values</p>
             <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
               We don't just install panels.<br /><span className="text-[#1B3A8C]">We earn trust.</span>
@@ -60,8 +62,8 @@ export default function About() {
                 { icon: Eye, title: "Vision", desc: "Be the most-loved clean-energy brand of Eastern India by 2030." },
                 { icon: Heart, title: "Values", desc: "Engineering rigor, transparent pricing, lifelong customer trust." },
               ].map(({ icon: I, title, desc }) => (
-                <div key={title} className="flex gap-4 p-4 rounded-2xl bg-slate-50/70 border border-slate-100">
-                  <span className="h-11 w-11 rounded-xl bg-[#F26A21]/12 grid place-items-center flex-shrink-0"><I className="h-5 w-5 text-[#F26A21]" /></span>
+                <div key={title} className="group flex gap-4 p-4 rounded-2xl bg-slate-50/70 border border-slate-100 hover:bg-white hover:border-[#F26A21]/30 hover:shadow-lg hover:translate-x-1 transition-lift duration-500">
+                  <span className="h-11 w-11 rounded-xl bg-[#F26A21]/12 grid place-items-center flex-shrink-0 transition-[transform,background-color] duration-500 ease-spring group-hover:scale-110 group-hover:bg-[#F26A21]/20"><I className="h-5 w-5 text-[#F26A21]" /></span>
                   <div>
                     <div className="font-display font-bold text-slate-900">{title}</div>
                     <div className="text-sm text-slate-600 mt-0.5">{desc}</div>
@@ -69,19 +71,19 @@ export default function About() {
                 </div>
               ))}
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* Timeline */}
       <section className="py-20 md:py-28 bg-slate-50/70">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mb-14">
+          <RevealGroup className="max-w-2xl mb-14">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Our Journey</p>
             <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
               A decade of <span className="text-[#2BA84A]">honest solar.</span>
             </h2>
-          </div>
+          </RevealGroup>
 
           <div className="relative">
             <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#F26A21] via-[#2BA84A] to-[#1B3A8C] md:-translate-x-px" />
@@ -89,16 +91,17 @@ export default function About() {
               {MILESTONES.map((m, i) => (
                 <motion.div
                   key={m.year}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 28 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={VIEWPORT_ONCE}
+                  transition={{ duration: 0.8, ease: EASE_OUT_EXPO }}
                   className={`relative grid md:grid-cols-2 gap-6 items-center ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}
                 >
                   <div className={`pl-16 md:pl-0 md:pr-12 md:text-right ${i % 2 ? "md:pl-12 md:pr-0 md:text-left" : ""}`}>
                     <div className="font-display text-4xl md:text-5xl font-extrabold text-[#F26A21]">{m.year}</div>
                   </div>
                   <div className={`pl-16 md:pl-12 ${i % 2 ? "md:pr-12 md:pl-0" : ""}`}>
-                    <div className="p-6 rounded-2xl bg-white border border-slate-100 shadow-sm">
+                    <div className="p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-blue-900/5 hover:border-[#F26A21]/30 hover:-translate-y-1 transition-lift duration-500">
                       <h3 className="font-display font-bold text-xl text-slate-900">{m.title}</h3>
                       <p className="mt-2 text-slate-600 leading-relaxed">{m.desc}</p>
                     </div>
@@ -113,7 +116,7 @@ export default function About() {
 
       {/* CEO Message */}
       <section className="py-20 md:py-28 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <RevealGroup className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Sun className="h-12 w-12 text-[#F26A21] mx-auto mb-6" />
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Founder's Note</p>
           <blockquote className="font-display text-2xl md:text-4xl text-slate-800 leading-snug font-bold italic tracking-tight">
@@ -123,7 +126,7 @@ export default function About() {
             <div className="font-display font-bold text-slate-900 text-lg">Soumya Choudhury</div>
             <div className="text-sm text-slate-500">Founder & Managing Director</div>
           </div>
-        </div>
+        </RevealGroup>
       </section>
 
       <CTASection />

@@ -38,12 +38,12 @@ export default function CTASection() {
               </Button>
             </Link>
             <Link to="/calculator">
-              <Button variant="outline" data-testid="big-cta-quote" className="rounded-full border-white/30 bg-white/10 hover:bg-white/20 text-white px-7 py-6 text-base font-semibold backdrop-blur">
-                Size Your Backup <ArrowRight className="ml-2 h-4 w-4" />
+              <Button variant="outline" data-testid="big-cta-quote" className="group hover:-translate-y-0.5 hover:shadow-xl rounded-full border-white/30 bg-white/10 hover:bg-white/20 text-white px-7 py-6 text-base font-semibold backdrop-blur">
+                Size Your Backup <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
             <a href={`tel:${BRAND.phone}`}>
-              <Button variant="outline" data-testid="big-cta-call" className="rounded-full border-white/30 bg-transparent hover:bg-white/10 text-white px-7 py-6 text-base font-semibold">
+              <Button variant="outline" data-testid="big-cta-call" className="group hover:-translate-y-0.5 hover:shadow-xl rounded-full border-white/30 bg-transparent hover:bg-white/10 text-white px-7 py-6 text-base font-semibold">
                 <Phone className="mr-2 h-5 w-5" /> Call Now
               </Button>
             </a>

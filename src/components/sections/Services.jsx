@@ -4,6 +4,7 @@ import { ArrowRight, Home, Building2, Factory, Wrench, Gauge, Landmark, HardHat,
 import { SERVICES, IMG } from "@/lib/data";
 import { fadeUpVariant, VIEWPORT_ONCE, SMOOTH_EASING } from "@/lib/animations";
 import ProgressiveImage from "@/components/ProgressiveImage";
+import { RevealGroup } from "@/components/Reveal";
 
 const ICONS = { Home, Building2, Factory, Wrench, Gauge, Landmark, HardHat, BatteryCharging, PlugZap };
 
@@ -18,7 +19,7 @@ export default function Services({ withHeader = true }) {
     <section className="relative py-24 md:py-32 bg-slate-50/70 bg-grid" data-testid="services-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {withHeader && (
-          <div className="max-w-3xl mb-14">
+          <RevealGroup className="max-w-3xl mb-14">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Solar Services</p>
             <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.05]">
               End-to-end solar, <span className="text-[#1B3A8C]">tailored to every roof.</span>
@@ -26,7 +27,7 @@ export default function Services({ withHeader = true }) {
             <p className="mt-5 text-lg text-slate-600">
               From a single home panel to MW-scale industrial plants — one trusted partner for design, install, financing and lifelong service.
             </p>
-          </div>
+          </RevealGroup>
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">

@@ -47,7 +47,7 @@ export default function TrustStrip() {
                       <img
                         src={p.logo}
                         alt={p.name}
-                        className="max-h-16 max-w-full object-contain"
+                        className="max-h-16 max-w-full object-contain grayscale-[30%] opacity-90 hover:grayscale-0 hover:opacity-100 hover:scale-105 transition-[filter,opacity,transform] duration-500"
                         onError={(e) => {
                           e.currentTarget.style.display = "none";
                         }}
@@ -81,7 +81,7 @@ export default function TrustStrip() {
                 viewport={VIEWPORT_ONCE}
                 custom={i}
                 variants={fadeUpVariant}
-                className={`flex items-center gap-3 p-4 rounded-xl ${
+                className={`hover-lift flex items-center gap-3 p-4 rounded-xl hover:shadow-md transition-lift duration-500 ${
                   highlight ? "bg-gradient-to-r from-orange-50 to-white border border-orange-200" : "bg-slate-50 border border-slate-100"
                 }`}
               >

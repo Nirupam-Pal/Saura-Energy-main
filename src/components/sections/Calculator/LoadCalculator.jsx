@@ -15,6 +15,7 @@ import {
   LOAD_TYPES,
   STEPS,
 } from "./loadCalculator.constants";
+import { RevealGroup } from "@/components/Reveal";
 
 /**
  * LoadCalculator
@@ -87,7 +88,7 @@ export default function LoadCalculator() {
       data-testid="load-calculator-section"
     >
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8">
+        <RevealGroup className="text-center mb-8">
           {/* <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">
             Calculator
           </p>
@@ -104,7 +105,7 @@ export default function LoadCalculator() {
           <p className="mt-5 text-lg text-slate-600">
             Pick your appliances, and we'll size the exact backup power you need.
           </p>
-        </div>
+        </RevealGroup>
 
         <div className="rounded-3xl border border-slate-100 shadow-xl shadow-blue-900/5 overflow-hidden lg:grid lg:grid-cols-[1fr_340px]">
           <AnimatePresence mode="sync" initial={false}>
@@ -179,7 +180,7 @@ export default function LoadCalculator() {
                     onClick={handleCalculate}
                     disabled={loading}
                     data-testid="load-calc-submit-btn"
-                    className="w-full mt-6 lg:mt-auto rounded-xl bg-[#F26A21] hover:bg-[#D95B1A] text-white py-6 text-base font-semibold shadow-lg hover:shadow-xl"
+                    className="w-full mt-6 lg:mt-auto rounded-xl bg-[#F26A21] hover:bg-[#D95B1A] text-white py-6 text-base font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5"
                   >
                     {loading ? "Calculating…" : "Find Solution"}
                   </Button>

@@ -1,12 +1,13 @@
 import AnimatedCounter from "@/components/AnimatedCounter";
 import { COMMERCIAL_PROJECTS } from "@/lib/data";
+import { Reveal, RevealGroup } from "@/components/Reveal";
 
 // Grid width follows the number of entries (capped) so 1–3 cards fill the row.
 const COLS = { 1: "grid-cols-1", 2: "grid-cols-2", 3: "grid-cols-3" };
 
-function ProjectGroup({ title, subtitle, badge, projects, frame, numberGradient, large }) {
+function ProjectGroup({ title, subtitle, badge, projects, frame, numberGradient, large, delay = 0 }) {
   return (
-    <div className={`rounded-2xl p-[1px] bg-gradient-to-r ${frame} shadow-lg`}>
+    <Reveal delay={delay} className={`hover-lift rounded-2xl p-[1px] bg-gradient-to-r ${frame} shadow-lg hover:shadow-2xl hover:shadow-blue-900/10 transition-lift duration-500`}>
       <div className="bg-white rounded-2xl p-6 h-full">
         <div className="flex items-center justify-between">
           <div>
@@ -20,7 +21,7 @@ function ProjectGroup({ title, subtitle, badge, projects, frame, numberGradient,
           {projects.map((p) => (
             <div
               key={p.name}
-              className={`rounded-lg ${large ? "p-5" : "p-4 text-center"} bg-gradient-to-tr from-white/80 to-slate-50 border border-slate-100 shadow-sm`}
+              className={`rounded-lg ${large ? "p-5" : "p-4 text-center"} bg-gradient-to-tr from-white/80 to-slate-50 border border-slate-100 shadow-sm hover:border-[#F26A21]/30 hover:shadow-md hover:-translate-y-0.5 transition-lift duration-500`}
             >
               <div className={`${large ? "text-4xl md:text-5xl" : "text-2xl md:text-3xl"} font-extrabold bg-clip-text text-transparent bg-gradient-to-r ${numberGradient}`}>
                 <AnimatedCounter to={p.kw} duration={1.6} suffix=" kW" />
@@ -30,7 +31,7 @@ function ProjectGroup({ title, subtitle, badge, projects, frame, numberGradient,
           ))}
         </div>
       </div>
-    </div>
+    </Reveal>
   );
 }
 
@@ -41,12 +42,12 @@ export default function CommercialProjects() {
   return (
     <section className="py-20 bg-gradient-to-b from-white via-slate-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mb-10">
+        <RevealGroup className="max-w-3xl mb-10">
           <h2 className="font-display text-3xl md:text-4xl font-extrabold text-slate-900">
             Commercial Solar Projects
           </h2>
           <p className="mt-3 text-slate-600">Completed and upcoming commercial projects with installed and planned capacities.</p>
-        </div>
+        </RevealGroup>
 
         <div className={`grid grid-cols-1 ${completed.length && upcoming.length ? "md:grid-cols-2" : ""} gap-8`}>
           {completed.length > 0 && (
@@ -68,6 +69,7 @@ export default function CommercialProjects() {
               projects={upcoming}
               frame="from-[#2BA84A] via-[#1B3A8C] to-[#F26A21]"
               numberGradient="from-[#2BA84A] to-[#1B3A8C]"
+              delay={0.12}
             />
           )}
         </div>

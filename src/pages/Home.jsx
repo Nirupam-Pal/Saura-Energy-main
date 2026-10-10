@@ -1,5 +1,6 @@
 import Seo, { LOCAL_BUSINESS_LD } from "@/components/Seo";
-import Hero from "@/components/sections/Hero";
+// import Hero from "@/components/sections/Hero";
+import HeroSolar from "@/components/sections/HeroSolar";
 import TrustStrip from "@/components/sections/TrustStrip";
 import AboutSnippet from "@/components/sections/AboutSnippet";
 import Services from "@/components/sections/Services";
@@ -22,7 +23,8 @@ export default function Home() {
         description="Rooftop solar for homes, schools and businesses across Tripura and North-East India. PM Surya Ghar subsidy help, inverters, battery backup and free site survey."
         jsonLd={LOCAL_BUSINESS_LD}
       />
-      <Hero />
+      {/* <Hero /> */}
+      <HeroSolar />
       <TrustStrip />
       <AboutSnippet />
       <Services />
