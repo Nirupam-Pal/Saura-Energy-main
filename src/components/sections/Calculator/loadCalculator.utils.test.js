@@ -24,7 +24,22 @@ import {
   validateBackupHours,
   isStepValid,
 } from "./loadCalculator.utils";
-import { PROPERTY_TYPE_PRESETS } from "./loadCalculator.constants";
+
+// Appliance mix the reference tool uses for its "2 BHK" preset.
+const TWO_BHK_QUANTITIES = {
+  "ceiling-fan": 2,
+  laptop: 1,
+  "led-bulb-5w": 3,
+  tubelight: 2,
+  "led-tv": 1,
+  "phone-charger": 2,
+  "set-top-box": 1,
+  "wifi-router": 1,
+  "water-purifier": 1,
+  "room-cooler-bldc": 1,
+  "fridge-200l": 1,
+  computer: 1,
+};
 
 describe("clampQuantity", () => {
   test("clamps negative values to 0", () => {
@@ -52,7 +67,7 @@ describe("calculateApplianceLoad", () => {
 });
 
 describe("calculateTotalLoad + calculateCategoryLoads (2 BHK preset)", () => {
-  const quantities = PROPERTY_TYPE_PRESETS["2bhk"];
+  const quantities = TWO_BHK_QUANTITIES;
 
   test("matches the reference tool's own total for the 2 BHK preset (1135W)", () => {
     expect(calculateTotalLoad(quantities)).toBe(1135);
@@ -131,7 +146,7 @@ describe("selectBattery", () => {
 describe("computeLoadCalculation (full pipeline, 2 BHK / 5hr reference scenario)", () => {
   test("reproduces the reference tool's exact recommendation", () => {
     const result = computeLoadCalculation({
-      quantities: PROPERTY_TYPE_PRESETS["2bhk"],
+      quantities: TWO_BHK_QUANTITIES,
       backupHours: 5,
     });
 

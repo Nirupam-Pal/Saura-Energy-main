@@ -123,68 +123,6 @@ export const APPLIANCE_INDEX = APPLIANCE_CATEGORIES.reduce((acc, category) => {
 export const MAX_APPLIANCE_QUANTITY = 20;
 
 // ---------------------------------------------------------------------------
-// Property type presets
-// ---------------------------------------------------------------------------
-// Selecting a preset fills in the quantities below exactly as the reference
-// tool does; "Custom" clears every quantity back to 0 for manual entry.
-
-export const PROPERTY_TYPES = [
-  { id: '2bhk', label: '2 BHK' },
-  { id: '3bhk', label: '3 BHK' },
-  { id: '4bhk', label: '4 BHK' },
-  { id: 'custom', label: 'Custom' },
-];
-
-export const PROPERTY_TYPE_PRESETS = {
-  '2bhk': {
-    'ceiling-fan': 2,
-    laptop: 1,
-    'led-bulb-5w': 3,
-    tubelight: 2,
-    'led-tv': 1,
-    'phone-charger': 2,
-    'set-top-box': 1,
-    'wifi-router': 1,
-    'water-purifier': 1,
-    'room-cooler-bldc': 1,
-    'fridge-200l': 1,
-    computer: 1,
-  },
-  '3bhk': {
-    'ceiling-fan': 3,
-    laptop: 2,
-    'led-bulb-5w': 4,
-    tubelight: 3,
-    'led-tv': 1,
-    'phone-charger': 3,
-    'set-top-box': 1,
-    'wifi-router': 1,
-    'exhaust-fan': 1,
-    'water-purifier': 1,
-    'ac-1-ton': 1,
-    'fridge-200l': 1,
-    'room-cooler-bldc': 1,
-  },
-  '4bhk': {
-    'ceiling-fan': 4,
-    laptop: 2,
-    'led-bulb-5w': 5,
-    tubelight: 4,
-    'led-tv': 2,
-    'phone-charger': 2,
-    'set-top-box': 1,
-    'wifi-router': 1,
-    'exhaust-fan': 1,
-    'water-purifier': 1,
-    'ac-1-5-ton': 1,
-    blender: 1,
-    'room-cooler-bldc': 1,
-    'fridge-200l': 1,
-  },
-  custom: {},
-};
-
-// ---------------------------------------------------------------------------
 // Backup requirement input
 // ---------------------------------------------------------------------------
 

@@ -4,7 +4,6 @@ import { Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 
-import PropertyTypeSelector from "./PropertyTypeSelector";
 import ApplianceCategoryPicker from "./ApplianceCategoryPicker";
 import ResultScreen from "./ResultScreen";
 
@@ -12,7 +11,6 @@ import { getLoadCalculation } from "./loadCalculator.service";
 import { calculateTotalLoad, clampQuantity, validateSelection, isStepValid } from "./loadCalculator.utils";
 import {
   APPLIANCE_CATEGORIES,
-  PROPERTY_TYPE_PRESETS,
   BACKUP_HOURS_LIMITS,
   LOAD_TYPES,
   STEPS,
@@ -22,19 +20,17 @@ import {
  * LoadCalculator
  *
  * Appliance-picker flow matching the reference tool (luminousindia.com/load-calculator):
- *   1. Pick a property type preset (or go Custom) to seed appliance quantities.
- *   2. Browse appliance categories, filter by Essential/Heavy load, and set
+ *   1. Browse appliance categories, filter by Essential/Heavy load, and set
  *      quantities per appliance — the total running load updates live.
- *   3. Choose average daily backup hours and hit "Find Solution" to get a
+ *   2. Choose average daily backup hours and hit "Find Solution" to get a
  *      recommended inverter + battery.
  *
  * All calculation logic lives in utils/services; this component only owns
- * UI state (selected property type, quantities, active category/filter,
+ * UI state (quantities, active category/filter,
  * backup hours, errors, loading, result).
  */
 export default function LoadCalculator() {
   const [step, setStep] = useState(STEPS.APPLIANCES);
-  const [propertyType, setPropertyType] = useState(null);
   const [quantities, setQuantities] = useState({});
   const [activeCategoryId, setActiveCategoryId] = useState(APPLIANCE_CATEGORIES[0].id);
   const [loadTypeFilter, setLoadTypeFilter] = useState(LOAD_TYPES.ALL);
@@ -44,12 +40,6 @@ export default function LoadCalculator() {
   const [result, setResult] = useState(null);
 
   const totalLoad = useMemo(() => calculateTotalLoad(quantities), [quantities]);
-
-  const handlePropertyTypeSelect = (id) => {
-    setPropertyType(id);
-    setQuantities({ ...PROPERTY_TYPE_PRESETS[id] });
-    if (errors.totalLoad) setErrors({});
-  };
 
   const handleQuantityDelta = (applianceId, delta) => {
     setQuantities((prev) => ({
@@ -81,7 +71,6 @@ export default function LoadCalculator() {
   const handleBackToAppliances = () => setStep(STEPS.APPLIANCES);
 
   const handleRestart = () => {
-    setPropertyType(null);
     setQuantities({});
     setActiveCategoryId(APPLIANCE_CATEGORIES[0].id);
     setLoadTypeFilter(LOAD_TYPES.ALL);
@@ -129,9 +118,7 @@ export default function LoadCalculator() {
                 className="lg:contents"
               >
                 <div className="bg-white p-5 md:p-8" data-testid="load-calc-appliances-step">
-                  <PropertyTypeSelector activePropertyType={propertyType} onSelect={handlePropertyTypeSelect} />
-
-                  <div className="mt-6">
+                  <div>
                     <ApplianceCategoryPicker
                       categories={APPLIANCE_CATEGORIES}
                       activeCategoryId={activeCategoryId}
