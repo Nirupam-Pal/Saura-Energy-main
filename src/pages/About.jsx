@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
-import { Sun, Target, Eye, Heart, Award, Building, Leaf, Users } from "lucide-react";
+import { Sun, Target, Eye, Heart, Award, Building, Leaf, Users, Home, BadgeCheck } from "lucide-react";
 import { IMG, BRAND } from "@/lib/data";
 import Seo from "@/components/Seo";
 import CTASection from "@/components/sections/CTASection";
 import ProgressiveImage from "@/components/ProgressiveImage";
+import AnimatedCounter from "@/components/AnimatedCounter";
+import PhotoCollage, { CollageBadge, CollageStat, projectPhoto } from "@/components/PhotoCollage";
 import { EASE_OUT_EXPO, VIEWPORT_ONCE } from "@/lib/animations";
 import { Reveal, RevealGroup } from "@/components/Reveal";
 
@@ -15,6 +17,20 @@ const MILESTONES = [
   { year: "2024", title: "500+ Plants Live", desc: "Crossed 18.6 MW of cumulative installed capacity. 7 NE states covered." },
   { year: "2026", title: "Battery & EV", desc: "Launched lithium storage and solar-integrated EV charging verticals." },
 ];
+
+const ABOUT_COLLAGE = {
+  main: {
+    src: projectPhoto("Holycross College", "2.JPG", IMG.engineers2),
+    alt: "Saura Energy solar array on the Andre Block rooftop, Holycross College, Agartala",
+    position: "object-[55%_40%]",
+  },
+  inset: {
+    src: projectPhoto("ONGC Panchabati road", null, IMG.heroDrone),
+    alt: "Elevated rooftop solar structure installed by Saura Energy",
+    position: "object-[50%_40%]",
+  },
+  caption: { place: "Agartala, Tripura", title: "Andre Block, Holycross College" },
+};
 
 export default function About() {
   return (
@@ -43,10 +59,11 @@ export default function About() {
       {/* MVV cards */}
       <section className="py-20 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
-          <Reveal className="relative">
-            <ProgressiveImage src={IMG.engineers2} alt="Engineers" sizes="(min-width: 1024px) 600px, 100vw" className="rounded-3xl shadow-2xl shadow-blue-900/15 aspect-[4/5]" />
-            <ProgressiveImage src={IMG.heroDrone} alt="Drone" sizes="224px" className="hidden md:block absolute -bottom-12 -right-8 w-56 h-56 rounded-3xl border-8 border-white shadow-xl" />
-          </Reveal>
+          <PhotoCollage
+            {...ABOUT_COLLAGE}
+            topCard={<CollageStat icon={Home} value={<><AnimatedCounter to={1240} duration={2} />+</>} label="homes powered" />}
+            bottomCard={<CollageBadge icon={BadgeCheck} label="PM Surya Ghar Vendor" />}
+          />
           <Reveal delay={0.12}>
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#F26A21] mb-3">Our Mission, Vision & Values</p>
             <h2 className="font-display text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
