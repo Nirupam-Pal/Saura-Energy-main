@@ -93,34 +93,30 @@ html, body {
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-/* Frosted-glass navbar (applied once the page is scrolled). A translucent
-   tint + heavy blur/saturate lets the page show through; the hairline white
-   border and inset top highlight read as the lit edge of a glass pane. The
-   diagonal sheen lives on ::before so it can fade in (gradients can't
-   transition as a background). */
-.nav-shell::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.04) 45%, rgba(255, 255, 255, 0.15) 100%);
-  opacity: 0;
-  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-  z-index: -1;
-}
-.nav-shell { isolation: isolate; }
+/* Frosted-glass navbar pill. Lives on its own layer behind the bar, which
+   only fades/scales in on scroll, so the blur itself is never animated.
+   A translucent tint + blur/saturate lets the page show through; the hairline
+   white border and inset top highlight read as the lit edge of a glass pane. */
 .nav-glass {
   background-color: rgba(255, 255, 255, 0.35);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  backdrop-filter: blur(24px) saturate(180%);
-  border-color: rgba(255, 255, 255, 0.65);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.8),
     inset 0 -1px 0 rgba(15, 23, 42, 0.04),
     0 12px 40px -16px rgba(15, 23, 42, 0.28);
 }
-.nav-glass::before { opacity: 1; }
+/* Mobile menu open: links need a near-solid backdrop to stay readable. */
+.nav-glass.nav-glass-menu { background-color: rgba(255, 255, 255, 0.88); }
+.nav-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.04) 45%, rgba(255, 255, 255, 0.15) 100%);
+  pointer-events: none;
+}
 
 /* Animated gradient text */
 .gradient-text {

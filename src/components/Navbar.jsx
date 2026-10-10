@@ -22,9 +22,11 @@ export default function Navbar() {
   const loc = useLocation();
 
   useEffect(() => {
+    // Only flips a boolean (React skips re-renders when it doesn't change);
+    // passive so it never blocks scrolling.
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -34,6 +36,10 @@ export default function Navbar() {
   // over the hero, so the menu never floats on a transparent background.
   const solid = scrolled || open;
 
+  // Scroll animation is compositor-only (transform + opacity): the header's
+  // layout never changes. The strip fades while the whole header glides up
+  // by the strip's height (h-9 = 36px, minus an 8px float gap), and the glass
+  // pill is a separate layer behind the bar that fades/settles in.
   return (
     <motion.header
       data-testid="site-navbar"
@@ -42,42 +48,38 @@ export default function Navbar() {
       transition={{ duration: 0.7, ease: EASE_OUT_EXPO }}
       className="fixed top-0 inset-x-0 z-50 pointer-events-none"
     >
-      {/* Top utility strip — folds away (grid-rows 1fr → 0fr) once you scroll. */}
+      <div className={`will-change-transform transition-transform duration-500 ease-out-expo ${solid ? "translate-y-2 md:-translate-y-7" : "translate-y-0"}`}>
+      {/* Top utility strip */}
       <div
-        className={`hidden md:grid pointer-events-auto transition-[grid-template-rows,opacity] duration-500 ease-out-expo ${
-          scrolled ? "grid-rows-[0fr] opacity-0" : "grid-rows-[1fr] opacity-100"
+        className={`hidden md:flex h-9 items-center justify-between px-8 text-xs font-medium border-b border-white/10 text-white/90 transition-opacity duration-300 ${
+          solid ? "opacity-0" : "opacity-100 pointer-events-auto"
         }`}
-        aria-hidden={scrolled}
+        aria-hidden={solid}
       >
-        <div className="overflow-hidden">
-          <div className="flex items-center justify-between px-8 py-2 text-xs font-medium border-b border-white/10 text-white/90">
-            <div className="flex items-center gap-6">
-              <span className="flex items-center gap-2"><Sun className="h-3.5 w-3.5" /> Powering NE India since 2025</span>
-              <span className="opacity-70">•</span>
-              <span>PM Surya Ghar Empanelled</span>
-            </div>
-            <div className="flex items-center gap-5">
-              <a href={`tel:${BRAND.phone}`} tabIndex={scrolled ? -1 : undefined} className="flex items-center gap-1.5 hover:text-[#F26A21] transition" data-testid="topbar-phone">
-                <Phone className="h-3.5 w-3.5" /> {BRAND.phoneDisplay}
-              </a>
-              <span className="opacity-70">•</span>
-              <a href={`tel:${BRAND.landline}`} tabIndex={scrolled ? -1 : undefined} className="hover:text-[#F26A21] transition">{BRAND.landline}</a>
-            </div>
-          </div>
+        <div className="flex items-center gap-6">
+          <span className="flex items-center gap-2"><Sun className="h-3.5 w-3.5" /> Powering NE India since 2025</span>
+          <span className="opacity-70">•</span>
+          <span>PM Surya Ghar Empanelled</span>
+        </div>
+        <div className="flex items-center gap-5">
+          <a href={`tel:${BRAND.phone}`} tabIndex={solid ? -1 : undefined} className="flex items-center gap-1.5 hover:text-[#F26A21] transition" data-testid="topbar-phone">
+            <Phone className="h-3.5 w-3.5" /> {BRAND.phoneDisplay}
+          </a>
+          <span className="opacity-70">•</span>
+          <a href={`tel:${BRAND.landline}`} tabIndex={solid ? -1 : undefined} className="hover:text-[#F26A21] transition">{BRAND.landline}</a>
         </div>
       </div>
 
-      {/* Bar shell — full-width and transparent at the top of the page; on
-          scroll it condenses into a floating frosted pill inset from the edges. */}
-      <div
-        className={`nav-shell pointer-events-auto relative mx-auto border transition-[width,max-width,margin,border-radius,background-color,border-color,box-shadow,backdrop-filter] duration-500 ease-out-expo ${
-          solid
-            ? "nav-glass mt-3 w-[calc(100%-1.5rem)] max-w-6xl rounded-2xl"
-            : "mt-0 w-full max-w-7xl rounded-none bg-transparent border-transparent shadow-none"
-        }`}
-      >
+      {/* Bar shell — fixed geometry; only the glass layer behind it animates. */}
+      <div className="pointer-events-auto relative mx-auto max-w-7xl">
+        <div
+          aria-hidden="true"
+          className={`nav-glass absolute inset-y-0 inset-x-2 sm:inset-x-3 rounded-2xl transition-[opacity,transform,background-color] duration-500 ease-out-expo ${
+            solid ? "opacity-100 scale-100" : "opacity-0 scale-[1.03]"
+          } ${open ? "nav-glass-menu" : ""}`}
+        />
       {/* Main bar */}
-      <div className={`flex items-center justify-between px-4 sm:px-6 transition-[padding] duration-500 ease-out-expo ${solid ? "py-2 lg:px-5" : "py-3 lg:px-8"}`}>
+      <div className="relative flex items-center justify-between px-5 sm:px-7 lg:px-8 py-3">
         <Link to="/" className="flex items-center gap-3" data-testid="nav-logo">
           <img src="/img/brand/saura-96.webp" alt="Saura Energy logo" width="44" height="44" fetchPriority="high" className={`h-11 w-11 rounded-lg object-contain bg-white p-0.5 shadow-sm origin-left transition-transform duration-500 ease-out-expo ${solid ? "scale-[0.86]" : ""}`} />
           <div className={`leading-tight origin-left transition-transform duration-500 ease-out-expo ${solid ? "scale-95 -translate-x-1" : ""}`}>
@@ -136,7 +138,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className="lg:hidden border-t border-slate-200/60 px-4 py-3 space-y-1"
+            className="relative lg:hidden border-t border-slate-200/60 mx-2 sm:mx-3 px-4 py-3 space-y-1"
             data-testid="nav-mobile-menu"
           >
             {NAV_LINKS.map((l) => (
@@ -156,6 +158,7 @@ export default function Navbar() {
           </motion.nav>
         )}
       </AnimatePresence>
+      </div>
       </div>
     </motion.header>
   );
